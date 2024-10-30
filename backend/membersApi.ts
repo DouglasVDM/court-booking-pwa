@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Member } from '../../types';
+import { Member } from '../types';
 
 const API_BASE = 'http://localhost:5000';
 
