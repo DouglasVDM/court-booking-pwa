@@ -7,8 +7,6 @@ const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const navigate = useNavigate();
 
-  console.log(user)
-
   if (!isAuthenticated) {
     navigate("/");
   }
