@@ -18,7 +18,7 @@ const YOUR_AUTH0_CLIENT_ID = import.meta.env.VITE_YOUR_AUTH0_CLIENT_ID;
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Home />,
   },
   {
     path: "/login",
