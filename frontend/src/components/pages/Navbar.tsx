@@ -1,9 +1,11 @@
 import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
+import LogoutButton from './LogoutButton';
+import LoginButton from './LoginButton'
 
 export function Navbar() {
-  const { isAuthenticated, user, loginWithRedirect, logout } = useAuth0<{
+  const { isAuthenticated, user} = useAuth0<{
     name: string;
   }>();
   const { pathname } = useLocation();
@@ -32,24 +34,10 @@ export function Navbar() {
       {isAuthenticated ? (
         <div>
           <span id="hello">Hello, {user?.name}!</span>{' '}
-          <button
-            className="btn btn-outline-secondary"
-            id="logout"
-            onClick={() =>
-              logout({ logoutParams: { returnTo: window.location.origin } })
-            }
-          >
-            logout
-          </button>
+          <LogoutButton/>
         </div>
       ) : (
-        <button
-          className="btn btn-outline-success"
-          id="login"
-          onClick={() => loginWithRedirect()}
-        >
-          login
-        </button>
+        <LoginButton/>
       )}
     </nav>
   );
