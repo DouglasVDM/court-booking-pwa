@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
       "SELECT * FROM visitors LIMIT 5";
     const { rows } = await pool.query(query);
     res.status(200).json(rows);
-    console.log("Success: Get all visitors", {rows});
+    console.log("Success: Get all visitors");
   } catch (err) {
     console.error((err as Error).message);
     res.status(500).send("Could not get visitors");
