@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
       "SELECT * FROM members LIMIT 5";
     const { rows } = await pool.query(query);
     res.status(200).json(rows);
-    console.log("Success: Get all members", {rows});
+    console.log("Success: Get all members");
   } catch (err) {
     console.error((err as Error).message);
     res.status(500).send("Could not get members");
