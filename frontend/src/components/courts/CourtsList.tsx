@@ -1,36 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { fetchCourts, deleteCourt } from '../../../../backend/api/courtsApi';
-import CourtForm from '../CourtForm';
-import { Court } from '../../../../types';
+import Form from "react-bootstrap/Form";
+import PropTypes from "prop-types";
 
-const CourtsList: React.FC = () => {
-    const [courts, setCourts] = useState<Court[]>([]);
-
-    useEffect(() => {
-        const getCourts = async () => {
-            const courtsList = await fetchCourts();
-            setCourts(courtsList);
-        };
-        getCourts();
-    }, []);
-
-    const handleDelete = async (id: number) => {
-        await deleteCourt(id);
-        setCourts(courts.filter((court) => court.court_id !== id));
-    };
-
-    return (
-        <div>
-            <h2>Courts</h2>
-            {courts.map((court) => (
-                <div key={court.court_id}>
-                    <p>{court.court_name}</p>
-                    <button onClick={() => handleDelete(court.court_id)}>Delete</button>
-                </div>
-            ))}
-            <CourtForm refreshCourts={setCourts} />
-        </div>
+const Courts = ({ courts}) => {
+    console.log("courtsData",courts)
+  const handleClick = (event) => {
+    const selectedCourt = courts.find(
+      (court) => court.court_id === parseInt(event.target.value)
     );
+
+  };
+
+  return (
+    <Form.Select aria-label="Select a court" size="lg" onClick={handleClick}>
+      <option>Select court</option>
+      {courts.map(({ court_id, court_name }) => (
+        <option value={court_id} key={court_id}>
+          {court_name}
+        </option>
+      ))}
+    </Form.Select>
+  );
 };
 
-export default CourtsList;
+Courts.propTypes = {
+  courts: PropTypes.arrayOf(
+    PropTypes.shape({
+      court_id: PropTypes.number.isRequired,
+      court_name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onCourtSelected: PropTypes.func.isRequired,
+};
+
+export default Courts;
