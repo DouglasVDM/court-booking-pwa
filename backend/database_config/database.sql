@@ -37,8 +37,38 @@ INSERT INTO visitors (first_name, surname, email, phone, visit_date, visit_type,
 ('Alice', 'Johnson', 'alice@example.com', '+27 12 345 6780', '2024-11-05', 'singles', TRUE),
 ('Bob', 'Williams', 'bob@example.com', '+27 21 937 6540', '2024-11-05', 'doubles', falsE);
 
+--
+
+DROP TABLE IF EXISTS courts CASCADE;
+
+CREATE TABLE Courts (
+    court_id SERIAL PRIMARY KEY,
+    court_name VARCHAR(20) NOT NULL,
+    has_lights BOOLEAN DEFAULT FALSE,
+--    CONSTRAINT courts_pkey PRIMARY KEY (court_id),
+    UNIQUE (court_name)
+);
+
+INSERT INTO Courts (court_name, has_lights) VALUES
+('Court 1', TRUE),
+('Court 2', TRUE),
+('Court 3', FALSE),
+('Court 4', FALSE);
+
+--
+
 SELECT * FROM MEMBERS LIMIT 5;
 select * from visitors v limit 5 ;
+SELECT * FROM Courts c limit 5 ;
+SELECT * FROM Courts WHERE has_lights = TRUE;
+
+
+
+
+
+
+
+
 -- 
 
 
