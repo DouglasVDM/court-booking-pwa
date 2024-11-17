@@ -1,27 +1,29 @@
-import Form from "react-bootstrap/Form";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
 import PropTypes from "prop-types";
 
-const Courts = ({ courts}) => {
-    console.log("courtsData",courts)
+const Courts = ({ courts }) => {
   const handleClick = (event) => {
     const selectedCourt = courts.find(
       (court) => court.court_id === parseInt(event.target.value)
     );
-
   };
 
   return (
-    <Form.Select aria-label="Select a court" size="lg" onClick={handleClick}>
-      <option>Select court</option>
-      {courts.map(({ court_id, court_name }) => (
-        <option value={court_id} key={court_id}>
-          {court_name}
-        </option>
+    <>
+      {courts.map(({ court_id, court_name, has_lights }) => (
+        <Card key={court_id} style={{ width: "18rem" }}>
+          <Card.Img variant="top" src="holder.js/100px180" />
+          <Card.Body>
+            <Card.Title>{court_name}</Card.Title>
+            <Card.Text>{has_lights ? "Has lights" : ""}</Card.Text>
+            <Button variant="primary">Go somewhere</Button>
+          </Card.Body>
+        </Card>
       ))}
-    </Form.Select>
+    </>
   );
 };
-
 Courts.propTypes = {
   courts: PropTypes.arrayOf(
     PropTypes.shape({
@@ -29,7 +31,7 @@ Courts.propTypes = {
       court_name: PropTypes.string.isRequired,
     })
   ).isRequired,
-  onCourtSelected: PropTypes.func.isRequired,
+//   onCourtSelected: PropTypes.func.isRequired,
 };
 
 export default Courts;
