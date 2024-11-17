@@ -14,9 +14,7 @@ import { Error } from "./components/pages/Error";
 import { Loading } from "./components/pages/Loading";
 import Profile from "./components/pages/Profile";
 import LandingPage from "./components/pages/LandingPage";
-import CourtsList from "./components/courts/CourtsList"
-
-
+import CourtsList from "./components/courts/CourtsList";
 
 function App() {
   const { error, isLoading } = useAuth0();
@@ -32,7 +30,7 @@ function App() {
       <Navbar />
       {error && <Error message={error.message} />}
       <Routes>
-        <Route path="/" element={<LandingPage/>}/>
+        <Route path="/" element={<LandingPage />} />
         <Route path="/profile" element={<ProtectedProfile />} />
         <Route path="/courts" element={<ProtectedCourt courts={courts} />} />
       </Routes>
@@ -40,36 +38,3 @@ function App() {
   );
 }
 export default App;
-
-/**
- *     <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route
-        path="/profile"
-        element={<AuthenticationGuard component={ProfilePage} />}
-      />
-      <Route path="/about" element={<PublicPage />} />
-      <Route path="/protected" element={<ProtectedPage/>} />
-      <Route
-        path="/admin"
-        element={<AuthenticationGuard component={AdminPage} />}
-      />
-      <Route path="/callback" element={<CallbackPage />} />
-      <Route path="*" element={<NotFoundPage />} />
-
-      <Route path="/bookings" element={<Bookings bookings={bookings} />} />
-      <Route
-        path="/booking-form"
-        element={
-          <BookingForm
-            courts={courts}
-            daysOfWeek={daysOfWeek}
-            startTimes={startTimes}
-            durations={durations}
-            bookingTypes={bookingTypes}
-          />
-        }
-      />
-      <Route path="/login" element={<LoginForm />} />
-    </Routes>
- */
