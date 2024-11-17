@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { addCourt } from '../../../../backend/api/courtsApi';
 import { Court } from '../../../../types';
 
 interface CourtFormProps {
