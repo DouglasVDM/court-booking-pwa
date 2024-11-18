@@ -1,5 +1,5 @@
-import {Navbar} from "./pages/Navbar";
-import PageFooter from "./pages/PageFooter";
+import {Navbar} from "../components/navigation/desktop/Navbar";
+import PageFooter from "./PageFooter";
 
 const PageLayout = ({ children }) => {
   return (
