@@ -17,6 +17,8 @@ import LandingPage from "./components/pages/LandingPage";
 import CourtsList from "./components/courts/CourtsList";
 import PageFooter from "./components/pages/PageFooter";
 import HeroBanner from "./components/pages/HeroBanner";
+import PageLayout from "./components/PageLayout";
+import HomePage from "./components/pages/HomePage";
 
 function App() {
   const { error, isLoading } = useAuth0();
@@ -29,15 +31,15 @@ function App() {
   }
   return (
     <>
-      <Navbar />
-      <HeroBanner/>
-      {error && <Error message={error.message} />}
-      <Routes>
-        {/* <Route path="/" element={<LandingPage />} /> */}
-        <Route path="/profile" element={<ProtectedProfile />} />
-        <Route path="/courts" element={<ProtectedCourt courts={courts} />} />
-      </Routes>
-      <PageFooter/>
+      <PageLayout>
+        {" "}
+        {error && <Error message={error.message} />}
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/profile" element={<ProtectedProfile />} />
+          <Route path="/courts" element={<ProtectedCourt courts={courts} />} />
+        </Routes>
+      </PageLayout>
     </>
   );
 }
