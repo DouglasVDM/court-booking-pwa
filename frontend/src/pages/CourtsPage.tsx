@@ -2,7 +2,7 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import PropTypes from "prop-types";
 
-const Courts = ({ courts }) => {
+const CourtsPage = ({ courts }) => {
   const handleClick = (event) => {
     const selectedCourt = courts.find(
       (court) => court.court_id === parseInt(event.target.value)
@@ -24,7 +24,7 @@ const Courts = ({ courts }) => {
     </>
   );
 };
-Courts.propTypes = {
+CourtsPage.propTypes = {
   courts: PropTypes.arrayOf(
     PropTypes.shape({
       court_id: PropTypes.number.isRequired,
@@ -34,4 +34,4 @@ Courts.propTypes = {
 //   onCourtSelected: PropTypes.func.isRequired,
 };
 
-export default Courts;
+export default CourtsPage;

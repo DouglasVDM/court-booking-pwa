@@ -1,6 +1,6 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import LogoutButton from "./LogoutButton";
+import LogoutButton from "../components/buttons/LogoutButton";
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {

@@ -1,7 +1,7 @@
 import Form from "react-bootstrap/Form";
 import PropTypes from "prop-types";
 
-const Courts = ({ courts, onCourtSelected }) => {
+const CourtsFormPage = ({ courts, onCourtSelected }) => {
   const handleClick = (event) => {
     const selectedCourt = courts.find(
       (court) => court.court_id === parseInt(event.target.value)
@@ -22,7 +22,7 @@ const Courts = ({ courts, onCourtSelected }) => {
   );
 };
 
-Courts.propTypes = {
+CourtsFormPage.propTypes = {
   courts: PropTypes.arrayOf(
     PropTypes.shape({
       court_id: PropTypes.number.isRequired,
@@ -32,4 +32,4 @@ Courts.propTypes = {
   onCourtSelected: PropTypes.func.isRequired,
 };
 
-export default Courts;
+export default CourtsFormPage;
