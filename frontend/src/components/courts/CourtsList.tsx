@@ -1,36 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import { fetchCourts, deleteCourt } from '../../../../backend/api/courtsApi';
-import CourtForm from '../CourtForm';
-import { Court } from '../../../../types';
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import PropTypes from "prop-types";
 
-const CourtsList: React.FC = () => {
-    const [courts, setCourts] = useState<Court[]>([]);
-
-    useEffect(() => {
-        const getCourts = async () => {
-            const courtsList = await fetchCourts();
-            setCourts(courtsList);
-        };
-        getCourts();
-    }, []);
-
-    const handleDelete = async (id: number) => {
-        await deleteCourt(id);
-        setCourts(courts.filter((court) => court.court_id !== id));
-    };
-
-    return (
-        <div>
-            <h2>Courts</h2>
-            {courts.map((court) => (
-                <div key={court.court_id}>
-                    <p>{court.court_name}</p>
-                    <button onClick={() => handleDelete(court.court_id)}>Delete</button>
-                </div>
-            ))}
-            <CourtForm refreshCourts={setCourts} />
-        </div>
+const Courts = ({ courts }) => {
+  const handleClick = (event) => {
+    const selectedCourt = courts.find(
+      (court) => court.court_id === parseInt(event.target.value)
     );
+  };
+
+  return (
+    <>
+      {courts.map(({ court_id, court_name, has_lights }) => (
+        <Card key={court_id} style={{ width: "18rem" }}>
+          <Card.Img variant="top" src="holder.js/100px180" />
+          <Card.Body>
+            <Card.Title>{court_name}</Card.Title>
+            <Card.Text>{has_lights ? "Has lights" : ""}</Card.Text>
+            <Button variant="primary">Go somewhere</Button>
+          </Card.Body>
+        </Card>
+      ))}
+    </>
+  );
+};
+Courts.propTypes = {
+  courts: PropTypes.arrayOf(
+    PropTypes.shape({
+      court_id: PropTypes.number.isRequired,
+      court_name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+//   onCourtSelected: PropTypes.func.isRequired,
 };
 
-export default CourtsList;
+export default Courts;
