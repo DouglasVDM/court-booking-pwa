@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { Auth0Provider } from "@auth0/auth0-react";
 import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const root = createRoot(document.getElementById("root"));
 const AUTH0_DOMAIN = import.meta.env.VITE_AUTH0_DOMAIN;

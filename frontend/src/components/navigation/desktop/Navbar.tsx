@@ -12,51 +12,41 @@ export function Navbar() {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="collapse navbar-collapse">
+      <div className="">
+        {/* <div className="collapse navbar-collapse"> */}
         <div className="navbar-nav"></div>
         {isAuthenticated ? (
           <>
             <Link
               to="/"
               className={`nav-item nav-link${
-                pathname === "/home" ? " active" : ""
+                pathname === "/home" ? "active" : ""
               }`}
             >
               Home
             </Link>
-            <br />
-            <br />
             <Link
               to="/profile"
               className={`nav-item nav-link${
-                pathname === "/profile" ? " active" : ""
+                pathname === "/profile" ? "active" : ""
               }`}
             >
               Profile
             </Link>
-            <br />
-            <br />
             <Link
               to="/courts"
               className={`nav-item nav-link${
-                pathname === "/courts" ? " active" : ""
+                pathname === "/courts" ? "active" : ""
               }`}
             >
               Courts
-              <br />
-              <br />
               <span id="hello">Hello, {user?.name}!</span>
-              <br />
-              <br />
               <LogoutButton />
-              <hr />
             </Link>
           </>
         ) : (
           <>
             <LoginButton />
-            <br />
-            <hr />
           </>
         )}
       </div>
