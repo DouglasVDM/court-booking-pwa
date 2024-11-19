@@ -26,6 +26,14 @@ export function Navbar() {
               Home
             </Link>
             <Link
+              to="/dashboard"
+              className={`nav-item nav-link${
+                pathname === "/dashboard" ? "active" : ""
+              }`}
+            >
+              Dashboard
+            </Link>
+            <Link
               to="/profile"
               className={`nav-item nav-link${
                 pathname === "/profile" ? "active" : ""
@@ -40,9 +48,8 @@ export function Navbar() {
               }`}
             >
               Courts
-              <span id="hello">Hello, {user?.name}!</span>
-              <LogoutButton />
             </Link>
+            <LogoutButton />
           </>
         ) : (
           <>
