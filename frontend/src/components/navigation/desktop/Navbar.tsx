@@ -42,12 +42,12 @@ export function Navbar() {
               Profile
             </Link>
             <Link
-              to="/courts"
+              to="/bookings"
               className={`nav-item nav-link${
-                pathname === "/courts" ? "active" : ""
+                pathname === "/bookings" ? "active" : ""
               }`}
             >
-              Courts
+              Bookings
             </Link>
             <LogoutButton />
           </>
