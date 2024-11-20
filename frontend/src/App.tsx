@@ -7,6 +7,7 @@ const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT;
 
 // Custom Hooks for fetching data
 import useCourts from "./customHooks/useCourts";
+import useBookingTypes from "./customHooks/useBookingTypes"
 
 
 // Components
@@ -14,7 +15,7 @@ import PageLoader from "./components/PageLoader";
 import PageLayout from "./components/PageLayout";
 
 // Pages
-import CourtsPage from "./pages/CourtsPage";
+import BookingPage from "./pages/BookingPage";
 import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Profile from "./pages/Profile";
@@ -23,8 +24,9 @@ import DashboardPage from "./pages/DashboardPage";
 function App() {
   const { error, isLoading } = useAuth0();
   const { courts } = useCourts(apiEndpointPrefix);
+  const { bookingTypes } = useBookingTypes(apiEndpointPrefix);
   const ProtectedProfile = withAuthenticationRequired(Profile);
-  const ProtectedCourt = withAuthenticationRequired(CourtsPage);
+  const ProtectedBooking = withAuthenticationRequired(BookingPage);
   const ProtectedDashboard = withAuthenticationRequired(DashboardPage);
 
   if (isLoading) {
@@ -39,7 +41,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/dashboard" element={<ProtectedDashboard />} />
           <Route path="/profile" element={<ProtectedProfile />} />
-          <Route path="/courts" element={<ProtectedCourt courts={courts} />} />
+          <Route path="/bookings" element={<ProtectedBooking courts={courts} bookingTypes={bookingTypes}/>} />
         </Routes>
       </PageLayout>
     </>
