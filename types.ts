@@ -15,6 +15,10 @@ export interface Court {
     court_id: number;
     court_name: string;
 }
+export interface bookingTypes {
+    booking_type_id: number;
+    booking_type_name: string;
+}
 
 export interface Booking {
     booking_id: number;

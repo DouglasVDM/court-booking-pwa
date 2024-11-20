@@ -6,10 +6,10 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import NotFound from "../components/NotFound";
 import Home from "../components/Home";
-import Dashboard from "../components/Dashboard";
 import LoginButton from "../components/LoginButton";
 import MembersList from "../components/members/MembersList";
 import CourtsList from "../components/courts/CourtsList";
+import DashboardPage from "../pages/DashboardPage";
 
 const router = createBrowserRouter([
   {
@@ -26,12 +26,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: <DashboardPage />,
   },
-  // {
-  //   path: "/courts",
-  //   element: <CourtsList />,
-  // },
+  {
+    path: "/courts",
+    element: <CourtsList />,
+  },
   {
     path: "/members",
     element: <MembersList />,
@@ -42,13 +42,12 @@ const router = createBrowserRouter([
   },
 ]);
 
-export default function Root() {
+export default function root() {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
   if (isLoading) {
     return <div>Loading ...</div>;
   }
-  return isAuthenticated ? <Profile /> : <LoginButton />;
   <>
     <div className="app" id="detail">
       <Navbar />

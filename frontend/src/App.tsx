@@ -3,24 +3,31 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 
-// Custom Hooks for fetching data
-import useCourts from "./customHooks/useCourts";
-
 const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT;
 
+// Custom Hooks for fetching data
+import useCourts from "./customHooks/useCourts";
+import useBookingTypes from "./customHooks/useBookingTypes"
+
+
 // Components
-import NotFoundPage from "./pages/NotFoundPage";
 import PageLoader from "./components/PageLoader";
-import Profile from "./pages/Profile";
-import CourtsPage from "./pages/CourtsPage";
-import HomePage from "./pages/HomePage";
 import PageLayout from "./components/PageLayout";
+
+// Pages
+import BookingPage from "./pages/BookingPage";
+import HomePage from "./pages/HomePage";
+import NotFoundPage from "./pages/NotFoundPage";
+import Profile from "./pages/Profile";
+import DashboardPage from "./pages/DashboardPage";
 
 function App() {
   const { error, isLoading } = useAuth0();
   const { courts } = useCourts(apiEndpointPrefix);
+  const { bookingTypes } = useBookingTypes(apiEndpointPrefix);
   const ProtectedProfile = withAuthenticationRequired(Profile);
-  const ProtectedCourt = withAuthenticationRequired(CourtsPage);
+  const ProtectedBooking = withAuthenticationRequired(BookingPage);
+  const ProtectedDashboard = withAuthenticationRequired(DashboardPage);
 
   if (isLoading) {
     return <PageLoader />;
@@ -32,8 +39,9 @@ function App() {
         {error && <NotFoundPage message={error.message} />}
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/dashboard" element={<ProtectedDashboard />} />
           <Route path="/profile" element={<ProtectedProfile />} />
-          <Route path="/courts" element={<ProtectedCourt courts={courts} />} />
+          <Route path="/bookings" element={<ProtectedBooking courts={courts} bookingTypes={bookingTypes}/>} />
         </Routes>
       </PageLayout>
     </>
