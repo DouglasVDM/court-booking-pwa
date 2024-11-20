@@ -1,3 +1,4 @@
+import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
 // Import your hero image
@@ -17,9 +18,9 @@ const HeroBanner = () => {
             backgroundPosition: "center",
           }}
         >
-          <Col className="text-center text-light">
-            <h1>Welcome to My App</h1>
-            <p>Explore and book your favorite courts!</p>
+          <Col className="text-center">
+            <h1>Welcome to my tennis court booking app</h1>
+            <p>Explore and book your favorite court!</p>
           </Col>
         </Row>
       </Container>
