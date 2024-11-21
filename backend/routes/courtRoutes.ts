@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const query = "SELECT * FROM courts LIMIT 5";
+    const query = "SELECT * FROM court LIMIT 5";
     const { rows } = await pool.query(query);
     res.status(200).json(rows);
     console.log("Success: Get all courts");
@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params; // Extract court from the URL parameter
-    const query = "SELECT court_id, court_name FROM courts WHERE court_id = $1";
+    const query = "SELECT court_id, court_name FROM court WHERE court_id = $1";
     const { rows } = await pool.query(query, [id]);
 
     if (rows.length === 0) {
