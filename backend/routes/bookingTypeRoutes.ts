@@ -5,20 +5,20 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const query = "SELECT * FROM booking_types";
+    const query = "SELECT * FROM booking_type";
     const { rows } = await pool.query(query);
     res.status(200).json(rows);
-    console.log("Success: Get all booking_types");
+    console.log("Success: Get all booking_type");
   } catch (err) {
     console.error((err as Error).message);
-    res.status(500).send("Could not get booking_types");
+    res.status(500).send("Could not get booking_type");
   }
 });
 
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params; // Extract booking_type from the URL parameter
-    const query = "SELECT booking_type_id, booking_type_name FROM booking_types WHERE booking_type_id = $1";
+    const query = "SELECT booking_type_id, booking_type_name FROM booking_type WHERE booking_type_id = $1";
     const { rows } = await pool.query(query, [id]);
 
     if (rows.length === 0) {
