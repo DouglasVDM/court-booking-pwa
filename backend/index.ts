@@ -14,6 +14,7 @@ const memberRoutes = require("./routes/memberRoutes");
 const visitorRoutes = require("./routes/visitorRoutes");
 const courtRoutes = require("./routes/courtRoutes");
 const bookingTypeRoutes = require("./routes/bookingTypeRoutes");
+const timeSlotRoutes = require("./routes/timeSlotRoutes");
 
 // Middelware
 app.use(express.json());
@@ -27,6 +28,7 @@ app.use("/members", memberRoutes);
 app.use("/visitors", visitorRoutes);
 app.use("/courts", courtRoutes);
 app.use("/bookingTypes", bookingTypeRoutes);
+app.use("/timeslots", timeSlotRoutes);
 
 // Test route to confirm server connection
 app.get("/", (req, res) => {
