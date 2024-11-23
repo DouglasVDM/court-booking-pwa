@@ -3,15 +3,26 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import PropTypes from "prop-types";
+import { Button } from "react-bootstrap";
 
 const CourtsPage = ({ courts }) => {
   const [selectedCourt, setSelectedCourt] = useState(null);
+  const [isFinalized, setIsFinalized] = useState(false);
 
   const handleClick = (event) => {
     const selectedCourt = courts.find(
       (court) => court.court_id === parseInt(event.target.value)
     );
     setSelectedCourt(selectedCourt);
+  };
+
+  const handleFinalize = () => {
+    setIsFinalized(true);
+  };
+
+  const handleChangeCourt = () => {
+    setIsFinalized(false);
+    setSelectedCourt(null); // Reset selection to allow re-selection
   };
 
   return (
@@ -22,31 +33,61 @@ const CourtsPage = ({ courts }) => {
           <Form.Label as="legend" column sm={2}>
             Please select your court
           </Form.Label>
-          {courts.map(({ court_id, court_name, has_lights }) => (
-            <Col key={court_id} sm={15}>
+
+          {/* Show only the selected court if finalized */}
+          {isFinalized && selectedCourt ? (
+            <Col sm={15}>
               <Form.Label>
-                <p>{has_lights}</p>
-              </Form.Label>
-              <Form.Check
-                onClick={handleClick}
-                type="radio"
-                label={
-                  <span>
-                    {court_name}{" "}
-                    {has_lights && (
-                      <span style={{ color: "green", marginLeft: "10px" }}>
-                        (Has Lights)
-                      </span>
-                    )}
+                <strong>Selected Court:</strong> {selectedCourt.court_name}
+                {selectedCourt.has_lights && (
+                  <span style={{ color: "green", marginLeft: "10px" }}>
+                    (Has Lights)
                   </span>
-                }
-                name="selectedCourt"
-                id={court_id}
-                value={court_id}
-              />
+                )}
+              </Form.Label>
+              <Button
+                variant="secondary"
+                style={{ marginTop: "10px" }}
+                onClick={handleChangeCourt}
+              >
+                Change Court
+              </Button>
             </Col>
-          ))}
+          ) : (
+            // Show all courts if not finalized
+            courts.map(({ court_id, court_name, has_lights }) => (
+              <Col key={court_id} sm={15}>
+                <Form.Check
+                  onClick={handleClick}
+                  type="radio"
+                  label={
+                    <span>
+                      {court_name}{" "}
+                      {has_lights && (
+                        <span style={{ color: "green", marginLeft: "10px" }}>
+                          (Has Lights)
+                        </span>
+                      )}
+                    </span>
+                  }
+                  name="selectedCourt"
+                  id={court_id}
+                  value={court_id}
+                />
+              </Col>
+            ))
+          )}
         </Form.Group>
+        {/* Finalize button */}
+        {!isFinalized && selectedCourt && (
+          <Button
+            variant="primary"
+            onClick={handleFinalize}
+            style={{ marginTop: "10px" }}
+          >
+            Finalize Selection
+          </Button>
+        )}
       </Form>
     </>
   );
