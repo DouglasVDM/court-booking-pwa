@@ -1,20 +1,24 @@
-import React from "react";
-import { Form } from "react-bootstrap";
+import React, { useState } from "react";
+import { Col, Form, FormGroup, Row } from "react-bootstrap";
 
 interface DatePickerProps {
   selectedDate: string;
   onDateChange: (date: string) => void;
 }
 
-const DatePicker: React.FC<DatePickerProps> = ({ selectedDate, onDateChange }) => (
-  <Form.Group>
-    <Form.Label>Select Date</Form.Label>
-    <Form.Control
-      type="date"
-      value={selectedDate}
-      onChange={(event) => onDateChange(event.target.value)}
-    />
-  </Form.Group>
-);
+const DatePicker: React.FC<DatePickerProps> = () => {
+  const [selectedDate, setSelectedDate] = useState("");
+
+  const handleChange = (event) => {
+    const chosenDate = event.target.value;
+    setSelectedDate(chosenDate);
+  };
+
+  return (
+    <>
+<h1>Date</h1>
+    </>
+  );
+};
 
 export default DatePicker;
