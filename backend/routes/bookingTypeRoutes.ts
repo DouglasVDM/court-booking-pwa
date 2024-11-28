@@ -5,31 +5,31 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const query = "SELECT * FROM booking_type";
+    const query = "SELECT * FROM booking_types";
     const { rows } = await pool.query(query);
     res.status(200).json(rows);
-    console.log("Success: Get all booking_type");
+    console.log("Success: Get all booking_types");
   } catch (err) {
     console.error((err as Error).message);
-    res.status(500).send("Could not get booking_type");
+    res.status(500).send("Could not get booking_types");
   }
 });
 
 router.get("/:id", async (req, res) => {
   try {
-    const { id } = req.params; // Extract booking_type from the URL parameter
-    const query = "SELECT booking_type_id, booking_type_name FROM booking_type WHERE booking_type_id = $1";
+    const { id } = req.params; // Extract booking_types from the URL parameter
+    const query = "SELECT booking_types_id, booking_types_name FROM booking_types WHERE booking_types_id = $1";
     const { rows } = await pool.query(query, [id]);
 
     if (rows.length === 0) {
-      return res.status(404).send(`booking_type id ${id} not found`);
+      return res.status(404).send(`booking_types id ${id} not found`);
     }
 
     res.status(200).json(rows[0]);
-    console.log(`Success: Get booking_type by booking_type_id ${id}`);
+    console.log(`Success: Get booking_types by booking_types_id ${id}`);
   } catch (err) {
     console.error((err as Error).message);
-    res.status(500).send("Could not get booking_type by id");
+    res.status(500).send("Could not get booking_types by id");
   }
 });
 
