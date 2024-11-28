@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import NavbarTab from "./NavbarTab";
+import { Tab, Tabs } from "react-bootstrap";
 
 const NavbarTabs = () => {
   const { isAuthenticated } = useAuth0();
@@ -11,13 +12,13 @@ const NavbarTabs = () => {
           <br />
           {window.location.pathname === "/" ? (
             <>
-              <NavbarTab path="/bookings" label="All bookings" />
+              <NavbarTab path="/profile" label="Your Profile" />
               <br />
-              <NavbarTab path="/booking-form" label="Book a court" />
+              <NavbarTab path="/bookings" label="Book a court" />
             </>
           ) : (
             <>
-              {window.location.pathname === "/booking-form" ? (
+              {window.location.pathname === "/bookings-form" ? (
                 <>
                   <NavbarTab path="/" label="Home" />
                   <br />
