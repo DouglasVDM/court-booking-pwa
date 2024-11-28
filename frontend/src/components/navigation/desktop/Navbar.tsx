@@ -49,6 +49,7 @@ export function Navbar() {
             >
               Bookings
             </Link>
+
             <LogoutButton />
           </>
         ) : (
