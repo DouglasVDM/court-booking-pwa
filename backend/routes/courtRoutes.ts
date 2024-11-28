@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const query = "SELECT * FROM court LIMIT 5";
+    const query = "SELECT * FROM courts LIMIT 5";
     const { rows } = await pool.query(query);
     res.status(200).json(rows);
     console.log("Success: Get all courts");
@@ -17,19 +17,19 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const { id } = req.params; // Extract court from the URL parameter
-    const query = "SELECT court_id, court_name FROM court WHERE court_id = $1";
+    const { id } = req.params; // Extract courts from the URL parameter
+    const query = "SELECT court_id, court_name FROM courts WHERE court_id = $1";
     const { rows } = await pool.query(query, [id]);
 
     if (rows.length === 0) {
-      return res.status(404).send(`court id ${id} not found`);
+      return res.status(404).send(`courts id ${id} not found`);
     }
 
     res.status(200).json(rows[0]);
-    console.log(`Success: Get court by court_id ${id}`);
+    console.log(`Success: Get courts by court_id ${id}`);
   } catch (err) {
     console.error((err as Error).message);
-    res.status(500).send("Could not get court by id");
+    res.status(500).send("Could not get courts by id");
   }
 });
 
