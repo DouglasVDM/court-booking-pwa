@@ -31,7 +31,7 @@ const CourtsPage = ({ courts }) => {
         {" "}
         <Form.Group as={Row} className="mb-3">
           <Form.Label as="legend" column sm={2}>
-            Please select your court
+            <h5>Please select your court</h5>
           </Form.Label>
 
           {/* Show only the selected court if finalized */}
