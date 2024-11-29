@@ -21,9 +21,9 @@ const BookingTypesPage = ({ bookingTypes }) => {
   return (
     <>
       <Form>
-        {" "}
+        
         <Form.Group as={Row} className="mb-3">
-          <Form.Label as="legend" column sm={2}>
+          <Form.Label as="legend" className="text-start">
             Please select your booking type
           </Form.Label>
           {bookingTypes.map(({ booking_type_id, booking_type_name, has_lights }) => (
@@ -36,7 +36,7 @@ const BookingTypesPage = ({ bookingTypes }) => {
                 type="radio"
                 label={
                   <span>
-                    {booking_type_name}{" "}
+                    {booking_type_name}
                     {has_lights && (
                       <span style={{ color: "green", marginLeft: "10px" }}>
                         (Has Lights)
