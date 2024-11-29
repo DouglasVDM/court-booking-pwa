@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const query = "SELECT * FROM booking_types";
+    const query = "SELECT * FROM booking_types LIMIT 4";
     const { rows } = await pool.query(query);
     res.status(200).json(rows);
     console.log("Success: Get all booking_types");
