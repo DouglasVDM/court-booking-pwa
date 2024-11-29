@@ -26,70 +26,67 @@ const CourtsPage = ({ courts }) => {
   };
 
   return (
-    <>
-      <Form>
-        {" "}
-        <Form.Group as={Row} className="mb-3">
-          <Form.Label as="legend" column sm={2}>
-            <h5>Please select your court</h5>
-          </Form.Label>
+    <Form>
+      <Form.Group as={Row} className="mb-3">
+        <Form.Label className="text-start" as="legend" >
+          Please select your court
+        </Form.Label>
 
-          {/* Show only the selected court if finalized */}
-          {isFinalized && selectedCourt ? (
-            <Col sm={15}>
-              <Form.Label>
-                <strong>Selected Court:</strong> {selectedCourt.court_name}
-                {selectedCourt.has_lights && (
-                  <span style={{ color: "green", marginLeft: "10px" }}>
-                    (Has Lights)
+        {/* Show only the selected court if finalized */}
+        {isFinalized && selectedCourt ? (
+          <Col sm={15}>
+            <Form.Label>
+              <strong>Selected Court : </strong>{selectedCourt.court_name}
+              {selectedCourt.has_lights && (
+                <span style={{ color: "green", marginLeft: "10px" }}>
+                  (Has Lights)
+                </span>
+              )}
+            </Form.Label>
+            <Button
+              variant="secondary"
+              style={{ marginTop: "10px"}}
+              onClick={handleChangeCourt}
+            >
+              Change Court
+            </Button>
+          </Col>
+        ) : (
+          // Show all courts if not finalized
+          courts.map(({ court_id, court_name, has_lights }) => (
+            <Row key={court_id} sm={15}>
+              <Form.Check
+                onClick={handleClick}
+                type="radio"
+                label={
+                  <span>
+                    {court_name}
+                    {has_lights && (
+                      <span style={{ color: "green", marginLeft: "10px" }}>
+                        (Has Lights)
+                      </span>
+                    )}
                   </span>
-                )}
-              </Form.Label>
-              <Button
-                variant="secondary"
-                style={{ marginTop: "10px" }}
-                onClick={handleChangeCourt}
-              >
-                Change Court
-              </Button>
-            </Col>
-          ) : (
-            // Show all courts if not finalized
-            courts.map(({ court_id, court_name, has_lights }) => (
-              <Col key={court_id} sm={15}>
-                <Form.Check
-                  onClick={handleClick}
-                  type="radio"
-                  label={
-                    <span>
-                      {court_name}{" "}
-                      {has_lights && (
-                        <span style={{ color: "green", marginLeft: "10px" }}>
-                          (Has Lights)
-                        </span>
-                      )}
-                    </span>
-                  }
-                  name="selectedCourt"
-                  id={court_id}
-                  value={court_id}
-                />
-              </Col>
-            ))
-          )}
-        </Form.Group>
-        {/* Finalize button */}
-        {!isFinalized && selectedCourt && (
-          <Button
-            variant="primary"
-            onClick={handleFinalize}
-            style={{ marginTop: "10px" }}
-          >
-            Finalize Selection
-          </Button>
+                }
+                name="selectedCourt"
+                id={court_id}
+                value={court_id}
+              />
+            </Row>
+          ))
         )}
-      </Form>
-    </>
+      </Form.Group>
+      {/* Finalize button */}
+      {!isFinalized && selectedCourt && (
+        <Button
+          variant="primary"
+          onClick={handleFinalize}
+          style={{ marginTop: "10px" }}
+        >
+          Finalize Selection
+        </Button>
+      )}
+    </Form>
   );
 };
 
