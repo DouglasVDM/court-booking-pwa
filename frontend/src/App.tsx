@@ -32,8 +32,6 @@ function App() {
   const ProtectedBooking = withAuthenticationRequired(BookingPage);
   const ProtectedDashboard = withAuthenticationRequired(DashboardPage);
 
-  console.log("endTimes",endTimes);
-
   if (isLoading) {
     return <PageLoader />;
   }
