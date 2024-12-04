@@ -1,103 +1,34 @@
 import React, { useState } from "react";
+import { Row } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
 
 const CourtsPage = ({ courts }) => {
-  const [selectedCourt, setSelectedCourt] = useState(null);
-  const [isFinalized, setIsFinalized] = useState(false);
+  const [selectedCourt, setSelectedCourt] = useState([]);
 
-  const handleClick = (event) => {
-    const selectedCourt = courts.find(
-      (court) => court.court_id === parseInt(event.target.value)
-    );
-    setSelectedCourt(selectedCourt);
-  };
-
-  const handleFinalize = () => {
-    setIsFinalized(true);
-  };
-
-  const handleChangeCourt = () => {
-    setIsFinalized(false);
-    setSelectedCourt(null); // Reset selection to allow re-selection
+  const handleSelectedCourt = (event) => {
+    const court = event.target.value;
+    setSelectedCourt(court);
+    console.log("court", selectedCourt);
   };
 
   return (
     <Form>
-      <Form.Group as={Row} className="mb-3">
-        <Form.Label className="text-start" as="legend" >
-          Please select your court
-        </Form.Label>
-
-        {/* Show only the selected court if finalized */}
-        {isFinalized && selectedCourt ? (
-          <Col sm={15}>
-            <Form.Label>
-              <strong>Selected Court : </strong>{selectedCourt.court_name}
-              {selectedCourt.has_lights && (
-                <span style={{ color: "green", marginLeft: "10px" }}>
-                  (Has Lights)
-                </span>
-              )}
-            </Form.Label>
-            <Button
-              variant="secondary"
-              style={{ marginTop: "10px"}}
-              onClick={handleChangeCourt}
-            >
-              Change Court
-            </Button>
-          </Col>
-        ) : (
-          // Show all courts if not finalized
-          courts.map(({ court_id, court_name, has_lights }) => (
-            <Row key={court_id} sm={15}>
-              <Form.Check
-                onClick={handleClick}
-                type="radio"
-                label={
-                  <span>
-                    {court_name}
-                    {has_lights && (
-                      <span style={{ color: "green", marginLeft: "10px" }}>
-                        (Has Lights)
-                      </span>
-                    )}
-                  </span>
-                }
-                name="selectedCourt"
-                id={court_id}
-                value={court_id}
-              />
-            </Row>
-          ))
-        )}
-      </Form.Group>
-      {/* Finalize button */}
-      {!isFinalized && selectedCourt && (
-        <Button
-          variant="primary"
-          onClick={handleFinalize}
-          style={{ marginTop: "10px" }}
-        >
-          Finalize Selection
-        </Button>
-      )}
+      <Row className="mb-3">
+        <Form.Group as={Col} controlId="formGridBooking">
+          <Form.Label className="text-start w-100">Select a court</Form.Label>
+          <Form.Select size="lg" onChange={handleSelectedCourt}>
+            <option aria-label="select a court">Select a court</option>
+            {courts.map(({ court_id, court_name }) => (
+              <option key={court_id} value={court_name}>
+                {court_name}
+              </option>
+            ))}
+          </Form.Select>
+        </Form.Group>
+      </Row>
     </Form>
   );
-};
-
-CourtsPage.propTypes = {
-  courts: PropTypes.arrayOf(
-    PropTypes.shape({
-      court_id: PropTypes.number.isRequired,
-      court_name: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  //   onCourtSelected: PropTypes.func.isRequired,
 };
 
 export default CourtsPage;
