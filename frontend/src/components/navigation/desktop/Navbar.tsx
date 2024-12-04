@@ -20,6 +20,14 @@ export function Navbar() {
             <Link
               to="/"
               className={`nav-item nav-link${
+                pathname === "/bookings" ? "active" : ""
+              }`}
+            >
+              Bookings
+            </Link>
+            <Link
+              to="/home"
+              className={`nav-item nav-link${
                 pathname === "/home" ? "active" : ""
               }`}
             >
@@ -40,14 +48,6 @@ export function Navbar() {
               }`}
             >
               Profile
-            </Link>
-            <Link
-              to="/bookings"
-              className={`nav-item nav-link${
-                pathname === "/bookings" ? "active" : ""
-              }`}
-            >
-              Bookings
             </Link>
 
             <LogoutButton />
