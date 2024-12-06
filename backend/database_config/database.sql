@@ -123,20 +123,19 @@ CREATE TABLE bookings (
     booking_id serial4 NOT NULL,
     member_id int4 NOT NULL,
     booked_at timestamp DEFAULT now() NULL,
-    day_name varchar(20) NOT NULL,
+    booking_date date NOT NULL,
     start_time_id int4 NOT NULL,
     end_time_id int4 NOT NULL,
-    duration_hours int4 NOT NULL,
-    booking_type_name varchar(50) NOT NULL,
+    booking_type_id int4 NOT NULL,
     court_id int4 NOT NULL,
     CONSTRAINT bookings_pkey PRIMARY KEY (booking_id),
+    CONSTRAINT fk_booking_type_id FOREIGN KEY (booking_type_id) REFERENCES booking_types(booking_type_id) ON DELETE CASCADE,
     CONSTRAINT fk_court FOREIGN KEY (court_id) REFERENCES courts(court_id) ON DELETE CASCADE,
-    CONSTRAINT fk_start_time FOREIGN KEY (start_time_id) REFERENCES start_times(start_time_id) ON DELETE CASCADE,
     CONSTRAINT fk_end_time FOREIGN KEY (end_time_id) REFERENCES end_times(end_time_id) ON DELETE CASCADE,
-    CONSTRAINT fk_member FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE
+    CONSTRAINT fk_member FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE,
+    CONSTRAINT fk_start_time FOREIGN KEY (start_time_id) REFERENCES start_times(start_time_id) ON DELETE CASCADE
 );
 INSERT INTO bookings (
-        booking_id,
         member_id,
         booked_at,
         booking_date,
@@ -146,7 +145,6 @@ INSERT INTO bookings (
         court_id
     )
 VALUES(
-        nextval('bookings_booking_id_seq'::regclass),
         1,
         now(),
         '2024-12-07',
