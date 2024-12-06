@@ -9,7 +9,6 @@ const useEndTimes = (apiEndpointPrefix) => {
       try {
         const endTimesResponse = await axios.get(`${apiEndpointPrefix}/endTimes`);
         setEndTimes(endTimesResponse.data);
-        console.log(endTimesResponse.data)
       } catch (err) {
         console.error("Error fetching endTimes:", err.message);
       }

@@ -5,7 +5,8 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const query = "SELECT * FROM end_times";
+    const query =
+      "SELECT end_time_id,to_char(end_time, 'HH24:MI') AS end_time FROM end_times";
     const { rows } = await pool.query(query);
     res.status(200).json(rows);
     console.log("Success: Get all end times");

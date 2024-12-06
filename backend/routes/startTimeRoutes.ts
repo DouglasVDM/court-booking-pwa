@@ -5,7 +5,8 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const query = "SELECT * FROM start_times";
+    const query =
+      "SELECT start_time_id, to_char(start_time, 'HH24:MI') AS start_time FROM start_times";
     const { rows } = await pool.query(query);
     res.status(200).json(rows);
     console.log("Success: Get all time slots");
