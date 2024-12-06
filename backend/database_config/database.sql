@@ -72,7 +72,7 @@ VALUES ('06:00'),
     ('19:00'),
     ('19:30');
 SELECT *
-FROM start_time st;
+FROM start_times st;
 -- public.end_times definition
 -- Drop table
 -- DROP TABLE end_times;
@@ -115,7 +115,7 @@ VALUES ('06:30'),
     ('21:30'),
     ('22:00');
 SELECT *
-FROM end_time et;
+FROM end_times et;
 -- public.bookings definition
 -- Drop table
 -- DROP TABLE bookings;
