@@ -68,25 +68,48 @@ router.post("/", async (req, res) => {
   } = req.body;
 
   try {
-    const query = `
-      INSERT INTO bookings (court_id, member_id, booking_date, start_time_id, end_time_id, booking_type_id)
+    // Check for existing booking
+    const checkQuery = `
+      SELECT * FROM bookings 
+      WHERE court_id = $1 
+        AND booking_date = $2 
+        AND (
+          (start_time_id <= $3 AND end_time_id > $3) OR 
+          (start_time_id < $4 AND end_time_id >= $4)
+        )
+    `;
+    const { rows } = await pool.query(checkQuery, [
+      court_id,
+      booking_date,
+      start_time_id,
+      end_time_id,
+    ]);
+
+    if (rows.length > 0) {
+      return res.status(409).json({
+        error: "The court is already booked for the selected time slot.",
+      });
+    }
+
+    // Insert booking if no conflict
+    const insertQuery = `
+      INSERT INTO bookings (court_id, booking_date, start_time_id, end_time_id, member_id, booking_type_id)
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *;
     `;
-    const values = [
+    const result = await pool.query(insertQuery, [
       court_id,
       member_id,
       booking_date,
       start_time_id,
       end_time_id,
       booking_type_id,
-    ];
-    const { rows } = await pool.query(query, values);
+    ]);
 
     res.status(201).json(rows[0]);
   } catch (err) {
-    console.error((err as Error).message);
-    res.status(500).send("Could not create booking");
+    console.error("Error creating booking:", err);
+    res.status(500).send("Failed not create booking");
   }
 });
 
