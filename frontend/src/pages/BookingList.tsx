@@ -1,7 +1,7 @@
 import React from "react";
 
-const BookingsList = ({bookings}) => {
-console.log(bookings)
+const BookingsList = ({ bookings }) => {
+  console.log(bookings);
 
   return (
     <div>
@@ -9,7 +9,10 @@ console.log(bookings)
       <ul>
         {bookings.map((booking) => (
           <li key={booking.booking_id}>
-            Court {booking.court_id} - {booking.booking_date} - {booking.start_time_id} to {booking.end_time_id}
+            {booking.first_name} {booking.surname}_booked_{booking.court_name}_for_
+            {booking.booking_type_name}_on_
+            {booking.day_name} {booking.booking_date}_starting at_
+            {booking.start_time}_finishing at_{booking.end_time}
           </li>
         ))}
       </ul>

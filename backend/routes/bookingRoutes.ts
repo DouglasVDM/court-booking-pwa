@@ -11,18 +11,33 @@ const formatDate = (dateString: string): string => {
 
 router.get("/", async (req, res) => {
   try {
-    const query = "SELECT * FROM bookings LIMIT 5";
+    const query = `
+    SELECT 
+          b.booking_id,
+          b.member_id,
+          m.first_name,
+          m.surname,
+          TO_CHAR(b.booked_at, 'YYYY-MM-DD HH24:MI') AS booked_at,
+          TO_CHAR(b.booking_date, 'YYYY-MM-DD') AS booking_date,
+          TO_CHAR(b.booking_date, 'FMDay') AS day_name,
+          TO_CHAR(s.start_time, 'HH24:MI') AS start_time,
+          TO_CHAR(e.end_time, 'HH24:MI') AS end_time,
+          b.booking_type_id,
+          bt.booking_type_name,
+          b.court_id,
+          c.court_name
+      FROM bookings b
+      JOIN start_times s ON b.start_time_id = s.start_time_id
+      JOIN end_times e ON b.end_time_id = e.end_time_id
+      JOIN courts c ON b.court_id = c.court_id
+      JOIN booking_types bt ON b.booking_type_id = bt.booking_type_id
+      JOIN members m ON b.member_id = m.member_id
+      LIMIT 5;`;
     const { rows } = await pool.query(query);
 
-    // Format date fields in the response
-    const formattedRows = rows.map((row: any) => ({
-      ...row,
-      booked_at: row.booked_at ? formatDate(row.booked_at) : null,
-      booking_date: row.booking_date ? formatDate(row.booking_date) : null,
-    }));
-
-    res.status(200).json(formattedRows);
+    res.status(200).json(rows);
     console.log("Success: Get all bookings");
+    console.log(rows);
   } catch (err) {
     console.error((err as Error).message);
     res.status(500).send("Could not get bookings");
@@ -59,12 +74,12 @@ router.get("/:id", async (req, res) => {
 // Create a new booking
 router.post("/", async (req, res) => {
   const {
-    court_id,
     member_id,
     booking_date,
     start_time_id,
     end_time_id,
     booking_type_id,
+    court_id,
   } = req.body;
 
   try {
