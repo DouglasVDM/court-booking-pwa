@@ -129,6 +129,12 @@ CREATE TABLE bookings (
     booking_type_id int4 NOT NULL,
     court_id int4 NOT NULL,
     CONSTRAINT bookings_pkey PRIMARY KEY (booking_id),
+    CONSTRAINT unique_booking UNIQUE (
+        court_id,
+        booking_date,
+        start_time_id,
+        end_time_id
+    ),
     CONSTRAINT fk_booking_type_id FOREIGN KEY (booking_type_id) REFERENCES booking_types(booking_type_id) ON DELETE CASCADE,
     CONSTRAINT fk_court FOREIGN KEY (court_id) REFERENCES courts(court_id) ON DELETE CASCADE,
     CONSTRAINT fk_end_time FOREIGN KEY (end_time_id) REFERENCES end_times(end_time_id) ON DELETE CASCADE,
