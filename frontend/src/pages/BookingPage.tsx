@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { Button } from "react-bootstrap";
 import CourtsPage from "./CourtsPage";
 import BookingTypesPage from "./BookingTypesPage";
 import DatePickerPage from "../components/DatePickerPage";
@@ -15,6 +16,8 @@ import useEndTimes from "../customHooks/useEndTimes";
 import useFetchBookings from "../customHooks/useFetchBookings";
 
 const BookingPage = () => {
+  const [currentPage, setCurrentPage] = useState("bookings");
+
   const { courts } = useCourts(apiEndpointPrefix);
   const { bookingTypes } = useBookingTypes(apiEndpointPrefix);
   const { startTimes } = useStartTimes(apiEndpointPrefix);
@@ -24,11 +27,36 @@ const BookingPage = () => {
   return (
     <>
       <h1>Booking Page</h1>
-      <BookingsList bookings={bookings}/>
-      <DatePickerPage />
-      <CourtsPage courts={courts} />
-      <BookingTypesPage bookingTypes={bookingTypes} />
-      <StartTimeSelector startTimes={startTimes} endTimes={endTimes} />
+      <div className="mb-3">
+        <Button
+          className={`btn ${
+            currentPage === "bookings" ? "btn-primary" : "btn-outline-primary"
+          }`}
+          onClick={() => setCurrentPage("bookings")}
+        >
+          Show Bookings
+        </Button>{" "}
+        <Button
+          className={`btn ${
+            currentPage === "datePicker" ? "btn-primary" : "btn-outline-primary"
+          }`}
+          onClick={() => setCurrentPage("bookingForm")}
+        >
+          Book a court
+        </Button>
+      </div>
+      <div className="mt-4">
+        {currentPage === "bookings" && <BookingsList bookings={bookings} />}
+        {currentPage === "bookingForm" && (
+          <div>
+            <h2>Book a Court</h2>
+            <DatePickerPage />
+            <CourtsPage courts={courts} />
+            <BookingTypesPage bookingTypes={bookingTypes} />
+            <StartTimeSelector startTimes={startTimes} endTimes={endTimes} />
+          </div>
+        )}
+      </div>
     </>
   );
 };
