@@ -28,22 +28,26 @@ const BookingPage = () => {
     <>
       <h1>Booking Page</h1>
       <div className="mb-3">
-        <Button
-          className={`btn ${
-            currentPage === "bookings" ? "btn-primary" : "btn-outline-primary"
-          }`}
-          onClick={() => setCurrentPage("bookings")}
-        >
-          Show Bookings
-        </Button>{" "}
-        <Button
-          className={`btn ${
-            currentPage === "datePicker" ? "btn-primary" : "btn-outline-primary"
-          }`}
-          onClick={() => setCurrentPage("bookingForm")}
-        >
-          Book a court
-        </Button>
+        {currentPage != "bookings" && (
+          <Button
+            className={`btn ${
+              currentPage === "bookings" ? "primary" : "outline-primary"
+            }`}
+            onClick={() => setCurrentPage("bookings")}
+          >
+            Show Bookings
+          </Button>
+        )}
+        {currentPage != "bookingForm" && (
+          <Button
+            className={`btn ${
+              currentPage === "datePicker" ? "primary" : "outline-primary"
+            }`}
+            onClick={() => setCurrentPage("bookingForm")}
+          >
+            Book a court
+          </Button>
+        )}
       </div>
       <div className="mt-4">
         {currentPage === "bookings" && <BookingsList bookings={bookings} />}
