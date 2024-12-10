@@ -8,7 +8,7 @@ const BookingsList = ({ bookings }) => {
 
   return (
     <Row>
-      <h1>Bookings</h1>
+      <h2>Bookings</h2>
       {bookings.map((booking) => (
         <Col key={booking.booking_id} md={4}>
           <Card>
