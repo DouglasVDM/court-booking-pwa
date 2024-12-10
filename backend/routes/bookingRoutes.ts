@@ -82,6 +82,8 @@ router.post("/", async (req, res) => {
     court_id,
   } = req.body;
 
+  console.log(req.body);
+
   try {
     // Check for existing booking
     const checkQuery = `
@@ -108,17 +110,17 @@ router.post("/", async (req, res) => {
 
     // Insert booking if no conflict
     const insertQuery = `
-      INSERT INTO bookings (court_id, booking_date, start_time_id, end_time_id, member_id, booking_type_id)
+      INSERT INTO bookings (member_id, booking_date, start_time_id, end_time_id, booking_type_id, court_id)
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *;
     `;
     const result = await pool.query(insertQuery, [
-      court_id,
       member_id,
       booking_date,
       start_time_id,
       end_time_id,
       booking_type_id,
+      court_id,
     ]);
 
     res.status(201).json(rows[0]);
@@ -132,29 +134,28 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const {
-    court_id,
     member_id,
     booking_date,
     start_time_id,
     end_time_id,
     booking_type_id,
+    court_id,
   } = req.body;
 
   try {
     const query = `
       UPDATE bookings
-      SET court_id = $1, member_id = $2, booking_date = $3, start_time_id = $4, end_time_id = $5, booking_type_id = $6
+      SET member_id = $1, booking_date = $2, start_time_id = $3, end_time_id = $4, booking_type_id = $5,court_id = $6, 
       WHERE booking_id = $7
       RETURNING *;
     `;
     const values = [
-      court_id,
       member_id,
       booking_date,
       start_time_id,
       end_time_id,
       booking_type_id,
-      id,
+      court_id,
     ];
     const { rows } = await pool.query(query, values);
 
