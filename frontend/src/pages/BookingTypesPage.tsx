@@ -1,38 +1,40 @@
-import React, { useState } from "react";
-import Col from "react-bootstrap/Col";
+import React from "react";
 import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import PropTypes from "prop-types";
 
-const BookingTypesPage = ({ bookingTypes }) => {
-  const [selectedBookingType, setSelectedBookingType] = useState([]);
+interface BookingType {
+  booking_type_id: number; // Use number to match int type
+  booking_type_name: string;
+}
 
-  const handleSelectedBookingType = (event) => {
-    const bookingType = event.target.value;
-    setSelectedBookingType(bookingType);
-    console.log("bookingType", selectedBookingType);
+interface BookingTypesPageProps {
+  bookingTypes: BookingType[];
+  onBookingTypeSelect: (id: number) => void; // Callback with int ID
+}
+
+const BookingTypesPage: React.FC<BookingTypesPageProps> = ({
+  bookingTypes,
+  onBookingTypeSelect,
+}) => {
+  const handleBookingTypeChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const selectedBookingTypeId = parseInt(event.target.value, 10);
+    onBookingTypeSelect(selectedBookingTypeId);
+    console.log("selectedBookingTypeId", selectedBookingTypeId);
   };
 
   return (
-    <Form>
-      <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridBooking">
-          <Form.Label className="text-start w-100">
-            Select a booking type
-          </Form.Label>
-          <Form.Select size="lg" onChange={handleSelectedBookingType}>
-            <option aria-label="select a bookingType">
-              Select a booking type
-            </option>
-            {bookingTypes.map(({ booking_type_id, booking_type_name }) => (
-              <option key={booking_type_id} value={booking_type_name}>
-                {booking_type_name}
-              </option>
-            ))}
-          </Form.Select>
-        </Form.Group>
-      </Row>
-    </Form>
+    <Form.Group controlId="bookingTypeSelect">
+      <Form.Label>Select Booking Type</Form.Label>
+      <Form.Select size="lg" onChange={handleBookingTypeChange}>
+        <option aria-label="select a bookingType">Select a booking type</option>
+        {bookingTypes.map(({ booking_type_id, booking_type_name }) => (
+          <option key={booking_type_id} value={booking_type_id}>
+            {booking_type_name}
+          </option>
+        ))}
+      </Form.Select>
+    </Form.Group>
   );
 };
 
