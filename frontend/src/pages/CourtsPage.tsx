@@ -1,33 +1,35 @@
-import React, { useState } from "react";
-import { Row } from "react-bootstrap";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
+import React from "react";
+import { Form } from "react-bootstrap";
 
-const CourtsPage = ({ courts }) => {
-  const [selectedCourt, setSelectedCourt] = useState([]);
+interface Court {
+  court_id: number; // Use number to match int type
+  court_name: string;
+}
 
-  const handleSelectedCourt = (event) => {
-    const court = event.target.value;
-    setSelectedCourt(court);
-    console.log("court", selectedCourt);
+interface CourtsPageProps {
+  courts: Court[];
+  onCourtSelect: (id: number) => void; // Callback with int ID
+}
+
+const CourtsPage: React.FC<CourtsPageProps> = ({ courts, onCourtSelect }) => {
+  const handleCourtChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedCourtId = parseInt(event.target.value, 10); // Convert to int
+    onCourtSelect(selectedCourtId);
+    console.log("selectedCourtId",selectedCourtId);
   };
 
   return (
-    <Form>
-      <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridBooking">
-          <Form.Label className="text-start w-100">Select a court</Form.Label>
-          <Form.Select size="lg" onChange={handleSelectedCourt}>
-            <option aria-label="select a court">Select a court</option>
-            {courts.map(({ court_id, court_name }) => (
-              <option key={court_id} value={court_name}>
-                {court_name}
-              </option>
-            ))}
-          </Form.Select>
-        </Form.Group>
-      </Row>
-    </Form>
+    <Form.Group controlId="courtSelect">
+      <Form.Label>Select Court</Form.Label>
+      <Form.Select size="lg" onChange={handleCourtChange}>
+        <option value="">Select a court</option>
+        {courts.map(({ court_id, court_name }) => (
+          <option key={court_id} value={court_id}>
+            {court_name}
+          </option>
+        ))}
+      </Form.Select>
+    </Form.Group>
   );
 };
 
