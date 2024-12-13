@@ -11,7 +11,6 @@ const useFetchBookings = (apiEndpointPrefix) => {
           `${apiEndpointPrefix}/bookings`
         );
         setBookings(fetchBookingResponse.data);
-        console.log(fetchBookingResponse.data);
       } catch (err) {
         console.error("Error fetching bookings:", err.message);
       }
