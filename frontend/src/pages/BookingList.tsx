@@ -4,8 +4,6 @@ import { CardTitle, Row } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 
 const BookingsList = ({ bookings }) => {
-  console.log(bookings);
-
   return (
     <Row>
       <h2>Bookings</h2>
