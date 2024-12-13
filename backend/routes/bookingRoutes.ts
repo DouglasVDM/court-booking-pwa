@@ -37,7 +37,6 @@ router.get("/", async (req, res) => {
 
     res.status(200).json(rows);
     console.log("Success: Get all bookings");
-    console.log(rows);
   } catch (err) {
     console.error((err as Error).message);
     res.status(500).send("Could not get bookings");
