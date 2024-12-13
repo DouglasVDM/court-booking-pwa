@@ -1,37 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 import { Col, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 
-interface startTimes {
-  start_time_id: string;
+interface Time {
+  start_time_id: number;
+  start_time: string;
+  end_time_id: number;
   end_time: string;
 }
 
-interface endTimes {
-  end_time_id: string;
-  end_time: string;
+interface TimeSelectorProps {
+  startTimes: Time[]; // Array of start times
+  endTimes: Time[]; // Array of end times
+  onStartTimeSelect: (id: number) => void; // Callback for int ID
+  onEndTimeSelect: (id: number) => void; // Callback for int ID
 }
 
-const TimeSelector = ({ startTimes, endTimes }) => {
-  const [selectedStartTime, setSelectedStartTime] = useState([]);
-  const [selectedEndTime, setSelectedEndTime] = useState([]);
-
-  console.log(startTimes);
-  console.log(endTimes);
-
+const TimeSelector: React.FC<TimeSelectorProps> = ({
+  startTimes,
+  endTimes,
+  onStartTimeSelect,
+  onEndTimeSelect,
+}) => {
   const handleSelectedStartTime = (event) => {
-    const selectedStartTimeSlot = event.target.value;
-    setSelectedStartTime(selectedStartTimeSlot);
-    console.log("start_time", selectedStartTimeSlot);
+    const selectedStartTimeId = parseInt(event.target.value, 10);
+    onStartTimeSelect(selectedStartTimeId);
+    console.log("start_time_id", selectedStartTimeId);
   };
 
   const handleSelectedEndTime = (event) => {
-    const selectedEndTimeSlot = event.target.value;
-    setSelectedEndTime(selectedEndTimeSlot);
-    console.log("end_time", selectedEndTimeSlot);
+    const selectedEndTimeId = parseInt(event.target.value, 10);
+    onEndTimeSelect(selectedEndTimeId);
+    console.log("end_time", selectedEndTimeId);
   };
-
-  // onClick={handleSelectedStartTime(selectedStartTime)}
 
   return (
     <Form>
@@ -45,7 +46,7 @@ const TimeSelector = ({ startTimes, endTimes }) => {
               Select a start time
             </option>
             {startTimes.map(({ start_time_id, start_time }) => (
-              <option key={start_time_id} value={start_time}>
+              <option key={start_time_id} value={start_time_id}>
                 {start_time}
               </option>
             ))}
@@ -58,7 +59,7 @@ const TimeSelector = ({ startTimes, endTimes }) => {
           <Form.Select size="lg" onChange={handleSelectedEndTime}>
             <option aria-label="select a end time">Select a end time</option>
             {endTimes.map(({ end_time_id, end_time }) => (
-              <option key={end_time_id} value={end_time}>
+              <option key={end_time_id} value={end_time_id}>
                 {end_time}
               </option>
             ))}
