@@ -15,14 +15,13 @@ const CourtsPage: React.FC<CourtsPageProps> = ({ courts, onCourtSelect }) => {
   const handleCourtChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedCourtId = parseInt(event.target.value, 10); // Convert to int
     onCourtSelect(selectedCourtId);
-    console.log("selectedCourtId",selectedCourtId);
+    console.log("selectedCourtId", selectedCourtId);
   };
 
   return (
     <Form.Group controlId="courtSelect">
-      <Form.Label>Select Court</Form.Label>
       <Form.Select size="lg" onChange={handleCourtChange}>
-        <option value="">Select a court</option>
+        <option value="">Court</option>
         {courts.map(({ court_id, court_name }) => (
           <option key={court_id} value={court_id}>
             {court_name}

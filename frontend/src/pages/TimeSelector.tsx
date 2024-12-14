@@ -35,38 +35,28 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
   };
 
   return (
-    <Form>
-      <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridStartTime">
-          <Form.Label className="text-start w-100">
-            Select a start time
-          </Form.Label>
-          <Form.Select size="lg" onChange={handleSelectedStartTime}>
-            <option aria-label="select a start time">
-              Select a start time
+    <Row className="mb-3">
+      <Form.Group as={Col} controlId="formGridStartTime">
+        <Form.Select size="lg" onChange={handleSelectedStartTime}>
+          <option aria-label="select a start time">Start</option>
+          {startTimes.map(({ start_time_id, start_time }) => (
+            <option key={start_time_id} value={start_time_id}>
+              {start_time}
             </option>
-            {startTimes.map(({ start_time_id, start_time }) => (
-              <option key={start_time_id} value={start_time_id}>
-                {start_time}
-              </option>
-            ))}
-          </Form.Select>
-        </Form.Group>
-        <Form.Group as={Col} controlId="formGridStartTime">
-          <Form.Label className="text-start w-100">
-            Select a end time
-          </Form.Label>
-          <Form.Select size="lg" onChange={handleSelectedEndTime}>
-            <option aria-label="select a end time">Select a end time</option>
-            {endTimes.map(({ end_time_id, end_time }) => (
-              <option key={end_time_id} value={end_time_id}>
-                {end_time}
-              </option>
-            ))}
-          </Form.Select>
-        </Form.Group>
-      </Row>
-    </Form>
+          ))}
+        </Form.Select>
+      </Form.Group>
+      <Form.Group as={Col} controlId="formGridStartTime">
+        <Form.Select size="lg" onChange={handleSelectedEndTime}>
+          <option aria-label="select a end time">End</option>
+          {endTimes.map(({ end_time_id, end_time }) => (
+            <option key={end_time_id} value={end_time_id}>
+              {end_time}
+            </option>
+          ))}
+        </Form.Select>
+      </Form.Group>
+    </Row>
   );
 };
 

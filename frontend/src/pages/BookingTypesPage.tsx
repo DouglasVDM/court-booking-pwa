@@ -25,9 +25,8 @@ const BookingTypesPage: React.FC<BookingTypesPageProps> = ({
 
   return (
     <Form.Group controlId="bookingTypeSelect">
-      <Form.Label>Select Booking Type</Form.Label>
       <Form.Select size="lg" onChange={handleBookingTypeChange}>
-        <option aria-label="select a bookingType">Select a booking type</option>
+        <option aria-label="select a bookingType">Booking Type</option>
         {bookingTypes.map(({ booking_type_id, booking_type_name }) => (
           <option key={booking_type_id} value={booking_type_id}>
             {booking_type_name}
