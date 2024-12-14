@@ -5,7 +5,7 @@ export const useCreateBooking = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const createBooking = async (bookingData: any) => {
+  const createBooking = async (bookingData: JSON) => {
     setLoading(true);
     try {
       await axios.post("/api/bookings", bookingData);
