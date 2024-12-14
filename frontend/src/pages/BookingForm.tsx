@@ -40,7 +40,7 @@ const BookingForm: React.FC = () => {
 
     const bookingPayload = {
       member_id: 3, // Assuming hardcoded for MVP; replace with logged-in user ID later.
-      booking_date: "2024-12-12" /*bookingDate,*/,
+      booking_date: bookingDate,
       start_time_id: startTimeId,
       end_time_id: endTimeId,
       booking_type_id: bookingTypeId,
@@ -69,35 +69,73 @@ const BookingForm: React.FC = () => {
   return (
     <Form onSubmit={handleSubmit} className="p-4">
       <h2 className="mb-4">Book a Court</h2>
-      {/* 
-      <Form.Group className="mb-3" controlId="bookingDate">
-        <Form.Label>Select Booking Date</Form.Label>
-        <DatePickerPage selectedDate={new Date(bookingDate)} onDateChange={(date)=>setBookingDate(date.toISOString().split("T")[0])} />
-      </Form.Group> */}
 
-      <Row>
-        <TimeSelector
-          startTimes={startTimes}
-          endTimes={endTimes}
-          onStartTimeSelect={(id) => setStartTimeId(id)}
-          onEndTimeSelect={(id) => setEndTimeId(id)}
-        />
+      <Row className="mb-3">
+        <Col md={6}>
+          <Form.Group controlId="bookingDate">
+            <Form.Label>Select a Booking Date</Form.Label>
+            <DatePickerPage
+              selectedDate={bookingDate ? new Date(bookingDate) : null} // Pass null if bookingDate is empty
+              onDateChange={(date) =>
+                setBookingDate(date ? date.toISOString().split("T")[0] : "")
+              }
+              className="form-control"
+            />
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group controlId="timeSelector">
+            <Form.Label>Select Start and End Time</Form.Label>
+            <Row>
+              <Col>
+                <TimeSelector
+                  startTimes={startTimes}
+                  endTimes={endTimes}
+                  onStartTimeSelect={(id) => setStartTimeId(id)}
+                  onEndTimeSelect={(id) => setEndTimeId(id)}
+                />
+              </Col>
+            </Row>
+          </Form.Group>
+        </Col>
       </Row>
-      <Row>
-        <Form.Group className="mb-3" controlId="bookingTypeId">
-          <BookingTypesPage
-            bookingTypes={bookingTypes}
-            onBookingTypeSelect={(id) => setBookingTypeId(id)}
-          />
-        </Form.Group>
 
-        <Form.Group className="mb-3" controlId="courtId">
-          <CourtsPage courts={courts} onCourtSelect={(id) => setCourtId(id)} />
-        </Form.Group>
+      <Row className="mb-3">
+        <Col md={6}>
+          <Form.Group className="mb-3" controlId="bookingTypeId">
+            <Form.Label>Select Booking Type</Form.Label>
+            <BookingTypesPage
+              bookingTypes={bookingTypes}
+              onBookingTypeSelect={(id) => setBookingTypeId(id)}
+            />
+          </Form.Group>
+        </Col>
+        <Col md={6}>
+          <Form.Group controlId="courtId">
+            <Form.Label>Select Court</Form.Label>
+            <CourtsPage
+              courts={courts}
+              onCourtSelect={(id) => setCourtId(id)}
+            />
+          </Form.Group>
+        </Col>
       </Row>
-      <Button type="submit" variant="primary" className="mt-3">
-        Submit Booking
-      </Button>
+
+      <div className="d-flex justify-content-center mt-4">
+        <Button
+          type="submit"
+          variant="primary"
+          disabled={
+            !bookingDate ||
+            !startTimeId ||
+            !endTimeId ||
+            !bookingTypeId ||
+            !courtId
+          }
+        >
+          Submit Booking
+        </Button>
+      </div>
     </Form>
   );
 };
