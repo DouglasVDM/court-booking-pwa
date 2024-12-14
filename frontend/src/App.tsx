@@ -30,8 +30,8 @@ function App() {
     <>
       <PageLayout>
         <Routes>
-          <Route path="/" element={<ProtectedBooking />} />
-          <Route path="/home" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/bookings" element={<ProtectedBooking />} />
           <Route path="/dashboard" element={<ProtectedDashboard />} />
           <Route path="/profile" element={<ProtectedProfile />} />
         </Routes>
