@@ -83,17 +83,56 @@ router.post("/", async (req, res) => {
 
   console.log(req.body);
 
+  const today = new Date();
+  const twoWeeksLater = new Date();
+  twoWeeksLater.setDate(today.getDate() + 14); // 2 weeks into the future
+
+  const requestedDate = new Date(booking_date);
+
+  // Check: Booking date cannot be more than 2 weeks into the future
+  if (requestedDate > twoWeeksLater) {
+    return res.status(400).json({
+      message: "You cannot book a court more than 2 weeks in advance.",
+    });
+  }
+
   try {
+    // Query DB to check last booking within the past 2 weeks
+    const recentBookings = await pool.query(
+      `
+    SELECT MAX(booking_date) AS last_booking_date
+    FROM bookings
+    WHERE member_id = $1 AND booking_date >= CURRENT_DATE - INTERVAL '14 days'
+    `,
+      [member_id]
+    );
+
+    if (recentBookings.rows[0].last_booking_date) {
+      const nextEligibleDate = new Date(
+        recentBookings.rows[0].last_booking_date
+      );
+      nextEligibleDate.setDate(nextEligibleDate.getDate() + 14); // Add 14 days to last booking date
+
+      // Check: Booking date must not be before the next eligible date
+      if (requestedDate < nextEligibleDate) {
+        return res.status(400).json({
+          message: `You can only book once every 2 weeks. Your next eligible date is ${
+            nextEligibleDate.toISOString().split("T")[0]
+          }.`,
+        });
+      }
+    }
+
     // Check for existing booking
     const checkQuery = `
-      SELECT * FROM bookings 
-      WHERE court_id = $1 
-        AND booking_date = $2 
-        AND (
-          (start_time_id <= $3 AND end_time_id > $3) OR 
-          (start_time_id < $4 AND end_time_id >= $4)
-        )
-    `;
+          SELECT * FROM bookings 
+          WHERE court_id = $1 
+            AND booking_date = $2 
+            AND (
+              (start_time_id <= $3 AND end_time_id > $3) OR 
+              (start_time_id < $4 AND end_time_id >= $4)
+              )
+        `;
     const { rows } = await pool.query(checkQuery, [
       court_id,
       booking_date,
@@ -109,10 +148,10 @@ router.post("/", async (req, res) => {
 
     // Insert booking if no conflict
     const insertQuery = `
-      INSERT INTO bookings (member_id, booking_date, start_time_id, end_time_id, booking_type_id, court_id)
-      VALUES ($1, $2, $3, $4, $5, $6)
-      RETURNING *;
-    `;
+              INSERT INTO bookings (member_id, booking_date, start_time_id, end_time_id, booking_type_id, court_id)
+              VALUES ($1, $2, $3, $4, $5, $6)
+              RETURNING *;
+            `;
     const result = await pool.query(insertQuery, [
       member_id,
       booking_date,
@@ -122,7 +161,8 @@ router.post("/", async (req, res) => {
       court_id,
     ]);
 
-    res.status(201).json(rows[0]);
+    res.status(201).json(result.rows[0]);
+    console.log("Booking created successfully!");
   } catch (err) {
     console.error("Error creating booking:", err);
     res.status(500).send("Failed not create booking");
