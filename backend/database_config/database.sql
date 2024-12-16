@@ -161,6 +161,44 @@ VALUES(
     );
 -- 
 -- 
+--
+-- public.members definition
+-- Drop table
+-- DROP TABLE members;
+CREATE TABLE members (
+    member_id serial4 NOT NULL,
+    first_name varchar(100) NOT NULL,
+    surname varchar(100) NOT NULL,
+    email varchar(100) NOT NULL,
+    phone varchar(20) NULL,
+    membership_start date NULL,
+    membership_end date NULL,
+    is_admin bool DEFAULT false NULL,
+    admin_role varchar(50) NULL,
+    is_active bool DEFAULT true NULL,
+    auth0_user_id varchar(50) NULL,
+    CONSTRAINT members_auth0_user_id_key UNIQUE (auth0_user_id),
+    CONSTRAINT members_email_key UNIQUE (email),
+    CONSTRAINT members_phone_check CHECK (
+        ((phone)::text ~ '^\+27 \d{2} \d{3} \d{4}$'::text)
+    ),
+    CONSTRAINT members_pkey PRIMARY KEY (member_id)
+);
+CREATE TABLE visitors (
+    visitor_id serial4 NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    surname VARCHAR(50) NOT NULL,
+    email VARCHAR(100),
+    phone_number VARCHAR(20),
+    created_at TIMESTAMP DEFAULT NOW() CONSTRAINT visitors_email_key UNIQUE (email),
+    CONSTRAINT visitors_phone_number_check CHECK (
+        (
+            (phone_number)::text ~ '^\+27 \d{2} \d{3} \d{4}$'::text
+        )
+    ),
+    CONSTRAINT visitors_pkey PRIMARY KEY (visitor_id)
+);
+-- 
 -- 
 -- 
 -- 
