@@ -10,7 +10,7 @@ import useBookingTypes from "../customHooks/useBookingTypes";
 import useStartTimes from "../customHooks/useStartTimes";
 import useEndTimes from "../customHooks/useEndTimes";
 
-const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT;
+const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT_PREFIX;
 
 const BookingForm: React.FC = () => {
   const [bookingDate, setBookingDate] = useState<string>("");

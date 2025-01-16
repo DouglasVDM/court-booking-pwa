@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import BookingsList from "./BookingList";
 import BookingForm from "./BookingForm";
 
-const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT;
+const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT_PREFIX;
 
 // Custom Hooks for fetching data
 import useFetchBookings from "../customHooks/useFetchBookings";
