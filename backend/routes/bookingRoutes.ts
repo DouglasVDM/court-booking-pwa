@@ -32,7 +32,9 @@ router.get("/", async (req, res) => {
       JOIN courts c ON b.court_id = c.court_id
       JOIN booking_types bt ON b.booking_type_id = bt.booking_type_id
       JOIN members m ON b.member_id = m.member_id
-      LIMIT 5;`;
+      ORDER BY b.booking_date DESC, b.booking_id
+      LIMIT 4;`;
+
     const { rows } = await pool.query(query);
 
     res.status(200).json(rows);
