@@ -7,27 +7,24 @@ const HeroBanner = () => {
     <div>
       <Container fluid className="p-0">
         <Row
-          className="justify-content-center align-items-center text-light"
+          className="justify-content-center align-items-center"
           style={{
             minHeight: "100vh",
-            backgroundImage: `url(${heroImage})`,
+            backgroundImage: `url(${heroImage}`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            color: "#fff",
-            textShadow: "2px 2px 5px rgba(0, 0, 0, 0.7)",
           }}
         >
-          <Col className="text-center">
-            <h1>Welcome to the Tennis Club</h1>
-            <p>Your court, your time.</p>
-            <div className="d-flex justify-content-center gap-3 mt-3">
-              <Button variant="success" size="lg">
-                Member Login
-              </Button>
-              <Button variant="outline-dark" size="lg">
-                Guest Form
-              </Button>
-            </div>
+          <Col className="text-center text-light">
+            <h1 className="animate-text">Welcome to Our Tennis Club</h1>
+            <p className="animate-text">Explore and book your favorite court!</p>
+            {/* Button directs users to the MembershipSection */}
+            <Button
+              className="cta-btn"
+              href="#membership-section"
+            >
+              Learn More
+            </Button>
           </Col>
         </Row>
       </Container>
