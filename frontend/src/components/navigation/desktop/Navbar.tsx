@@ -5,7 +5,7 @@ import LoginButton from "../../buttons/LoginButton";
 import LogoutButton from "../../buttons/LogoutButton";
 
 export function Navbar() {
-  const { isAuthenticated, user } = useAuth0<{
+  const { isAuthenticated } = useAuth0<{
     name: string;
   }>();
   const { pathname } = useLocation();
@@ -17,6 +17,11 @@ export function Navbar() {
         <Link to="/" className="navbar-brand">
           Tennis Club
         </Link>
+
+        {/* Always visible login/logout buttons */}
+        <div className="d-flex">
+          {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+        </div>
 
         {/* Navbar Toggler for Mobile */}
         <button
@@ -76,15 +81,8 @@ export function Navbar() {
                     Profile
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <LogoutButton />
-                </li>
               </>
-            ) : (
-              <li className="nav-item">
-                <LoginButton />
-              </li>
-            )}
+            ) : null}
           </ul>
         </div>
       </div>
