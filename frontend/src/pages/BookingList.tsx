@@ -3,7 +3,12 @@ import Card from "react-bootstrap/Card";
 import { CardTitle, Row } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 
-const BookingsList = ({ bookings }) => {
+const BookingsList = ({ bookings, loading, error}) => {
+
+  if (loading) return <div>Loading bookings...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (bookings.length === 0) return <div>No bookings found.</div>;
+
   return (
     <Row>
       <h2>Bookings</h2>
