@@ -4,6 +4,10 @@ body {
   line-height: 1.6;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .about-section h2,
 .membership-section h2,
 .facilities-section h2 {
@@ -72,9 +76,42 @@ body {
   font-weight: bold;
 }
 
-html {
-  scroll-behavior: smooth;
+
+/* Navbar Styling */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
+.navbar-toggler {
+  border: none;
+}
+
+/* .navbar-toggler-icon {
+  background-color: #007bff;
+} */
+
+/* Navbar Link Styling */
+.nav-link {
+  color: #007bff;
+  font-weight: 500;
+  transition: color 0.3s ease-in-out;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #0056b3;
+}
+
+/* Button in Navbar */
+.nav-item .btn {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.9rem;
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
