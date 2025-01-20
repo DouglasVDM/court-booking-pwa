@@ -3,25 +3,28 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 
 const MembershipSection = () => {
   return (
-    <Container className="py-5 text-center bg-light">
-      <Row>
-        <Col>
-          <h2>Membership Benefits</h2>
-          <p>
-            Enjoy exclusive access to our courts, priority bookings, and
-            members-only events.
-          </p>
-          <div className="d-flex justify-content-center gap-3 mt-3">
-            <Button variant="success" size="lg">
-              Member Login
+    <div id="membership-section" className="membership-section bg-light py-5">
+      <Container>
+        <Row className="text-center">
+          <Col>
+            <h2>Join the Club</h2>
+            <p>
+              Become a member of our tennis community and enjoy exclusive access
+              to premium courts, events, and more.
+            </p>
+            {/* Sign-Up button takes users to the sign-up page */}
+            <Button
+              className="cta-btn"
+              onClick={() => {
+                window.location.href = "/signup"; // Update as needed
+              }}
+            >
+              Sign Up Now
             </Button>
-            <Button variant="outline-primary" size="lg">
-              Guest Form
-            </Button>
-          </div>
-        </Col>
-      </Row>
-    </Container>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 
