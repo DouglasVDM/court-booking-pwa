@@ -13,6 +13,7 @@ export function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
+        {/* Brand Link */}
         <Link to="/" className="navbar-brand">
           Tennis Club
         </Link>
