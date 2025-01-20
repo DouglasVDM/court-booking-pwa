@@ -38,7 +38,7 @@ const BookingPage = () => {
         )}
       </div>
       <div className="mt-4">
-        {currentPage === "bookings" && <BookingsList bookings={bookings} />}
+        {currentPage === "bookings" && <BookingsList bookings={bookings}  />}
         {currentPage === "bookingForm" && (
           <div>
             <BookingForm />
