@@ -13,6 +13,7 @@ import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Profile from "./pages/Profile";
 import DashboardPage from "./pages/DashboardPage";
+import SignUpPage from "./pages/SignUpPage";
 
 function App() {
   const { error, isLoading } = useAuth0();
@@ -34,6 +35,7 @@ function App() {
           <Route path="/bookings" element={<ProtectedBooking />} />
           <Route path="/dashboard" element={<ProtectedDashboard />} />
           <Route path="/profile" element={<ProtectedProfile />} />
+          <Route path="/signup" element={<SignUpPage />} />
         </Routes>
       </PageLayout>
     </>
