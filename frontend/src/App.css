@@ -87,6 +87,8 @@ html {
   padding: 0.5rem 1rem;
 }
 
+
+
 .navbar-toggler {
   border: none;
   /* Cleaner look for the toggler */
@@ -101,6 +103,10 @@ html {
   color: #007bff;
   font-weight: 500;
   transition: color 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-item {
+  list-style: none; /* Removes the dot */
 }
 
 .nav-link:hover,

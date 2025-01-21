@@ -17,14 +17,12 @@ export function Navbar() {
         <Link to="/" className="navbar-brand">
           Tennis Club
         </Link>
-        <li className="nav-item">
-          <Link
-            to="/"
-            className={`nav-link ${pathname === "/home" ? "active" : ""}`}
-          >
-            Home
-          </Link>
-        </li>
+        <Link
+          to="/"
+          className={`nav-link ${pathname === "/home" ? "active" : ""}`}
+        >
+          Home
+        </Link>
 
         {/* Always Visible Login/Logout Buttons */}
         <div className="d-flex align-items-center">
