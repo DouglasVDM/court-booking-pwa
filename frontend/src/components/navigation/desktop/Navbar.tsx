@@ -17,10 +17,22 @@ export function Navbar() {
         <Link to="/" className="navbar-brand">
           Tennis Club
         </Link>
+        <li className="nav-item">
+          <Link
+            to="/"
+            className={`nav-link ${pathname === "/home" ? "active" : ""}`}
+          >
+            Home
+          </Link>
+        </li>
 
-        {/* Always visible login/logout buttons */}
-        <div className="d-flex">
-          {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+        {/* Always Visible Login/Logout Buttons */}
+        <div className="d-flex align-items-center">
+          {isAuthenticated ? (
+            <LogoutButton className="btn-sm btn-outline-secondary ms-2" />
+          ) : (
+            <LoginButton className="btn-sm btn-outline-primary ms-2" />
+          )}
         </div>
 
         {/* Navbar Toggler for Mobile */}
@@ -37,20 +49,13 @@ export function Navbar() {
         </button>
 
         {/* Collapsible Content */}
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto">
+        <div
+          className="collapse navbar-collapse justify-content-end"
+          id="navbarNav"
+        >
+          <ul className="navbar-nav">
             {isAuthenticated ? (
               <>
-                <li className="nav-item">
-                  <Link
-                    to="/"
-                    className={`nav-link ${
-                      pathname === "/home" ? "active" : ""
-                    }`}
-                  >
-                    Home
-                  </Link>
-                </li>
                 <li className="nav-item">
                   <Link
                     to="/bookings"
