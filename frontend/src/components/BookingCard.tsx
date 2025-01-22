@@ -1,0 +1,31 @@
+import React from "react";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+
+const BookingCard = ({ booking, onCancelBooking }) => {
+  return (
+    <Card className="mb-3 shadow-sm">
+      <Card.Body>
+        <Card.Title>
+          {booking.first_name} {booking.surname}
+        </Card.Title>
+        <Card.Text>
+          <strong>Court:</strong> {booking.court_id} <br />
+          <strong>Type:</strong> {booking.booking_type_name} <br />
+          <strong>Date:</strong> {new Date(booking.booking_date).toLocaleDateString()} <br />
+          <strong>Start:</strong> {booking.start_time} <br />
+          <strong>End:</strong> {booking.end_time}
+        </Card.Text>
+        <Button
+          variant="danger"
+          size="sm"
+          onClick={() => onCancelBooking(booking.booking_id)}
+        >
+          Cancel Booking
+        </Button>
+      </Card.Body>
+    </Card>
+  );
+};
+
+export default BookingCard;
