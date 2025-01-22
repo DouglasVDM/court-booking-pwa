@@ -1,35 +1,82 @@
-import { Container, Row, Col } from 'react-bootstrap';
+import React from "react";
+import { Container, Row, Col } from "react-bootstrap";
 
-const PageFooter = () => {
-      return (
-  <footer className="bg-dark text-light py-4">
+const PageFooter: React.FC = () => {
+  return (
+    <footer
+      style={{
+        backgroundColor: "#dee2e6", // 30% darker gray
+        color: "#212529", // Bootstrap's standard text color
+      }}
+      className="py-4 border-top"
+    >
       <Container>
+        {/* Main Footer Content */}
         <Row>
-          <Col md={6}>
-            <h5>DTA Enterprises</h5>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam fermentum justo vel aliquet rutrum.</p>
+          <Col md={6} className="mb-3 mb-md-0">
+            <h5 className="text-uppercase">DTA Enterprises</h5>
+            <p className="small text-muted">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+              fermentum justo vel aliquet rutrum.
+            </p>
           </Col>
-          <Col md={3}>
-            <h5>Quick Links</h5>
-            <ul className="list-unstyled">
-              <li><a href="#">Home</a></li>
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Services</a></li>
-              <li><a href="#">Contact</a></li>
+          <Col md={3} className="mb-3 mb-md-0">
+            <h5 className="text-uppercase">Quick Links</h5>
+            <ul className="list-unstyled small">
+              <li>
+                <a href="#" className="text-decoration-none text-dark">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-decoration-none text-dark">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-decoration-none text-dark">
+                  Services
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-decoration-none text-dark">
+                  Contact
+                </a>
+              </li>
             </ul>
           </Col>
           <Col md={3}>
-            <h5>Contact Us</h5>
-            <ul className="list-unstyled">
-              <li>123 Street Name, City</li>
-              <li>Email: dta.enterprises11@gmail.com</li>
-              <li>Phone: +27 73 285 6353</li>
+            <h5 className="text-uppercase">Contact Us</h5>
+            <ul className="list-unstyled small">
+              <li className="text-muted">123 Street Name, City</li>
+              <li>
+                Email:{" "}
+                <a
+                  href="mailto:dta.enterprises11@gmail.com"
+                  className="text-decoration-none text-dark"
+                >
+                  dta.enterprises11@gmail.com
+                </a>
+              </li>
+              <li>
+                Phone:{" "}
+                <a
+                  href="tel:+27732856353"
+                  className="text-decoration-none text-dark"
+                >
+                  +27 73 285 6353
+                </a>
+              </li>
             </ul>
           </Col>
         </Row>
-        <Row className="mt-3">
+
+        {/* Footer Bottom Section */}
+        <Row className="mt-4">
           <Col>
-            <p className="text-center">© {new Date().getFullYear()} DTA Enterprises. All rights reserved.</p>
+            <p className="text-center small text-muted mb-0">
+              © {new Date().getFullYear()} DTA Enterprises. All rights reserved.
+            </p>
           </Col>
         </Row>
       </Container>
