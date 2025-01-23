@@ -51,6 +51,17 @@ html {
   font-size: 1.2rem;
 }
 
+/* BookingsPage */
+.bookings-page-container {
+  padding-top: 20px;
+  /* Adjust this value to suit the spacing */
+}
+
+.mt-4 {
+  margin-top: 1.5rem;
+  /* Already present in Bootstrap, used for consistent spacing */
+}
+
 /* General CTA button styling */
 .cta-btn {
   background-color: #007bff;
@@ -85,6 +96,7 @@ html {
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 0.5rem 1rem;
+  /* margin-bottom: 1rem; */
 }
 
 
@@ -106,7 +118,8 @@ html {
 }
 
 .navbar-nav .nav-item {
-  list-style: none; /* Removes the dot */
+  list-style: none;
+  /* Removes the dot */
 }
 
 .nav-link:hover,
@@ -115,7 +128,8 @@ html {
 }
 
 .navbar-nav .nav-item .nav-link {
-  font-size: 0.875rem; /* Reduce font size for smaller screens */
+  font-size: 0.875rem;
+  /* Reduce font size for smaller screens */
   padding: 0.5rem 0.75rem;
 }
 
@@ -147,15 +161,17 @@ html {
   }
 
   /* Mobile View Adjustments */
-@media (max-width: 576px) {
-  .navbar-brand {
-    font-size: 0.875rem;
-  }
+  @media (max-width: 576px) {
+    .navbar-brand {
+      font-size: 0.875rem;
+    }
 
-  .navbar-nav .nav-item .nav-link {
-    font-size: 0.8rem;
-  }
+    .navbar-nav .nav-item .nav-link {
+      font-size: 0.8rem;
+    }
 
-  .navbar .btn-sm {
-    font-size: 0.7rem;
+    .navbar .btn-sm {
+      font-size: 0.7rem;
+    }
   }
+}

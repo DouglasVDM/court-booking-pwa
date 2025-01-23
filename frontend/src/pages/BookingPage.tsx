@@ -13,10 +13,10 @@ const BookingPage = () => {
   const { bookings } = useFetchBookings(apiEndpointPrefix);
 
   return (
-    <>
-      <h1>Booking Page</h1>
+    <div className="bookings-page-container">
+      <h1 className="mt-4">Booking Page</h1>
       <div className="mb-3">
-        {currentPage != "bookings" && (
+        {currentPage !== "bookings" && (
           <Button
             className={`btn ${
               currentPage === "bookings" ? "primary" : "outline-primary"
@@ -26,7 +26,7 @@ const BookingPage = () => {
             Show Bookings
           </Button>
         )}
-        {currentPage != "bookingForm" && (
+        {currentPage !== "bookingForm" && (
           <Button
             className={`btn ${
               currentPage === "datePicker" ? "primary" : "outline-primary"
@@ -38,14 +38,14 @@ const BookingPage = () => {
         )}
       </div>
       <div className="mt-4">
-        {currentPage === "bookings" && <BookingsList bookings={bookings}  />}
+        {currentPage === "bookings" && <BookingsList bookings={bookings} />}
         {currentPage === "bookingForm" && (
           <div>
             <BookingForm />
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };
 
