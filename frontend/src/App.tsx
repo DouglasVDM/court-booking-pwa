@@ -20,8 +20,9 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/bookings"); // Redirect to bookings after login
+    const currentPath = window.location.pathname;
+    if (isAuthenticated && currentPath === "/") {
+      navigate("/bookings");
     }
   }, [isAuthenticated, navigate]);
 
