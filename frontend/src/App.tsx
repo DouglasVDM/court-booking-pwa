@@ -48,6 +48,8 @@ function App() {
     <PageLayout>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/logo" element={<HomePage />} />
         <Route path="/bookings" element={<ProtectedBooking />} />
         <Route path="/dashboard" element={<ProtectedDashboard />} />
         <Route path="/profile" element={<ProtectedProfile />} />
