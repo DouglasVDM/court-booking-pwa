@@ -4,24 +4,26 @@ import heroImage from "../assets/sample.png";
 
 const HeroBanner = () => {
   return (
-    <div>
-      <Container fluid className="p-0">
-        <Row
-          className="justify-content-center align-items-center"
-          style={{
-            minHeight: "100vh",
-            backgroundImage: `url(${heroImage}`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          <Col className="text-center text-light">
-            <h1 className="animate-text">Welcome to Our Tennis Club</h1>
-            <p className="animate-text">Explore and book your favorite court!</p>
-            {/* Button directs users to the MembershipSection */}
+    <div
+      style={{
+        backgroundImage: `url(${heroImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        height: "70vh", // Optimal height for modern hero banners
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Container className="text-center text-light">
+        <Row>
+          <Col>
+            <h1 className="fw-bold">Welcome to Our Tennis Club</h1>
+            <p className="lead">Explore and book your favorite court today!</p>
             <Button
-              className="cta-btn"
+              className="cta-btn mt-3"
               href="#membership-section"
+              size="lg"
             >
               Learn More
             </Button>
