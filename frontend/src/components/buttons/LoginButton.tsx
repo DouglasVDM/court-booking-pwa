@@ -8,7 +8,7 @@ const LoginButton = () => {
   const handleLogin = async () => {
     await loginWithRedirect({
       appState: {
-        returnTo: "/profile",
+        returnTo: "/bookings",
       },
       authorizationParams: {
         prompt: "login",

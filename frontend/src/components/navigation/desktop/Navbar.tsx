@@ -8,20 +8,17 @@ export function Navbar() {
   const { isAuthenticated } = useAuth0<{
     name: string;
   }>();
-  const { pathname } = useLocation();
+  const { pathname } = useLocation(); // Gets the current route
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
         {/* Brand Link */}
-        <Link to="/" className="navbar-brand">
-          Tennis Club
-        </Link>
         <Link
-          to="/"
-          className={`nav-link ${pathname === "/home" ? "active" : ""}`}
+          to="/logo"
+          className={`navbar-brand ${pathname === "/" ? "active" : ""}`}
         >
-          Home
+          Tennis Club
         </Link>
 
         {/* Always Visible Login/Logout Buttons */}
@@ -52,6 +49,15 @@ export function Navbar() {
           id="navbarNav"
         >
           <ul className="navbar-nav">
+            <li className="nav-item">
+              <Link
+                to="/home"
+                className={`nav-link ${pathname === "/home" ? "active" : ""}`}
+              >
+                Home
+              </Link>
+            </li>
+
             {isAuthenticated ? (
               <>
                 <li className="nav-item">

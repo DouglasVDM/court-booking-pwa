@@ -19,12 +19,6 @@ function App() {
   const { error, isLoading, isAuthenticated } = useAuth0();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/bookings"); // Redirect to bookings after login
-    }
-  }, [isAuthenticated, navigate]);
-
   const ProtectedBooking = withAuthenticationRequired(BookingPage, {
     onRedirecting: () => <PageLoader />,
   });
@@ -47,6 +41,8 @@ function App() {
     <PageLayout>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/logo" element={<HomePage />} />
         <Route path="/bookings" element={<ProtectedBooking />} />
         <Route path="/dashboard" element={<ProtectedDashboard />} />
         <Route path="/profile" element={<ProtectedProfile />} />
