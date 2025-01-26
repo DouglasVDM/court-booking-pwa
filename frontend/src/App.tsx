@@ -19,13 +19,6 @@ function App() {
   const { error, isLoading, isAuthenticated } = useAuth0();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const currentPath = window.location.pathname;
-    if (isAuthenticated && currentPath === "/") {
-      navigate("/bookings");
-    }
-  }, [isAuthenticated, navigate]);
-
   const ProtectedBooking = withAuthenticationRequired(BookingPage, {
     onRedirecting: () => <PageLoader />,
   });
