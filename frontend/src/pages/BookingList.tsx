@@ -28,7 +28,7 @@ const BookingsList = ({ bookings, loading, error, onCancelBooking }) => {
 
   return (
     <>
-      {/* Search and Filter Section */}
+      {/* Search and Filter Section
       <Row className="mb-3">
         <Col md={6}>
           <InputGroup>
@@ -52,7 +52,7 @@ const BookingsList = ({ bookings, loading, error, onCancelBooking }) => {
             <option value="Practice">Practice</option>
           </Form.Select>
         </Col>
-      </Row>
+      </Row> */}
 
       {/* Bookings Display */}
       <Row>
