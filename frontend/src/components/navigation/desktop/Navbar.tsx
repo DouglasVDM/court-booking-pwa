@@ -18,7 +18,7 @@ export function Navbar() {
           to="/logo"
           className={`navbar-brand ${pathname === "/" ? "active" : ""}`}
         >
-          Tennis Club
+          DTA Tennis Club
         </Link>
 
         {/* Always Visible Login/Logout Buttons */}
