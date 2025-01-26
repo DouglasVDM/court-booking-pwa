@@ -28,7 +28,10 @@ const SignUpPage = () => {
     <Container className="py-5">
       <Row className="justify-content-center">
         <Col md={6}>
-          <h2 className="text-center mb-4">Sign Up</h2>
+          <h1 className="text-center mb-4">Sign Up</h1>
+          <h1 className="text-center mb-4">
+            ** This page is still under construction **
+          </h1>
           {successMessage && (
             <Alert variant="success" className="text-center">
               {successMessage}
