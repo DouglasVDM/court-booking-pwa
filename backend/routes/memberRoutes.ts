@@ -52,7 +52,7 @@ router.get("/email/:email", async (req: Request, res: Response) => {
       return res.status(400).send("Invalid email format");
     }
 
-    const query = "SELECT member_id, member_name FROM members WHERE email = $1";
+    const query = "SELECT member_id, first_name, surname FROM members WHERE email = $1";
     const { rows } = await pool.query(query, [email]);
 
     if (rows.length === 0) {
