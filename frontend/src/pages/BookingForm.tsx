@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
+import { useAuth0 } from "@auth0/auth0-react";
 import DatePickerPage from "../components/DatePickerPage";
 import CourtsPage from "./CourtsPage";
 import BookingTypesPage from "./BookingTypesPage";
@@ -9,6 +10,7 @@ import useCourts from "../customHooks/useCourts";
 import useBookingTypes from "../customHooks/useBookingTypes";
 import useStartTimes from "../customHooks/useStartTimes";
 import useEndTimes from "../customHooks/useEndTimes";
+import { useFetchMemberId } from "../customHooks/useFetchMemberId";
 
 const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT_PREFIX;
 
@@ -23,9 +25,26 @@ const BookingForm: React.FC = () => {
   const { bookingTypes } = useBookingTypes(apiEndpointPrefix);
   const { startTimes } = useStartTimes(apiEndpointPrefix);
   const { endTimes } = useEndTimes(apiEndpointPrefix);
+  const {
+    memberId,
+    loading: memberLoading,
+    error: memberError,
+  } = useFetchMemberId();
+
+  const { user } = useAuth0(); // Access the logged-in user
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    if (memberLoading) {
+      alert("Please wait while we fetch your member information...");
+      return;
+    }
+
+    if (!memberId) {
+      alert("Unable to identify the logged-in member. Please try again.");
+      return;
+    }
 
     if (
       !bookingDate ||
@@ -39,7 +58,7 @@ const BookingForm: React.FC = () => {
     }
 
     const bookingPayload = {
-      member_id: 3, // Assuming hardcoded for MVP; replace with logged-in user ID later.
+      member_id: memberId, // Use the dynamic member ID
       booking_date: bookingDate,
       start_time_id: startTimeId,
       end_time_id: endTimeId,
@@ -69,6 +88,8 @@ const BookingForm: React.FC = () => {
   return (
     <Form onSubmit={handleSubmit} className="p-4">
       <h2 className="mb-4">Book a Court</h2>
+      
+      {memberError && <div className="alert alert-danger">{memberError}</div>}
 
       <Row className="mb-3">
         <Col md={6}>
