@@ -27,7 +27,7 @@ router.get("/:id", async (req, res) => {
       return res.status(400).send("Invalid member ID format");
     }
 
-    const query = "SELECT member_id, member_name FROM members WHERE member_id = $1";
+    const query = "SELECT member_id, first_name, surname FROM members WHERE member_id = $1";
     const { rows } = await pool.query(query, [id]);
 
     if (rows.length === 0) {
