@@ -13,7 +13,6 @@ import useEndTimes from "../customHooks/useEndTimes";
 import useFetchMemberId from "../customHooks/useFetchMemberId";
 
 const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT_PREFIX;
-console.log("apiEndpointPrefix:", apiEndpointPrefix);
 
 const BookingForm: React.FC = () => {
   const [bookingDate, setBookingDate] = useState<string>("");
@@ -29,14 +28,12 @@ const BookingForm: React.FC = () => {
 
   const { user } = useAuth0(); // Access the logged-in user
   const userEmail = user?.email || null; // Extract email
-  console.log(userEmail);
 
   const {
     memberId,
     loading: memberLoading,
     error: memberError,
   } = useFetchMemberId(apiEndpointPrefix);
-  console.log("memberId:", memberId);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
