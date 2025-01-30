@@ -10,9 +10,10 @@ import useCourts from "../customHooks/useCourts";
 import useBookingTypes from "../customHooks/useBookingTypes";
 import useStartTimes from "../customHooks/useStartTimes";
 import useEndTimes from "../customHooks/useEndTimes";
-import { useFetchMemberId } from "../customHooks/useFetchMemberId";
+import useFetchMemberId from "../customHooks/useFetchMemberId";
 
 const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT_PREFIX;
+console.log("apiEndpointPrefix:", apiEndpointPrefix);
 
 const BookingForm: React.FC = () => {
   const [bookingDate, setBookingDate] = useState<string>("");
@@ -25,13 +26,17 @@ const BookingForm: React.FC = () => {
   const { bookingTypes } = useBookingTypes(apiEndpointPrefix);
   const { startTimes } = useStartTimes(apiEndpointPrefix);
   const { endTimes } = useEndTimes(apiEndpointPrefix);
+
+  const { user } = useAuth0(); // Access the logged-in user
+  const userEmail = user?.email || null; // Extract email
+  console.log(userEmail);
+
   const {
     memberId,
     loading: memberLoading,
     error: memberError,
-  } = useFetchMemberId();
-
-  const { user } = useAuth0(); // Access the logged-in user
+  } = useFetchMemberId(apiEndpointPrefix);
+  console.log("memberId:", memberId);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -88,7 +93,7 @@ const BookingForm: React.FC = () => {
   return (
     <Form onSubmit={handleSubmit} className="p-4">
       <h2 className="mb-4">Book a Court</h2>
-      
+
       {memberError && <div className="alert alert-danger">{memberError}</div>}
 
       <Row className="mb-3">
