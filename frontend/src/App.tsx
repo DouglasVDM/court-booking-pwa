@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import "./App.css";
+import "./styles/index.css";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 
 // Components
