@@ -1,20 +1,41 @@
 /* Hero Banner Styling */
 .hero-banner {
     width: 100%;
-    height: calc(100vw * 9 / 16); /* Maintain 16:9 aspect ratio */
+    height: 40vh; /* Reduced height */
     background-size: cover;
     background-position: center;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
   }
   
   .hero-banner h1 {
-    font-size: 2.5rem;
+    font-size: 2rem; /* Slightly smaller */
     font-weight: bold;
     color: #fff;
   }
   
   .hero-banner p {
-    font-size: 1.25rem;
+    font-size: 1.1rem; /* Adjusted text size */
     color: #f8f9fa;
+  }
+  
+  /* Adjust for small screens */
+  @media (max-width: 768px) {
+    .hero-banner {
+      height: 30vh; /* Even smaller on mobile */
+    }
+  
+    .hero-banner h1 {
+      font-size: 1.8rem;
+    }
+  
+    .hero-banner p {
+      font-size: 1rem;
+    }
   }
   
