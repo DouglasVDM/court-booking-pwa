@@ -1,12 +1,12 @@
 import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import heroImage from "../assets/sample.png";
+// import heroImage from "../assets/mayfield-tennis-club.jpg";
 
 const HeroBanner = () => {
   return (
     <div
       style={{
-        backgroundImage: `url(${heroImage})`,
+        // backgroundImage: `url(${heroImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         height: "70vh", // Optimal height for modern hero banners
