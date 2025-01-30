@@ -15,7 +15,7 @@ const HeroBanner = () => {
         justifyContent: "center",
       }}
     >
-      <Container className="text-center text-light">
+      <Container className="text-center">
         <Row>
           <Col>
             <h1 className="fw-bold">Welcome to Our Tennis Club</h1>
