@@ -77,6 +77,13 @@ const BookingForm: React.FC = () => {
 
       if (response.ok) {
         alert("Booking created successfully!");
+
+        // Reset the form
+        setBookingDate("");
+        setCourtId(null);
+        setBookingTypeId(null);
+        setStartTimeId(null);
+        setEndTimeId(null);
       } else {
         const error = await response.json();
         alert(`Error: ${error.message || "Failed to create booking."}`);
