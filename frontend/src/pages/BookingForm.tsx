@@ -121,6 +121,8 @@ const BookingForm: React.FC = () => {
                 <TimeSelector
                   startTimes={startTimes}
                   endTimes={endTimes}
+                  selectedStartTimeId={startTimeId}
+                  selectedEndTimeId={endTimeId}
                   onStartTimeSelect={(id) => setStartTimeId(id)}
                   onEndTimeSelect={(id) => setEndTimeId(id)}
                 />
@@ -136,6 +138,7 @@ const BookingForm: React.FC = () => {
             <Form.Label>Select Booking Type</Form.Label>
             <BookingTypesPage
               bookingTypes={bookingTypes}
+              selectedBookingTypeId={bookingTypeId}
               onBookingTypeSelect={(id) => setBookingTypeId(id)}
             />
           </Form.Group>
@@ -145,6 +148,7 @@ const BookingForm: React.FC = () => {
             <Form.Label>Select Court</Form.Label>
             <CourtsPage
               courts={courts}
+              selectedCourtId={courtId}
               onCourtSelect={(id) => setCourtId(id)}
             />
           </Form.Group>
