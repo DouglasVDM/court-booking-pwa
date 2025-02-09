@@ -19,6 +19,7 @@ const DatePickerPage: React.FC<DatePickerPageProps> = ({ className }) => {
       onChange={handleDateChange}
       className={className}
       dateFormat="yyyy-MM-dd"
+      isClearable
     />
   );
 };
