@@ -8,16 +8,16 @@ interface BookingType {
 
 interface BookingTypesPageProps {
   bookingTypes: BookingType[];
+  selectedBookingTypeId: number | null;
   onBookingTypeSelect: (id: number) => void; // Callback with int ID
 }
 
 const BookingTypesPage: React.FC<BookingTypesPageProps> = ({
   bookingTypes,
+  selectedBookingTypeId,
   onBookingTypeSelect,
 }) => {
-  const handleBookingTypeChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleBookingTypeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedBookingTypeId = parseInt(event.target.value, 10);
     onBookingTypeSelect(selectedBookingTypeId);
     console.log("selectedBookingTypeId", selectedBookingTypeId);
@@ -25,8 +25,14 @@ const BookingTypesPage: React.FC<BookingTypesPageProps> = ({
 
   return (
     <Form.Group controlId="bookingTypeSelect">
-      <Form.Select size="lg" onChange={handleBookingTypeChange}>
-        <option aria-label="select a bookingType">Booking Type</option>
+      <Form.Select
+        size="lg"
+        value={selectedBookingTypeId ?? ""}
+        onChange={handleBookingTypeSelect}
+      >
+        <option value="" aria-label="Select a booking type">
+          Select Booking Type
+        </option>
         {bookingTypes.map(({ booking_type_id, booking_type_name }) => (
           <option key={booking_type_id} value={booking_type_id}>
             {booking_type_name}
