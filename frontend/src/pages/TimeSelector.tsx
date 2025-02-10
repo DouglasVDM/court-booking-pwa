@@ -29,11 +29,13 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
   const handleSelectedStartTime = (event) => {
     const selectedStartTimeId = parseInt(event.target.value, 10);
     onStartTimeSelect(selectedStartTimeId);
+    console.log("selectedStartTimeId", selectedStartTimeId);
   };
 
   const handleSelectedEndTime = (event) => {
     const selectedEndTimeId = parseInt(event.target.value, 10);
     onEndTimeSelect(selectedEndTimeId);
+    console.log("selectedEndTimeId", selectedEndTimeId);
   };
 
   return (
