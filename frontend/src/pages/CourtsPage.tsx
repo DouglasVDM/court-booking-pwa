@@ -20,6 +20,7 @@ const CourtsPage: React.FC<CourtsPageProps> = ({
   const handleCourtSelect = (event) => {
     const selectedCourtId = parseInt(event.target.value, 10);
     onCourtSelect(selectedCourtId);
+    console.log("selectedCourtId", selectedCourtId);
   };
 
   return (
