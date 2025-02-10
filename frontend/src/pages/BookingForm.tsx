@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
-import DatePickerPage from "../components/DatePickerPage";
+import DatePickerPage from "./DatePickerPage";
 import CourtsPage from "./CourtsPage";
 import BookingTypesPage from "./BookingTypesPage";
 import TimeSelector from "./TimeSelector";
@@ -28,12 +28,14 @@ const BookingForm: React.FC = () => {
 
   const { user } = useAuth0(); // Access the logged-in user
   const userEmail = user?.email || null; // Extract email
+  console.log("userEmail", userEmail);
 
   const {
     memberId,
     loading: memberLoading,
     error: memberError,
   } = useFetchMemberId(apiEndpointPrefix);
+  console.log("memberId", memberId);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -67,6 +69,7 @@ const BookingForm: React.FC = () => {
       booking_type_id: bookingTypeId,
       court_id: courtId,
     };
+    console.log("bookingPayload", bookingPayload);
 
     try {
       const response = await fetch(`${apiEndpointPrefix}/bookings`, {
@@ -160,11 +163,11 @@ const BookingForm: React.FC = () => {
           type="submit"
           variant="primary"
           disabled={
-            !bookingDate ||
-            !startTimeId ||
-            !endTimeId ||
-            !bookingTypeId ||
-            !courtId
+            bookingDate === "" ||
+            startTimeId === null ||
+            endTimeId === null ||
+            bookingTypeId === null ||
+            courtId === null
           }
         >
           Submit Booking
