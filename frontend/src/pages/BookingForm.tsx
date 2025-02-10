@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
 import DatePickerPage from "./DatePickerPage";
@@ -36,6 +36,16 @@ const BookingForm: React.FC = () => {
     error: memberError,
   } = useFetchMemberId(apiEndpointPrefix);
   console.log("memberId", memberId);
+
+  useEffect(() => {
+    console.log("Current State:", {
+      bookingDate,
+      startTimeId,
+      endTimeId,
+      bookingTypeId,
+      courtId,
+    });
+  }, [bookingDate, startTimeId, endTimeId, bookingTypeId, courtId]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
