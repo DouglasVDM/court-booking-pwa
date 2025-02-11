@@ -12,14 +12,21 @@ const BookingCard = ({ booking, onCancelBooking }) => {
         <Card.Text>
           <strong>Court:</strong> {booking.court_id} <br />
           <strong>Type:</strong> {booking.booking_type_name} <br />
-          <strong>Date:</strong> {new Date(booking.booking_date).toLocaleDateString()} <br />
+          <strong>Date:</strong>{" "}
+          {new Date(booking.booking_date).toLocaleDateString()} <br />
           <strong>Start:</strong> {booking.start_time} <br />
           <strong>End:</strong> {booking.end_time}
         </Card.Text>
         <Button
           variant="danger"
           size="sm"
-          onClick={() => onCancelBooking(booking.booking_id)}
+          onClick={() => {
+            if (
+              window.confirm("Are you sure you want to cancel this booking?")
+            ) {
+              onCancelBooking(booking.booking_id);
+            }
+          }}
         >
           Cancel Booking
         </Button>
