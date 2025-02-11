@@ -197,6 +197,7 @@ router.put("/:id", async (req, res) => {
       end_time_id,
       booking_type_id,
       court_id,
+      id,
     ];
     const { rows } = await pool.query(query, values);
 
