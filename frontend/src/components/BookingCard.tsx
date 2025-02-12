@@ -2,7 +2,7 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
-const BookingCard = ({ booking, onCancelBooking }) => {
+const BookingCard = ({ booking, onCancelBooking, onEditBooking }) => {
   return (
     <Card className="mb-3 shadow-sm">
       <Card.Body>
@@ -17,6 +17,13 @@ const BookingCard = ({ booking, onCancelBooking }) => {
           <strong>Start:</strong> {booking.start_time} <br />
           <strong>End:</strong> {booking.end_time}
         </Card.Text>
+        <Button
+          variant="primary"
+          size="sm"
+          onClick={() => onEditBooking(booking.booking_id)}
+        >
+          Edit
+        </Button>
         <Button
           variant="danger"
           size="sm"
