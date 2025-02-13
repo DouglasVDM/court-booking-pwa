@@ -7,10 +7,19 @@ const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT_PREFIX;
 
 // Custom Hooks for fetching data
 import useFetchBookings from "../customHooks/useFetchBookings";
+import useFetchMemberId from "../customHooks/useFetchMemberId";
+
 
 const BookingPage = () => {
   const [currentPage, setCurrentPage] = useState("bookings");
   const { bookings } = useFetchBookings(apiEndpointPrefix);
+  
+  const {
+    memberId,
+    loading: memberLoading,
+    error: memberError,
+  } = useFetchMemberId(apiEndpointPrefix);
+  console.log("memberId", memberId);
 
   return (
     <div className="bookings-page-container">
@@ -38,7 +47,15 @@ const BookingPage = () => {
         )}
       </div>
       <div className="mt-4">
-        {currentPage === "bookings" && <BookingsList bookings={bookings} apiEndpointPrefix={apiEndpointPrefix} />}
+        {currentPage === "bookings" && (
+          <BookingsList
+            bookings={bookings}
+            apiEndpointPrefix={apiEndpointPrefix}
+            currentMemberId={memberId}
+            loading={memberLoading}
+            error={memberError}
+          />
+        )}
         {currentPage === "bookingForm" && (
           <div>
             <BookingForm />
