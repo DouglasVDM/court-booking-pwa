@@ -2,7 +2,25 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
-const BookingCard = ({ booking, onCancelBooking, onEditBooking }) => {
+const BookingCard = ({
+  booking,
+  onCancelBooking,
+  onEditBooking,
+  currentMemberId,
+}) => {
+  const isOwner = booking.member_id === currentMemberId;
+
+  console.log("isOwner: ", isOwner);
+console.log("booking: ", booking);
+console.log("currentMemberId: ", currentMemberId);
+console.log("bookingMemberId: ", booking.member_id);
+
+  const handleCancelClick = () => {
+    if (window.confirm("Are you sure you want to cancel this booking?")) {
+      onCancelBooking(booking.booking_id);
+    }
+  };
+
   return (
     <Card className="mb-3 shadow-sm">
       <Card.Body>
@@ -12,28 +30,26 @@ const BookingCard = ({ booking, onCancelBooking, onEditBooking }) => {
         <Card.Text>
           <strong>Court:</strong> {booking.court_id} <br />
           <strong>Type:</strong> {booking.booking_type_name} <br />
-          <strong>Date:</strong>{" "}
+          <strong>Date:</strong>
           {new Date(booking.booking_date).toLocaleDateString()} <br />
           <strong>Start:</strong> {booking.start_time} <br />
           <strong>End:</strong> {booking.end_time}
         </Card.Text>
-        <Button
-          variant="primary"
-          size="sm"
-          onClick={() => onEditBooking(booking.booking_id)}
-        >
-          Edit
-        </Button>
+
+        {isOwner && (
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => onEditBooking(booking.booking_id)}
+          >
+            Edit
+          </Button>
+        )}
+
         <Button
           variant="danger"
           size="sm"
-          onClick={() => {
-            if (
-              window.confirm("Are you sure you want to cancel this booking?")
-            ) {
-              onCancelBooking(booking.booking_id);
-            }
-          }}
+          onClick={handleCancelClick}
         >
           Cancel Booking
         </Button>
