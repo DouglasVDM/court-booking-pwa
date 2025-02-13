@@ -10,7 +10,6 @@ import useCourts from "../customHooks/useCourts";
 import useBookingTypes from "../customHooks/useBookingTypes";
 import useStartTimes from "../customHooks/useStartTimes";
 import useEndTimes from "../customHooks/useEndTimes";
-import useFetchMemberId from "../customHooks/useFetchMemberId";
 
 const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT_PREFIX;
 
@@ -30,14 +29,7 @@ const BookingForm: React.FC = () => {
   const userEmail = user?.email || null; // Extract email
   console.log("userEmail", userEmail);
 
-  const {
-    memberId,
-    loading: memberLoading,
-    error: memberError,
-  } = useFetchMemberId(apiEndpointPrefix);
-  console.log("memberId", memberId);
-
-  useEffect(() => {
+   useEffect(() => {
     console.log("Current State:", {
       bookingDate,
       startTimeId,
