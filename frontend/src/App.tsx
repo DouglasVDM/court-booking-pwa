@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "./styles/index.css";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Components
 import PageLoader from "./components/PageLoader";
@@ -39,6 +41,7 @@ function App() {
 
   return (
     <PageLayout>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/home" element={<HomePage />} />
