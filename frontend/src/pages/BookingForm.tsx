@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import DatePickerPage from "./DatePickerPage";
 import CourtsPage from "./CourtsPage";
 import BookingTypesPage from "./BookingTypesPage";
@@ -13,107 +14,55 @@ import useEndTimes from "../customHooks/useEndTimes";
 
 const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT_PREFIX;
 
-const BookingForm: React.FC = () => {
-  const [bookingDate, setBookingDate] = useState<string>("");
-  const [courtId, setCourtId] = useState<number | null>(null);
-  const [bookingTypeId, setBookingTypeId] = useState<number | null>(null);
-  const [startTimeId, setStartTimeId] = useState<number | null>(null);
-  const [endTimeId, setEndTimeId] = useState<number | null>(null);
+interface BookingFormProps {
+  booking?: any; // Optional booking data for editing
+  onSubmit: (data: any) => void;
+  onCancel: () => void;
+}
 
+const BookingForm: React.FC<BookingFormProps> = ({ booking, onSubmit, onCancel }) => {
   const { courts } = useCourts(apiEndpointPrefix);
   const { bookingTypes } = useBookingTypes(apiEndpointPrefix);
   const { startTimes } = useStartTimes(apiEndpointPrefix);
   const { endTimes } = useEndTimes(apiEndpointPrefix);
 
-  const { user } = useAuth0(); // Access the logged-in user
-  const userEmail = user?.email || null; // Extract email
-  console.log("userEmail", userEmail);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: booking || {
+      booking_date: "",
+      court_id: null,
+      booking_type_id: null,
+      start_time_id: null,
+      end_time_id: null,
+    },
+  });
 
-   useEffect(() => {
-    console.log("Current State:", {
-      bookingDate,
-      startTimeId,
-      endTimeId,
-      bookingTypeId,
-      courtId,
-    });
-  }, [bookingDate, startTimeId, endTimeId, bookingTypeId, courtId]);
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    if (memberLoading) {
-      alert("Please wait while we fetch your member information...");
-      return;
+  useEffect(() => {
+    if (booking) {
+      setValue("booking_date", booking.booking_date);
+      setValue("court_id", booking.court_id);
+      setValue("booking_type_id", booking.booking_type_id);
+      setValue("start_time_id", booking.start_time_id);
+      setValue("end_time_id", booking.end_time_id);
     }
-
-    if (!memberId) {
-      alert("Unable to identify the logged-in member. Please try again.");
-      return;
-    }
-
-    if (
-      !bookingDate ||
-      !courtId ||
-      !bookingTypeId ||
-      !startTimeId ||
-      !endTimeId
-    ) {
-      alert("Please complete all fields before submitting.");
-      return;
-    }
-
-    const bookingPayload = {
-      member_id: memberId, // Use the dynamic member ID
-      booking_date: bookingDate,
-      start_time_id: startTimeId,
-      end_time_id: endTimeId,
-      booking_type_id: bookingTypeId,
-      court_id: courtId,
-    };
-    console.log("bookingPayload", bookingPayload);
-
-    try {
-      const response = await fetch(`${apiEndpointPrefix}/bookings`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(bookingPayload),
-      });
-
-      if (response.ok) {
-        alert("Booking created successfully!");
-
-        // Reset the form
-        setBookingDate("");
-        setCourtId(null);
-        setBookingTypeId(null);
-        setStartTimeId(null);
-        setEndTimeId(null);
-      } else {
-        const error = await response.json();
-        alert(`Error: ${error.message || "Failed to create booking."}`);
-      }
-    } catch (error) {
-      console.error("Error submitting booking:", error);
-      alert("An unexpected error occurred.");
-    }
-  };
+  }, [booking, setValue]);
 
   return (
-    <Form onSubmit={handleSubmit} className="p-4">
-      <h2 className="mb-4">Book a Court</h2>
-
-      {memberError && <div className="alert alert-danger">{memberError}</div>}
+    <Form onSubmit={handleSubmit(onSubmit)} className="p-4">
+      <h2 className="mb-4">{booking ? "Edit Booking" : "Book a Court"}</h2>
 
       <Row className="mb-3">
         <Col md={6}>
           <Form.Group controlId="bookingDate">
             <Form.Label>Select a Booking Date</Form.Label>
             <DatePickerPage
-              selectedDate={bookingDate ? new Date(bookingDate) : null} // Pass null if bookingDate is empty
-              onDateChange={(date) =>
-                setBookingDate(date ? date.toISOString().split("T")[0] : "")
-              }
+              selectedDate={watch("booking_date")}
+              onDateChange={(date) => setValue("booking_date", date)}
               className="form-control"
             />
           </Form.Group>
@@ -126,10 +75,10 @@ const BookingForm: React.FC = () => {
                 <TimeSelector
                   startTimes={startTimes}
                   endTimes={endTimes}
-                  selectedStartTimeId={startTimeId}
-                  selectedEndTimeId={endTimeId}
-                  onStartTimeSelect={(id) => setStartTimeId(id)}
-                  onEndTimeSelect={(id) => setEndTimeId(id)}
+                  selectedStartTimeId={watch("start_time_id")}
+                  selectedEndTimeId={watch("end_time_id")}
+                  onStartTimeSelect={(id) => setValue("start_time_id", id)}
+                  onEndTimeSelect={(id) => setValue("end_time_id", id)}
                 />
               </Col>
             </Row>
@@ -139,12 +88,12 @@ const BookingForm: React.FC = () => {
 
       <Row className="mb-3">
         <Col md={6}>
-          <Form.Group className="mb-3" controlId="bookingTypeId">
+          <Form.Group controlId="bookingTypeId">
             <Form.Label>Select Booking Type</Form.Label>
             <BookingTypesPage
               bookingTypes={bookingTypes}
-              selectedBookingTypeId={bookingTypeId}
-              onBookingTypeSelect={(id) => setBookingTypeId(id)}
+              selectedBookingTypeId={watch("booking_type_id")}
+              onBookingTypeSelect={(id) => setValue("booking_type_id", id)}
             />
           </Form.Group>
         </Col>
@@ -153,26 +102,19 @@ const BookingForm: React.FC = () => {
             <Form.Label>Select Court</Form.Label>
             <CourtsPage
               courts={courts}
-              selectedCourtId={courtId}
-              onCourtSelect={(id) => setCourtId(id)}
+              selectedCourtId={watch("court_id")}
+              onCourtSelect={(id) => setValue("court_id", id)}
             />
           </Form.Group>
         </Col>
       </Row>
 
-      <div className="d-flex justify-content-center mt-4">
-        <Button
-          type="submit"
-          variant="primary"
-          disabled={
-            bookingDate === "" ||
-            startTimeId === null ||
-            endTimeId === null ||
-            bookingTypeId === null ||
-            courtId === null
-          }
-        >
-          Submit Booking
+      <div className="d-flex justify-content-between mt-4">
+        <Button type="button" variant="secondary" onClick={onCancel}>
+          Cancel
+        </Button>
+        <Button type="submit" variant="primary">
+          {booking ? "Update Booking" : "Submit Booking"}
         </Button>
       </div>
     </Form>
