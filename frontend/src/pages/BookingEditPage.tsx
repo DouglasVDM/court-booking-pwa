@@ -11,6 +11,8 @@ const BookingEditPage = ({ booking, onClose, setBookings }) => {
     console.log("Editing booking: ", booking);
     
     try {
+      const response = await fetch(
+        `${apiEndpointPrefix}/bookings/${booking.booking_id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
