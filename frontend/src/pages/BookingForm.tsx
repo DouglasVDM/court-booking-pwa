@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import DatePickerPage from "./DatePickerPage";
 import CourtsPage from "./CourtsPage";
 import BookingTypesPage from "./BookingTypesPage";
@@ -15,25 +14,29 @@ import useEndTimes from "../customHooks/useEndTimes";
 const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT_PREFIX;
 
 interface BookingFormProps {
-  booking?: any; // Optional booking data for editing
+  booking?: any;
   onSubmit: (data: any) => void;
   onCancel: () => void;
 }
 
-const BookingForm: React.FC<BookingFormProps> = ({ booking, onSubmit, onCancel }) => {
+const BookingForm: React.FC<BookingFormProps> = ({
+  booking,
+  onSubmit,
+  onCancel,
+}) => {
   const { courts } = useCourts(apiEndpointPrefix);
   const { bookingTypes } = useBookingTypes(apiEndpointPrefix);
   const { startTimes } = useStartTimes(apiEndpointPrefix);
   const { endTimes } = useEndTimes(apiEndpointPrefix);
 
   const {
-    register,
     handleSubmit,
     setValue,
+    reset, // ✅ Reset form when editing
     watch,
     formState: { errors },
   } = useForm({
-    defaultValues: booking || {
+    defaultValues: {
       booking_date: "",
       court_id: null,
       booking_type_id: null,
@@ -42,15 +45,18 @@ const BookingForm: React.FC<BookingFormProps> = ({ booking, onSubmit, onCancel }
     },
   });
 
+  // ✅ Reset form when `booking` is passed
   useEffect(() => {
     if (booking) {
-      setValue("booking_date", booking.booking_date);
-      setValue("court_id", booking.court_id);
-      setValue("booking_type_id", booking.booking_type_id);
-      setValue("start_time_id", booking.start_time_id);
-      setValue("end_time_id", booking.end_time_id);
+      reset({
+        booking_date: booking.booking_date,
+        court_id: booking.court_id,
+        booking_type_id: booking.booking_type_id,
+        start_time_id: booking.start_time_id,
+        end_time_id: booking.end_time_id,
+      });
     }
-  }, [booking, setValue]);
+  }, [booking, reset]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="p-4">
@@ -62,7 +68,9 @@ const BookingForm: React.FC<BookingFormProps> = ({ booking, onSubmit, onCancel }
             <Form.Label>Select a Booking Date</Form.Label>
             <DatePickerPage
               selectedDate={watch("booking_date")}
-              onDateChange={(date) => setValue("booking_date", date)}
+              onDateChange={(bookingDate) =>
+                setValue("booking_date", bookingDate)
+              }
               className="form-control"
             />
           </Form.Group>
@@ -77,8 +85,12 @@ const BookingForm: React.FC<BookingFormProps> = ({ booking, onSubmit, onCancel }
                   endTimes={endTimes}
                   selectedStartTimeId={watch("start_time_id")}
                   selectedEndTimeId={watch("end_time_id")}
-                  onStartTimeSelect={(id) => setValue("start_time_id", id)}
-                  onEndTimeSelect={(id) => setValue("end_time_id", id)}
+                  onStartTimeSelect={(startTimeId) =>
+                    setValue("start_time_id", startTimeId)
+                  }
+                  onEndTimeSelect={(endTimeId) =>
+                    setValue("end_time_id", endTimeId)
+                  }
                 />
               </Col>
             </Row>
@@ -93,7 +105,9 @@ const BookingForm: React.FC<BookingFormProps> = ({ booking, onSubmit, onCancel }
             <BookingTypesPage
               bookingTypes={bookingTypes}
               selectedBookingTypeId={watch("booking_type_id")}
-              onBookingTypeSelect={(id) => setValue("booking_type_id", id)}
+              onBookingTypeSelect={(bookingTypeId) =>
+                setValue("booking_type_id", bookingTypeId)
+              }
             />
           </Form.Group>
         </Col>
@@ -103,7 +117,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ booking, onSubmit, onCancel }
             <CourtsPage
               courts={courts}
               selectedCourtId={watch("court_id")}
-              onCourtSelect={(id) => setValue("court_id", id)}
+              onCourtSelect={(courtId) => setValue("court_id", courtId)}
             />
           </Form.Group>
         </Col>
