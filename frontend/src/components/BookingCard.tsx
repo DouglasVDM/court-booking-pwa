@@ -11,9 +11,9 @@ const BookingCard = ({
   const isOwner = booking.member_id === currentMemberId;
 
   console.log("isOwner: ", isOwner);
-console.log("booking: ", booking);
-console.log("currentMemberId: ", currentMemberId);
-console.log("bookingMemberId: ", booking.member_id);
+  console.log("booking: ", booking);
+  console.log("currentMemberId: ", currentMemberId);
+  console.log("bookingMemberId: ", booking.member_id);
 
   const handleCancelClick = () => {
     if (window.confirm("Are you sure you want to cancel this booking?")) {
@@ -40,17 +40,13 @@ console.log("bookingMemberId: ", booking.member_id);
           <Button
             variant="primary"
             size="sm"
-            onClick={() => onEditBooking(booking.booking_id)}
+            onClick={() => onEditBooking(booking)}
           >
             Edit
           </Button>
         )}
 
-        <Button
-          variant="danger"
-          size="sm"
-          onClick={handleCancelClick}
-        >
+        <Button variant="danger" size="sm" onClick={handleCancelClick}>
           Cancel Booking
         </Button>
       </Card.Body>
