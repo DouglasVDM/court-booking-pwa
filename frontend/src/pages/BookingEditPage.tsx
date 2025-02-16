@@ -6,16 +6,23 @@ const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT_PREFIX;
 
 const BookingEditPage = ({ booking, onClose, setBookings }) => {
   const handleUpdateBooking = async (updatedData) => {
+    const updatedBooking = { ...booking, ...updatedData }; // Merge old and new data
+    
+    console.log("Editing booking: ", booking);
+    
     try {
-      const response = await fetch(`${apiEndpointPrefix}/bookings/${booking.booking_id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedData),
-      });
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updatedBooking),
+        }
+      );
 
       if (response.ok) {
         setBookings((prev) =>
-          prev.map((b) => (b.booking_id === booking.booking_id ? updatedData : b))
+          prev.map((b) =>
+            b.booking_id === booking.booking_id ? updatedBooking : b
+          )
         );
         toast.success("Booking updated successfully!");
         onClose();
@@ -29,7 +36,13 @@ const BookingEditPage = ({ booking, onClose, setBookings }) => {
     }
   };
 
-  return <BookingForm booking={booking} onSubmit={handleUpdateBooking} onCancel={onClose} />;
+  return (
+    <BookingForm
+      booking={booking}
+      onSubmit={handleUpdateBooking}
+      onCancel={onClose}
+    />
+  );
 };
 
 export default BookingEditPage;
