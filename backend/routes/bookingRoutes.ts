@@ -186,7 +186,7 @@ router.put("/:id", async (req, res) => {
   try {
     const query = `
       UPDATE bookings
-      SET member_id = $1, booking_date = $2, start_time_id = $3, end_time_id = $4, booking_type_id = $5,court_id = $6, 
+      SET member_id = $1, booking_date = $2, start_time_id = $3, end_time_id = $4, booking_type_id = $5,court_id = $6 
       WHERE booking_id = $7
       RETURNING *;
     `;
