@@ -29,6 +29,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
   const { startTimes } = useStartTimes(apiEndpointPrefix);
   const { endTimes } = useEndTimes(apiEndpointPrefix);
 
+  
   const {
     handleSubmit,
     setValue,
@@ -44,9 +45,10 @@ const BookingForm: React.FC<BookingFormProps> = ({
       end_time_id: null,
     },
   });
-
+  
   // ✅ Reset form when `booking` is passed
   useEffect(() => {
+    console.log("Reset form when `booking` is passed")
     if (booking) {
       reset({
         booking_date: booking.booking_date,
@@ -57,7 +59,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
       });
     }
   }, [booking, reset]);
-
+  
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="p-4">
       <h2 className="mb-4">{booking ? "Edit Booking" : "Book a Court"}</h2>
