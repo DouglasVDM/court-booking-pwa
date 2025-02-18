@@ -6,7 +6,7 @@ import BookingForm from "./BookingForm";
 const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT_PREFIX;
 
 // Custom Hooks for fetching data
-import useFetchBookings from "../customHooks/useFetchBookings";
+import useFetchBookings from "../customHooks/useBookings";
 import useFetchMemberId from "../customHooks/useFetchMemberId";
 
 
