@@ -7,9 +7,10 @@ const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT_PREFIX;
 const BookingEditPage = ({ booking, onClose, setBookings }) => {
   const handleUpdateBooking = async (updatedData) => {
     const updatedBooking = { ...booking, ...updatedData }; // Merge old and new data
-    
+
     console.log("Editing booking: ", booking);
-    
+    console.log("Updated booking: ", updatedBooking);
+
     try {
       const response = await fetch(
         `${apiEndpointPrefix}/bookings/${booking.booking_id}`,
@@ -20,12 +21,19 @@ const BookingEditPage = ({ booking, onClose, setBookings }) => {
         }
       );
 
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to update booking.");
+      }
+      
       if (response.ok) {
-        setBookings((prev) =>
-          prev.map((b) =>
-            b.booking_id === booking.booking_id ? updatedBooking : b
-          )
-        );
+        if (setBookings) {
+          setBookings((prev) =>
+            [...prev.map((b) => 
+              (b.booking_id === booking.booking_id ? updatedBooking : b))
+            ]);
+        }
+        
         toast.success("Booking updated successfully!");
         onClose();
       } else {
