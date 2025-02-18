@@ -29,7 +29,6 @@ const BookingForm: React.FC<BookingFormProps> = ({
   const { startTimes } = useStartTimes(apiEndpointPrefix);
   const { endTimes } = useEndTimes(apiEndpointPrefix);
 
-  
   const {
     handleSubmit,
     setValue,
@@ -45,10 +44,10 @@ const BookingForm: React.FC<BookingFormProps> = ({
       end_time_id: null,
     },
   });
-  
+
   // ✅ Reset form when `booking` is passed
   useEffect(() => {
-    console.log("Reset form when `booking` is passed")
+    console.log("Reset form when `booking` is passed");
     if (booking) {
       reset({
         booking_date: booking.booking_date,
@@ -59,9 +58,20 @@ const BookingForm: React.FC<BookingFormProps> = ({
       });
     }
   }, [booking, reset]);
-  
+
+  // ✅ Submit handler for valid data
+  const handleFormSubmit = (data: any) => {
+    onSubmit(data); // Call the parent onSubmit function
+  };
+
+  // ✅ Invalid form data handler
+  const onInvalid = (errors: any) => {
+    console.log("Form validation errors:", errors);
+    // Optionally, you can show a toast or UI feedback here
+  };
+
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} className="p-4">
+    <Form onSubmit={handleSubmit(handleFormSubmit)} className="p-4">
       <h2 className="mb-4">{booking ? "Edit Booking" : "Book a Court"}</h2>
 
       <Row className="mb-3">
