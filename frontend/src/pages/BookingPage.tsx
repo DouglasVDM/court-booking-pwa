@@ -9,17 +9,45 @@ const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT_PREFIX;
 import useFetchBookings from "../customHooks/useBookings";
 import useFetchMemberId from "../customHooks/useFetchMemberId";
 
-
 const BookingPage = () => {
   const [currentPage, setCurrentPage] = useState("bookings");
   const { bookings } = useFetchBookings(apiEndpointPrefix);
-  
+
   const {
     memberId,
     loading: memberLoading,
     error: memberError,
   } = useFetchMemberId(apiEndpointPrefix);
   console.log("memberId", memberId);
+
+  const handleCreateBooking = async (data: any) => {
+    if (!memberId) {
+      console.error("Member ID is missing.");
+      return;
+    }
+
+    const bookingData = { ...data, member_id: memberId };
+
+    try {
+      const response = await fetch(`${apiEndpointPrefix}/bookings`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create booking");
+      }
+
+      alert("Booking created successfully!");
+      setCurrentPage("bookings"); // Navigate back to bookings list
+    } catch (error) {
+      console.error("Error creating booking:", error.message);
+      alert(`Error creating booking. Please try again.,${error.message}`);
+    }
+  };
 
   return (
     <div className="bookings-page-container">
@@ -58,7 +86,10 @@ const BookingPage = () => {
         )}
         {currentPage === "bookingForm" && (
           <div>
-            <BookingForm />
+            <BookingForm
+              onSubmit={handleCreateBooking}
+              onCancel={() => setCurrentPage("bookings")}
+            />
           </div>
         )}
       </div>
