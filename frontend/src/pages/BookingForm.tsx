@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+
 import DatePickerPage from "./DatePickerPage";
 import CourtsPage from "./CourtsPage";
 import BookingTypesPage from "./BookingTypesPage";
@@ -34,6 +35,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
     setValue,
     reset, // ✅ Reset form when editing
     watch,
+    register,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -44,6 +46,8 @@ const BookingForm: React.FC<BookingFormProps> = ({
       end_time_id: null,
     },
   });
+
+  const [submittedData, setSubmittedData] = React.useState<any>(null);  // ✅ Store submitted data
 
   // ✅ Reset form when `booking` is passed
   useEffect(() => {
@@ -61,7 +65,17 @@ const BookingForm: React.FC<BookingFormProps> = ({
 
   // ✅ Submit handler for valid data
   const handleFormSubmit = (data: any) => {
-    onSubmit(data); // Call the parent onSubmit function
+    onSubmit(data); // Call the parent onSubmit 
+    console.log("Submitted data:", data);
+    
+    setSubmittedData(data); // ✅ Store submitted data
+    reset({
+      booking_date: booking.booking_date,
+      court_id: booking.court_id,
+      booking_type_id: booking.booking_type_id,
+      start_time_id: booking.start_time_id,
+      end_time_id: booking.end_time_id,
+    }); // ✅ Reset form after submission
   };
 
   // ✅ Invalid form data handler
@@ -70,8 +84,10 @@ const BookingForm: React.FC<BookingFormProps> = ({
     // Optionally, you can show a toast or UI feedback here
   };
 
+  console.log("Submitted data:", submittedData);
+
   return (
-    <Form onSubmit={handleSubmit(handleFormSubmit)} className="p-4">
+    <Form onSubmit={handleSubmit(handleFormSubmit,onInvalid)} className="p-4">
       <h2 className="mb-4">{booking ? "Edit Booking" : "Book a Court"}</h2>
 
       <Row className="mb-3">
