@@ -9,7 +9,7 @@ interface Booking {
     user: string;
 }
 
-const useUpdateBooking = () => {
+const useUpdateBooking = (apiEndpointPrefix) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -18,7 +18,7 @@ const useUpdateBooking = () => {
         setError(null);
 
         try {
-            const response = await axios.put(`/api/bookings/${bookingId}`, updatedBooking);
+            const response = await axios.put(`${apiEndpointPrefix}/bookings/${bookingId}`, updatedBooking);
             setLoading(false);
             return response.data;
         } catch (err) {
@@ -28,7 +28,7 @@ const useUpdateBooking = () => {
         }
     };
 
-    return { updateBooking, loading, error };
+    return { updateBooking, loading, error, setError, setLoading,apiEndpointPrefix };
 };
 
 export default useUpdateBooking;
