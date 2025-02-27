@@ -2,7 +2,26 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
-const BookingCard = ({
+interface Booking {
+  booking_id: string;
+  member_id: string;
+  first_name: string;
+  surname: string;
+  court_id: number;
+  booking_type_name: string;
+  booking_date: string;
+  start_time: string;
+  end_time: string;
+}
+
+interface BookingCardProps {
+  booking: Booking;
+  onCancelBooking: (bookingId: string) => void;
+  onEditBooking: (booking: Booking) => void;
+  currentMemberId: string;
+}
+
+const BookingCard: React.FC<BookingCardProps> = ({
   booking,
   onCancelBooking,
   onEditBooking,
@@ -10,10 +29,10 @@ const BookingCard = ({
 }) => {
   const isOwner = booking.member_id === currentMemberId;
 
-  console.log("isOwner: ", isOwner);
-  console.log("booking: ", booking);
-  console.log("currentMemberId: ", currentMemberId);
-  console.log("bookingMemberId: ", booking.member_id);
+  console.log("isOwner:", isOwner);
+  console.log("Booking:", booking);
+  console.log("Current Member ID:", currentMemberId);
+  console.log("Booking Member ID:", booking.member_id);
 
   const handleCancelClick = () => {
     if (window.confirm("Are you sure you want to cancel this booking?")) {
@@ -30,18 +49,14 @@ const BookingCard = ({
         <Card.Text>
           <strong>Court:</strong> {booking.court_id} <br />
           <strong>Type:</strong> {booking.booking_type_name} <br />
-          <strong>Date:</strong>
+          <strong>Date:</strong>{" "}
           {new Date(booking.booking_date).toLocaleDateString()} <br />
           <strong>Start:</strong> {booking.start_time} <br />
           <strong>End:</strong> {booking.end_time}
         </Card.Text>
 
         {isOwner && (
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() => onEditBooking(booking)}
-          >
+          <Button variant="primary" size="sm" onClick={() => onEditBooking(booking)}>
             Edit
           </Button>
         )}
