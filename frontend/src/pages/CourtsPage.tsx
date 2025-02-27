@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 
 interface Court {
@@ -17,18 +17,21 @@ const CourtsPage: React.FC<CourtsPageProps> = ({
   selectedCourtId,
   onCourtSelect,
 }) => {
-  const handleCourtSelect = (event) => {
-    const selectedCourtId = parseInt(event.target.value, 10);
-    onCourtSelect(selectedCourtId);
-    console.log("selectedCourtId", selectedCourtId);
+  const [selectedCourt, setSelectedCourt] = useState<number | null>(selectedCourtId);
+
+  useEffect(() => {
+    setSelectedCourt(selectedCourtId); // Update local state when prop changes
+  }, [selectedCourtId]);
+
+  const handleCourtSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const courtId = parseInt(event.target.value, 10) || null;
+    setSelectedCourt(courtId);
+    onCourtSelect(courtId);
+    console.log("Selected Court ID:", courtId);
   };
 
   return (
-    <Form.Select
-      size="lg"
-      value={selectedCourtId ?? ""}
-      onChange={handleCourtSelect}
-    >
+    <Form.Select size="lg" value={selectedCourt ?? ""} onChange={handleCourtSelect}>
       <option value="" aria-label="Select a court">
         Select Court
       </option>
