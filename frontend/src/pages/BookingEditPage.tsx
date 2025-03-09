@@ -24,12 +24,12 @@ const BookingEditPage: React.FC<BookingEditPageProps> = ({
 }) => {
   const { setBooking, refetch } = useFetchBooking<Booking[]>(apiEndpointPrefix);
   const { updateBooking } = useUpdateBooking(apiEndpointPrefix);
-  console.log("Update booking", updateBooking);
+  
+  console.log("Before updating booking: ", booking);
 
   const handleUpdateBooking = async (updatedData) => {
     const updatedBooking = { ...booking, ...updatedData }; // Merge old and new data
 
-    console.log("Before updating booking: ", booking);
     console.log("Sending booking update: ", updatedBooking);
     try {
       const response = await updateBooking(booking.booking_id, updatedBooking);
