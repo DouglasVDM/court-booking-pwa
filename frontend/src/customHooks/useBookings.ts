@@ -1,16 +1,16 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
-const useBookings = (apiEndpointPrefix) => {
+const useBookings = (apiEndpointPrefix: string, refreshKey: number) => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   // Fetch bookings function
   const fetchBookings = useCallback(async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const response = await axios.get(`${apiEndpointPrefix}/bookings`);
       setBookings(response.data);
@@ -20,7 +20,7 @@ const useBookings = (apiEndpointPrefix) => {
     } finally {
       setLoading(false);
     }
-  }, [apiEndpointPrefix]);
+  }, [apiEndpointPrefix, refreshKey]);
 
   // Fetch bookings on mount
   useEffect(() => {
