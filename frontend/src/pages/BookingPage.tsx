@@ -13,16 +13,16 @@ const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT_PREFIX;
 
 const BookingPage = () => {
   const [currentPage, setCurrentPage] = useState("bookings");
-  const [refreshBookings, setRefreshBookings] = useState(0); // ✅ Force re-fetch trigger
+  const [refreshKey, setRefreshKey] = useState(0); // ✅ Force re-fetch trigger
 
-  const { bookings } = useFetchBookings(apiEndpointPrefix, refreshBookings); // ✅ Pass refreshBook
+  const { bookings,loading:bookingsLoading,error:bookingErro } = useFetchBookings(apiEndpointPrefix, refreshKey); // ✅ Pass refreshBook
   const {
     memberId,
     loading: memberLoading,
     error: memberError,
   } = useFetchMemberId(apiEndpointPrefix);
   console.log("memberId", memberId);
-  
+
   const { createBooking, loading: bookingLoading } =
     useCreateBooking(apiEndpointPrefix); // ✅ Use custom hook
 
@@ -38,7 +38,7 @@ const BookingPage = () => {
     await createBooking(data, memberId);
     toast.success("🎾 Booking created successfully!");
     setCurrentPage("bookings"); // ✅ Navigate back to bookings list
-    setRefreshBookings((prev) => prev + 1); // ✅ Trigger re-fetch
+    setRefreshKey((prev) => prev + 1); // ✅ Trigger re-fetch
   };
 
   return (
@@ -75,6 +75,7 @@ const BookingPage = () => {
             currentMemberId={memberId}
             loading={memberLoading}
             error={memberError}
+            setRefreshKey={setRefreshKey}
           />
         )}
         {currentPage === "bookingForm" && (
