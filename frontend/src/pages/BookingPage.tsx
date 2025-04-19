@@ -7,6 +7,7 @@ import BookingForm from "./BookingForm";
 import useFetchBookings from "../customHooks/useBookings";
 import useFetchMemberId from "../customHooks/useFetchMemberId";
 import useCreateBooking from "../customHooks/useCreateBooking"; // ✅ Import new hook
+import { toast } from "react-toastify";
 
 const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT_PREFIX;
 
@@ -21,6 +22,7 @@ const BookingPage = () => {
     error: memberError,
   } = useFetchMemberId(apiEndpointPrefix);
   console.log("memberId", memberId);
+  
   const { createBooking, loading: bookingLoading } =
     useCreateBooking(apiEndpointPrefix); // ✅ Use custom hook
 
@@ -33,10 +35,10 @@ const BookingPage = () => {
     const bookingData = { ...data, member_id: memberId };
     console.log("bookingData", bookingData);
 
-    await createBooking(data, memberId, () => {
-      setRefreshBookings((prev) => prev + 1); // ✅ Trigger re-fetch
-      setCurrentPage("bookings"); // ✅ Navigate back to bookings list
-    });
+    await createBooking(data, memberId);
+    toast.success("🎾 Booking created successfully!");
+    setCurrentPage("bookings"); // ✅ Navigate back to bookings list
+    setRefreshBookings((prev) => prev + 1); // ✅ Trigger re-fetch
   };
 
   return (
