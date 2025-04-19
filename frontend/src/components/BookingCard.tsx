@@ -56,14 +56,19 @@ const BookingCard: React.FC<BookingCardProps> = ({
         </Card.Text>
 
         {isOwner && (
-          <Button variant="primary" size="sm" onClick={() => onEditBooking(booking)}>
-            Edit
-          </Button>
+          <div className="d-flex gap-2">
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => onEditBooking(booking)}
+            >
+              Edit
+            </Button>
+            <Button variant="danger" size="sm" onClick={handleCancelClick}>
+              Cancel Booking
+            </Button>
+          </div>
         )}
-
-        <Button variant="danger" size="sm" onClick={handleCancelClick}>
-          Cancel Booking
-        </Button>
       </Card.Body>
     </Card>
   );
