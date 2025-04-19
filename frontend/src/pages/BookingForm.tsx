@@ -69,7 +69,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ booking, onSubmit, onCancel }
             <Form.Label>Select a Booking Date</Form.Label>
             <DatePickerPage
               selectedDate={formData.booking_date}
-              onDateChange={(date) => handleChange("booking_date", date)}
+              onDateChange={(bookingDate) => handleChange("booking_date", bookingDate)}
               className="form-control"
             />
           </Form.Group>
@@ -84,8 +84,8 @@ const BookingForm: React.FC<BookingFormProps> = ({ booking, onSubmit, onCancel }
                   endTimes={endTimes}
                   selectedStartTimeId={formData.start_time_id}
                   selectedEndTimeId={formData.end_time_id}
-                  onStartTimeSelect={(id) => handleChange("start_time_id", id)}
-                  onEndTimeSelect={(id) => handleChange("end_time_id", id)}
+                  onStartTimeSelect={(startTimeId) => handleChange("start_time_id", startTimeId)}
+                  onEndTimeSelect={(endTimeId) => handleChange("end_time_id", endTimeId)}
                 />
               </Col>
             </Row>
@@ -100,7 +100,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ booking, onSubmit, onCancel }
             <BookingTypesPage
               bookingTypes={bookingTypes}
               selectedBookingTypeId={formData.booking_type_id}
-              onBookingTypeSelect={(id) => handleChange("booking_type_id", id)}
+              onBookingTypeSelect={(bookingTypeId) => handleChange("booking_type_id", bookingTypeId)}
             />
           </Form.Group>
         </Col>
@@ -110,7 +110,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ booking, onSubmit, onCancel }
             <CourtsPage
               courts={courts}
               selectedCourtId={formData.court_id}
-              onCourtSelect={(id) => handleChange("court_id", id)}
+              onCourtSelect={(courtId) => handleChange("court_id", courtId)}
             />
           </Form.Group>
         </Col>
