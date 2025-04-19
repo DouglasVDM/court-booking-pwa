@@ -7,18 +7,19 @@ import BookingEditPage from "./BookingEditPage";
 
 const BookingsList = ({
   bookings,
-  setBookings,
   loading,
   error,
+  setRefreshKey,
   apiEndpointPrefix,
   currentMemberId,
+  setBookings,
 }) => {
   const {
     deleteBooking,
     loading: deleting,
     error: deleteError,
   } = useDeleteBooking(apiEndpointPrefix);
-console.log("currentMemberId", currentMemberId);
+  console.log("currentMemberId", currentMemberId);
 
   const [editingBooking, setEditingBooking] = useState(null);
 
@@ -27,11 +28,7 @@ console.log("currentMemberId", currentMemberId);
       return;
 
     await deleteBooking(bookingId);
-
-    // Remove the deleted booking from state
-    setBookings((prev) =>
-      prev.filter((booking) => booking.booking_id !== bookingId)
-    );
+    setRefreshKey((prev) => prev + 1); // Trigger re-fetch
   };
 
   if (loading) return <div>Loading bookings...</div>;
@@ -52,17 +49,21 @@ console.log("currentMemberId", currentMemberId);
       ) : (
         <Row>
           <h2>Bookings</h2>
-          {bookings.map((booking) => (
-            console.log("booking", booking),
-            <Col key={booking.booking_id} md={4}>
-              <BookingCard
-                booking={booking}
-                onCancelBooking={handleCancelBooking}
-                onEditBooking={setEditingBooking}
-                currentMemberId={currentMemberId}
-              />
-            </Col>
-          ))}
+          {bookings.map(
+            (booking) => (
+              console.log("booking", booking),
+              (
+                <Col key={booking.booking_id} md={4}>
+                  <BookingCard
+                    booking={booking}
+                    onCancelBooking={handleCancelBooking}
+                    onEditBooking={setEditingBooking}
+                    currentMemberId={currentMemberId}
+                  />
+                </Col>
+              )
+            )
+          )}
         </Row>
       )}
     </>
