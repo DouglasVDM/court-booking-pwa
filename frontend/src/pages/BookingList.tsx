@@ -2,33 +2,38 @@ import React, { useState } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import BookingCard from "../components/BookingCard";
+import BookingEditPage from "./BookingEditPage.tsx";
 import useDeleteBooking from "../customHooks/useDeleteBooking";
-import BookingEditPage from "./BookingEditPage";
 
-const BookingsList = ({
+interface BookingsListProps {
+  bookings: any[];
+  apiEndpointPrefix: string;
+  currentMemberId: number;
+  loading: boolean;
+  error: string | null;
+  triggerRefresh: () => void; // ✅ Add this
+}
+
+const BookingsList: React.FC<BookingsListProps> = ({
   bookings,
   loading,
   error,
-  setRefreshKey,
   apiEndpointPrefix,
   currentMemberId,
-  setBookings,
+  triggerRefresh,
 }) => {
-  const {
-    deleteBooking,
-    loading: deleting,
-    error: deleteError,
-  } = useDeleteBooking(apiEndpointPrefix);
+  const { deleteBooking, error: deleteError } = useDeleteBooking(apiEndpointPrefix);
+  const [editingBooking, setEditingBooking] = useState(null);
+
   console.log("currentMemberId", currentMemberId);
 
-  const [editingBooking, setEditingBooking] = useState(null);
 
   const handleCancelBooking = async (bookingId: number) => {
     if (!window.confirm("Are you sure you want to cancel this booking?"))
       return;
 
     await deleteBooking(bookingId);
-    setRefreshKey((prev) => prev + 1); // Trigger re-fetch
+    triggerRefresh(); // 🔁 Refresh bookings after deletion
   };
 
   if (loading) return <div>Loading bookings...</div>;
@@ -44,7 +49,7 @@ const BookingsList = ({
           booking={editingBooking}
           onClose={() => setEditingBooking(null)}
           apiEndpointPrefix={apiEndpointPrefix}
-          setBookings={setBookings}
+          refetchBookings={triggerRefresh} // ✅ pass to edit page
         />
       ) : (
         <Row>
