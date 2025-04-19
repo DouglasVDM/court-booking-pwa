@@ -5,7 +5,10 @@ const useCreateBooking = (apiEndpointPrefix: string) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const createBooking = async (data: any, memberId: number, onSuccess?: () => void) => {
+  const createBooking = async (
+    data: any,
+    memberId: number,
+  ) => {
     if (!memberId) {
       console.error("Member ID is missing.");
       return;
@@ -23,12 +26,17 @@ const useCreateBooking = (apiEndpointPrefix: string) => {
         },
       });
 
-      alert("Booking created successfully!");
-      if (onSuccess) onSuccess(); // ✅ Callback for successful booking
     } catch (error: any) {
-      console.error("Error creating booking:", error.response?.data || error.message);
+      console.error(
+        "Error creating booking:",
+        error.response?.data || error.message
+      );
       setError(error.response?.data?.message || error.message);
-      alert(`Error creating booking. Please try again. ${error.response?.data?.message || error.message}`);
+      alert(
+        `Error creating booking. Please try again. ${
+          error.response?.data?.message || error.message
+        }`
+      );
     } finally {
       setLoading(false);
     }
