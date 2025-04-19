@@ -15,7 +15,9 @@ const BookingPage = () => {
   const [currentPage, setCurrentPage] = useState("bookings");
   const [refreshKey, setRefreshKey] = useState(0); // ✅ Force re-fetch trigger
 
-  const { bookings,loading:bookingsLoading,error:bookingErro } = useFetchBookings(apiEndpointPrefix, refreshKey); // ✅ Pass refreshBook
+  const triggerRefresh = () => setRefreshKey(prev => prev + 1); // ✅ Clean refresh function
+
+  const { bookings,loading:bookingsLoading,error:bookingError } = useFetchBookings(apiEndpointPrefix, refreshKey); // ✅ Pass refreshBook
   const {
     memberId,
     loading: memberLoading,
@@ -38,7 +40,7 @@ const BookingPage = () => {
     await createBooking(data, memberId);
     toast.success("🎾 Booking created successfully!");
     setCurrentPage("bookings"); // ✅ Navigate back to bookings list
-    setRefreshKey((prev) => prev + 1); // ✅ Trigger re-fetch
+    triggerRefresh(); // ✅ Trigger re-fetch - Reuse the refresh function
   };
 
   return (
@@ -75,9 +77,10 @@ const BookingPage = () => {
             currentMemberId={memberId}
             loading={memberLoading}
             error={memberError}
-            setRefreshKey={setRefreshKey}
+            triggerRefresh={triggerRefresh} // ✅ Pass this down
           />
         )}
+
         {currentPage === "bookingForm" && (
           <div>
             <BookingForm
