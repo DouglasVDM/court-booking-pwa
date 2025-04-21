@@ -8,7 +8,7 @@ const useBookingTypes = (apiEndpointPrefix) => {
     const fetchBookingTypes = async () => {
       try {
         const bookingTypesResponse = await axios.get(
-          `${apiEndpointPrefix}/bookingTypes`
+          `${apiEndpointPrefix}/booking-types`
         );
         setBookingTypes(bookingTypesResponse.data);
       } catch (err) {
