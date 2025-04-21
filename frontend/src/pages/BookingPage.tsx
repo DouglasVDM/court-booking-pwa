@@ -3,23 +3,45 @@ import { Button } from "react-bootstrap";
 import BookingsList from "./BookingList";
 import BookingForm from "./BookingForm";
 
-const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT_PREFIX;
-
 // Custom Hooks for fetching data
-import useFetchBookings from "../customHooks/useFetchBookings";
+import useFetchBookings from "../customHooks/useBookings";
 import useFetchMemberId from "../customHooks/useFetchMemberId";
+import useCreateBooking from "../customHooks/useCreateBooking"; // ✅ Import new hook
+import { toast } from "react-toastify";
 
+const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT_PREFIX;
 
 const BookingPage = () => {
   const [currentPage, setCurrentPage] = useState("bookings");
-  const { bookings } = useFetchBookings(apiEndpointPrefix);
-  
+  const [refreshKey, setRefreshKey] = useState(0); // ✅ Force re-fetch trigger
+
+  const triggerRefresh = () => setRefreshKey(prev => prev + 1); // ✅ Clean refresh function
+
+  const { bookings,loading:bookingsLoading,error:bookingError } = useFetchBookings(apiEndpointPrefix, refreshKey); // ✅ Pass refreshBook
   const {
     memberId,
     loading: memberLoading,
     error: memberError,
   } = useFetchMemberId(apiEndpointPrefix);
   console.log("memberId", memberId);
+
+  const { createBooking, loading: bookingLoading } =
+    useCreateBooking(apiEndpointPrefix); // ✅ Use custom hook
+
+  const handleCreateBooking = async (data: any) => {
+    if (!memberId) {
+      console.error("Member ID is missing.");
+      return;
+    }
+
+    const bookingData = { ...data, member_id: memberId };
+    console.log("bookingData", bookingData);
+
+    await createBooking(data, memberId);
+    toast.success("🎾 Booking created successfully!");
+    setCurrentPage("bookings"); // ✅ Navigate back to bookings list
+    triggerRefresh(); // ✅ Trigger re-fetch - Reuse the refresh function
+  };
 
   return (
     <div className="bookings-page-container">
@@ -41,8 +63,9 @@ const BookingPage = () => {
               currentPage === "datePicker" ? "primary" : "outline-primary"
             }`}
             onClick={() => setCurrentPage("bookingForm")}
+            disabled={bookingLoading}
           >
-            Book a court
+            {bookingLoading ? "Booking..." : "Book a court"}
           </Button>
         )}
       </div>
@@ -54,11 +77,16 @@ const BookingPage = () => {
             currentMemberId={memberId}
             loading={memberLoading}
             error={memberError}
+            triggerRefresh={triggerRefresh} // ✅ Pass this down
           />
         )}
+
         {currentPage === "bookingForm" && (
           <div>
-            <BookingForm />
+            <BookingForm
+              onSubmit={handleCreateBooking}
+              onCancel={() => setCurrentPage("bookings")}
+            />
           </div>
         )}
       </div>

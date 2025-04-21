@@ -87,45 +87,45 @@ router.post("/", async (req, res) => {
 
   console.log(req.body);
 
-  const today = new Date();
-  const twoWeeksLater = new Date();
-  twoWeeksLater.setDate(today.getDate() + 14); // 2 weeks into the future
+  // const today = new Date();
+  // const twoWeeksLater = new Date();
+  // twoWeeksLater.setDate(today.getDate() + 14); // 2 weeks into the future
 
-  const requestedDate = new Date(booking_date);
+  // const requestedDate = new Date(booking_date);
 
-  // Check: Booking date cannot be more than 2 weeks into the future
-  if (requestedDate > twoWeeksLater) {
-    return res.status(400).json({
-      message: "You cannot book a court more than 2 weeks in advance.",
-    });
-  }
+  // // Check: Booking date cannot be more than 2 weeks into the future
+  // if (requestedDate > twoWeeksLater) {
+  //   return res.status(400).json({
+  //     message: "You cannot book a court more than 2 weeks in advance.",
+  //   });
+  // }
 
   try {
-    // Query DB to check last booking within the past 2 weeks
-    const recentBookings = await pool.query(
-      `
-    SELECT MAX(booking_date) AS last_booking_date
-    FROM bookings
-    WHERE member_id = $1 AND booking_date >= CURRENT_DATE - INTERVAL '14 days'
-    `,
-      [member_id]
-    );
+    // // Query DB to check last booking within the past 2 weeks
+    // const recentBookings = await pool.query(
+    //   `
+    // SELECT MAX(booking_date) AS last_booking_date
+    // FROM bookings
+    // WHERE member_id = $1 AND booking_date >= CURRENT_DATE - INTERVAL '14 days'
+    // `,
+    //   [member_id]
+    // );
 
-    if (recentBookings.rows[0].last_booking_date) {
-      const nextEligibleDate = new Date(
-        recentBookings.rows[0].last_booking_date
-      );
-      nextEligibleDate.setDate(nextEligibleDate.getDate() + 14); // Add 14 days to last booking date
+    // if (recentBookings.rows[0].last_booking_date) {
+    //   const nextEligibleDate = new Date(
+    //     recentBookings.rows[0].last_booking_date
+    //   );
+    //   nextEligibleDate.setDate(nextEligibleDate.getDate() + 14); // Add 14 days to last booking date
 
-      // Check: Booking date must not be before the next eligible date
-      if (requestedDate < nextEligibleDate) {
-        return res.status(400).json({
-          message: `You can only book once every 2 weeks. Your next eligible date is ${
-            nextEligibleDate.toISOString().split("T")[0]
-          }.`,
-        });
-      }
-    }
+    //   // Check: Booking date must not be before the next eligible date
+    //   if (requestedDate < nextEligibleDate) {
+    //     return res.status(400).json({
+    //       message: `You can only book once every 2 weeks. Your next eligible date is ${
+    //         nextEligibleDate.toISOString().split("T")[0]
+    //       }.`,
+    //     });
+    //   }
+    // }
 
     // Check for existing booking
     const checkQuery = `

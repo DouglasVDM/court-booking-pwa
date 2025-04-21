@@ -1,6 +1,7 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
+import { useForm } from "react-hook-form";
 
 interface Time {
   start_time_id: number;
@@ -26,17 +27,24 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
   onStartTimeSelect,
   onEndTimeSelect,
 }) => {
-  const handleSelectedStartTime = (event) => {
+  // Handles the selection of a start time
+  const handleSelectedStartTime = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const selectedStartTimeId = parseInt(event.target.value, 10);
     onStartTimeSelect(selectedStartTimeId);
     console.log("selectedStartTimeId", selectedStartTimeId);
   };
 
-  const handleSelectedEndTime = (event) => {
+  const handleSelectedEndTime = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const selectedEndTimeId = parseInt(event.target.value, 10);
     onEndTimeSelect(selectedEndTimeId);
     console.log("selectedEndTimeId", selectedEndTimeId);
   };
+
+  const { register, errors } = useForm();
 
   return (
     <Row className="mb-3">
@@ -46,7 +54,7 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
           value={selectedStartTimeId ?? ""}
           onChange={handleSelectedStartTime}
         >
-          <option value="" aria-label="Select an start time">
+          <option value="" aria-label="Select a start time">
             Start
           </option>
           {startTimes.map(({ start_time_id, start_time }) => (
