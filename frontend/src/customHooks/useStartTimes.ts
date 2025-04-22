@@ -7,7 +7,7 @@ const useStartTimes = (apiEndpointPrefix) => {
   useEffect(() => {
     const fetchstartTimes = async () => {
       try {
-        const startTimesResponse = await axios.get(`${apiEndpointPrefix}/startTimes`);
+        const startTimesResponse = await axios.get(`${apiEndpointPrefix}/start-times`);
         setStartTimes(startTimesResponse.data);
       } catch (err) {
         console.error("Error fetching startTimes:", err.message);
