@@ -1,48 +1,32 @@
 import React from "react";
-import BookingForm from "../pages/BookingForm";
 import { toast } from "react-toastify";
+
+import BookingForm from "./BookingForm";
+import useUpdateBooking from "../customHooks/useUpdateBooking";
 
 const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT_PREFIX;
 
-const BookingEditPage = ({ booking, onClose, setBookings }) => {
+const BookingEditPage: React.FC<BookingEditPageProps> = ({
+  booking,
+  onClose,
+  refetchBookings,
+}) => {
+  const { updateBooking } = useUpdateBooking(apiEndpointPrefix);
+  console.log("Before updating booking: ", booking);
+
   const handleUpdateBooking = async (updatedData) => {
-    const updatedBooking = { ...booking, ...updatedData }; // Merge old and new data
-
-    console.log("Editing booking: ", booking);
-    console.log("Updated booking: ", updatedBooking);
-
     try {
-      const response = await fetch(
-        `${apiEndpointPrefix}/bookings/${booking.booking_id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(updatedBooking),
-        }
-      );
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Failed to update booking.");
-      }
+      await updateBooking(booking.booking_id, updatedData);
       
-      if (response.ok) {
-        if (setBookings) {
-          setBookings((prev) =>
-            [...prev.map((b) => 
-              (b.booking_id === booking.booking_id ? updatedBooking : b))
-            ]);
-        }
-        
-        toast.success("Booking updated successfully!");
-        onClose();
-      } else {
-        const error = await response.json();
-        toast.error(`Error: ${error.message || "Failed to update booking."}`);
+      if (refetchBookings) {
+        await refetchBookings(); // Refetch latest bookings after update
       }
+
+      toast.success("🎾 Booking updated successfully!");
+      onClose(); // Close the form/modal after successful update
     } catch (error) {
-      console.error("Error updating booking:", error);
-      toast.error("An unexpected error occurred.");
+      console.error("Error updating booking", error);
+      toast.error("❌ Failed to update booking.");
     }
   };
 

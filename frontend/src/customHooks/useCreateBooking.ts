@@ -1,16 +1,42 @@
 import { useState } from "react";
 import axios from "axios";
 
-export const useCreateBooking = () => {
+const useCreateBooking = (apiEndpointPrefix: string) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const createBooking = async (bookingData: JSON) => {
+  const createBooking = async (
+    data: any,
+    memberId: number,
+  ) => {
+    if (!memberId) {
+      console.error("Member ID is missing.");
+      return;
+    }
+
     setLoading(true);
+    setError(null);
+
+    const bookingData = { ...data, member_id: memberId };
+
     try {
-      await axios.post("/api/bookings", bookingData);
-    } catch (err) {
-      setError(err.message || "An error occurred while creating the booking");
+      await axios.post(`${apiEndpointPrefix}/bookings`, bookingData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+    } catch (error: any) {
+      console.error(
+        "Error creating booking:",
+        error.response?.data || error.message
+      );
+      setError(error.response?.data?.message || error.message);
+      alert(
+        `Error creating booking. Please try again. ${
+          error.response?.data?.message || error.message
+        }`
+      );
     } finally {
       setLoading(false);
     }
@@ -18,3 +44,5 @@ export const useCreateBooking = () => {
 
   return { createBooking, loading, error };
 };
+
+export default useCreateBooking;

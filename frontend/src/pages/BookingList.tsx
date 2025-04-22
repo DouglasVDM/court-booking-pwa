@@ -2,36 +2,38 @@ import React, { useState } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import BookingCard from "../components/BookingCard";
+import BookingEditPage from "./BookingEditPage.tsx";
 import useDeleteBooking from "../customHooks/useDeleteBooking";
-import BookingEditPage from "./BookingEditPage";
 
-const BookingsList = ({
+interface BookingsListProps {
+  bookings: any[];
+  apiEndpointPrefix: string;
+  currentMemberId: number;
+  loading: boolean;
+  error: string | null;
+  triggerRefresh: () => void; // ✅ Add this
+}
+
+const BookingsList: React.FC<BookingsListProps> = ({
   bookings,
-  setBookings,
   loading,
   error,
   apiEndpointPrefix,
   currentMemberId,
+  triggerRefresh,
 }) => {
-  const {
-    deleteBooking,
-    loading: deleting,
-    error: deleteError,
-  } = useDeleteBooking(apiEndpointPrefix);
-console.log("currentMemberId", currentMemberId);
-
+  const { deleteBooking, error: deleteError } = useDeleteBooking(apiEndpointPrefix);
   const [editingBooking, setEditingBooking] = useState(null);
+
+  console.log("currentMemberId", currentMemberId);
+
 
   const handleCancelBooking = async (bookingId: number) => {
     if (!window.confirm("Are you sure you want to cancel this booking?"))
       return;
 
     await deleteBooking(bookingId);
-
-    // Remove the deleted booking from state
-    setBookings((prev) =>
-      prev.filter((booking) => booking.booking_id !== bookingId)
-    );
+    triggerRefresh(); // 🔁 Refresh bookings after deletion
   };
 
   if (loading) return <div>Loading bookings...</div>;
@@ -47,22 +49,26 @@ console.log("currentMemberId", currentMemberId);
           booking={editingBooking}
           onClose={() => setEditingBooking(null)}
           apiEndpointPrefix={apiEndpointPrefix}
-          setBookings={setBookings}
+          refetchBookings={triggerRefresh} // ✅ pass to edit page
         />
       ) : (
         <Row>
           <h2>Bookings</h2>
-          {bookings.map((booking) => (
-            console.log("booking", booking),
-            <Col key={booking.booking_id} md={4}>
-              <BookingCard
-                booking={booking}
-                onCancelBooking={handleCancelBooking}
-                onEditBooking={setEditingBooking}
-                currentMemberId={currentMemberId}
-              />
-            </Col>
-          ))}
+          {bookings.map(
+            (booking) => (
+              console.log("booking", booking),
+              (
+                <Col key={booking.booking_id} md={4}>
+                  <BookingCard
+                    booking={booking}
+                    onCancelBooking={handleCancelBooking}
+                    onEditBooking={setEditingBooking}
+                    currentMemberId={currentMemberId}
+                  />
+                </Col>
+              )
+            )
+          )}
         </Row>
       )}
     </>

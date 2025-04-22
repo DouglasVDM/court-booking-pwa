@@ -7,7 +7,7 @@ const useEndTimes = (apiEndpointPrefix) => {
   useEffect(() => {
     const fetchEndTimes = async () => {
       try {
-        const endTimesResponse = await axios.get(`${apiEndpointPrefix}/endTimes`);
+        const endTimesResponse = await axios.get(`${apiEndpointPrefix}/end-times`);
         setEndTimes(endTimesResponse.data);
       } catch (err) {
         console.error("Error fetching endTimes:", err.message);

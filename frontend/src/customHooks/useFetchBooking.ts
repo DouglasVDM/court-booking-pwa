@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const useFetchBooking = (apiEndpointPrefix: string, bookingId?: number) => {
+const useFetchBooking = (apiEndpointPrefix: string, bookingId?: number, refreshKey:number) => {
   const [booking, setBooking] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -23,7 +23,7 @@ const useFetchBooking = (apiEndpointPrefix: string, bookingId?: number) => {
     };
 
     fetchBooking();
-  }, [apiEndpointPrefix, bookingId]);
+  }, [apiEndpointPrefix, bookingId,refreshKey]);
 
   return { booking, loading, error, setBooking };
 };
