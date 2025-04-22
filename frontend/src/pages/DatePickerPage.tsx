@@ -20,6 +20,10 @@ const DatePickerPage: React.FC<DatePickerPageProps> = ({
       className={className}
       dateFormat="yyyy-MM-dd"
       isClearable
+      minDate={new Date()} // disables all dates before today
+      placeholderText="Select a date"
+      showPopperArrow={true}
+      popperPlacement="top"
     />
   );
 };
