@@ -26,7 +26,6 @@
     "@types/helmet": "^4.0.0",
     "@types/morgan": "^1.9.9",
     "@types/pg": "^8.11.10",
-    "@types/dotenv": "^10.0.0",
     "@types/axios": "^0.14.0"
   },
   "devDependencies": {
