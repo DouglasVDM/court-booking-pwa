@@ -1,7 +1,9 @@
 import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const MembershipSection = () => {
+  const navigate = useNavigate();
   return (
     <div id="membership-section" className="membership-section bg-light py-5">
       <Container>
@@ -13,12 +15,7 @@ const MembershipSection = () => {
               to premium courts, events, and more.
             </p>
             {/* Sign-Up button takes users to the sign-up page */}
-            <Button
-              className="cta-btn"
-              onClick={() => {
-                window.location.href = "/signup"; // Update as needed
-              }}
-            >
+            <Button className="cta-btn" onClick={() => navigate("/signup")}>
               Sign Up Now
             </Button>
           </Col>
