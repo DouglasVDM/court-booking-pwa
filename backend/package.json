@@ -4,10 +4,10 @@
   "description": "API for the tennis club court booking system",
   "main": "index.js",
   "scripts": {
-  "start": "tsc && node dist/server.js",
-  "dev": "ts-node-dev --respawn src/server.ts",
-  "build": "tsc"
-},
+    "start": "tsc && node dist/server.js",
+    "dev": "ts-node-dev --respawn src/server.ts",
+    "build": "tsc"
+  },
   "keywords": [],
   "author": "Your Name",
   "license": "ISC",
