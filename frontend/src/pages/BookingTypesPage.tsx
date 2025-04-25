@@ -20,7 +20,6 @@ const BookingTypesPage: React.FC<BookingTypesPageProps> = ({
   const handleBookingTypeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedBookingTypeId = parseInt(event.target.value, 10);
     onBookingTypeSelect(selectedBookingTypeId);
-    console.log("selectedBookingTypeId", selectedBookingTypeId);
   };
 
   return (

@@ -22,11 +22,9 @@ const BookingsList: React.FC<BookingsListProps> = ({
   currentMemberId,
   triggerRefresh,
 }) => {
-  const { deleteBooking, error: deleteError } = useDeleteBooking(apiEndpointPrefix);
+  const { deleteBooking, error: deleteError } =
+    useDeleteBooking(apiEndpointPrefix);
   const [editingBooking, setEditingBooking] = useState(null);
-
-  console.log("currentMemberId", currentMemberId);
-
 
   const handleCancelBooking = async (bookingId: number) => {
     if (!window.confirm("Are you sure you want to cancel this booking?"))
@@ -54,21 +52,16 @@ const BookingsList: React.FC<BookingsListProps> = ({
       ) : (
         <Row>
           <h2>Bookings</h2>
-          {bookings.map(
-            (booking) => (
-              console.log("booking", booking),
-              (
-                <Col key={booking.booking_id} md={4}>
-                  <BookingCard
-                    booking={booking}
-                    onCancelBooking={handleCancelBooking}
-                    onEditBooking={setEditingBooking}
-                    currentMemberId={currentMemberId}
-                  />
-                </Col>
-              )
-            )
-          )}
+          {bookings.map((booking) => (
+            <Col key={booking.booking_id} md={4}>
+              <BookingCard
+                booking={booking}
+                onCancelBooking={handleCancelBooking}
+                onEditBooking={setEditingBooking}
+                currentMemberId={currentMemberId}
+              />
+            </Col>
+          ))}
         </Row>
       )}
     </>

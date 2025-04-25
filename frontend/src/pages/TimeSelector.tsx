@@ -33,7 +33,6 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
   ) => {
     const selectedStartTimeId = parseInt(event.target.value, 10);
     onStartTimeSelect(selectedStartTimeId);
-    console.log("selectedStartTimeId", selectedStartTimeId);
   };
 
   const handleSelectedEndTime = (
@@ -41,7 +40,6 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
   ) => {
     const selectedEndTimeId = parseInt(event.target.value, 10);
     onEndTimeSelect(selectedEndTimeId);
-    console.log("selectedEndTimeId", selectedEndTimeId);
   };
 
   const { register, errors } = useForm();

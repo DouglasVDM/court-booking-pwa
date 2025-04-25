@@ -8,7 +8,6 @@ export const getAllVisitors = async (_req: Request, res: Response) => {
   try {
     const visitors = await fetchAllVisitors();
     res.status(200).json(visitors);
-    console.log("Success: Get all visitors");
   } catch (err) {
     console.error("Error fetching visitors:", (err as Error).message);
     res.status(500).send("Could not get visitors");
@@ -29,7 +28,6 @@ export const getVisitorById = async (req: Request, res: Response) => {
     }
 
     res.status(200).json(visitor);
-    console.log(`Success: Get visitor by ID ${id}`);
   } catch (err) {
     console.error("Error fetching visitor by ID:", (err as Error).message);
     res.status(500).send("Could not get visitor by ID");

@@ -27,7 +27,6 @@ const CourtsPage: React.FC<CourtsPageProps> = ({
     const courtId = parseInt(event.target.value, 10) || null;
     setSelectedCourt(courtId);
     onCourtSelect(courtId);
-    console.log("Selected Court ID:", courtId);
   };
 
   return (

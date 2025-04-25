@@ -29,11 +29,6 @@ const BookingCard: React.FC<BookingCardProps> = ({
 }) => {
   const isOwner = booking.member_id === currentMemberId;
 
-  console.log("isOwner:", isOwner);
-  console.log("Booking:", booking);
-  console.log("Current Member ID:", currentMemberId);
-  console.log("Booking Member ID:", booking.member_id);
-
   const handleCancelClick = () => {
     if (window.confirm("Are you sure you want to cancel this booking?")) {
       onCancelBooking(booking.booking_id);

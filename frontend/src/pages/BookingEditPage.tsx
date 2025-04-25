@@ -12,12 +12,11 @@ const BookingEditPage: React.FC<BookingEditPageProps> = ({
   refetchBookings,
 }) => {
   const { updateBooking } = useUpdateBooking(apiEndpointPrefix);
-  console.log("Before updating booking: ", booking);
 
   const handleUpdateBooking = async (updatedData) => {
     try {
       await updateBooking(booking.booking_id, updatedData);
-      
+
       if (refetchBookings) {
         await refetchBookings(); // Refetch latest bookings after update
       }

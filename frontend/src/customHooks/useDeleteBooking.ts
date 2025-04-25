@@ -8,8 +8,6 @@ const useDeleteBooking = (apiEndpointPrefix: string) => {
   const deleteBooking = async (bookingId: number, onSuccess?: () => void) => {
     setLoading(true);
     setError(null);
-    
-    console.log("API URL:", `${apiEndpointPrefix}/bookings/${bookingId}`); // Debugging line
 
     try {
       await axios.delete(`${apiEndpointPrefix}/bookings/${bookingId}`);

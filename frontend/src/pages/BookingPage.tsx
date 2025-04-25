@@ -23,7 +23,6 @@ const BookingPage = () => {
     loading: memberLoading,
     error: memberError,
   } = useFetchMemberId(apiEndpointPrefix);
-  console.log("memberId", memberId);
 
   const { createBooking, loading: bookingLoading } =
     useCreateBooking(apiEndpointPrefix); // ✅ Use custom hook
@@ -35,7 +34,6 @@ const BookingPage = () => {
     }
 
     const bookingData = { ...data, member_id: memberId };
-    console.log("bookingData", bookingData);
 
     await createBooking(data, memberId);
     toast.success("🎾 Booking created successfully!");

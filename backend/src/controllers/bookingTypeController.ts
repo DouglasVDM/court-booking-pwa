@@ -8,7 +8,6 @@ export const getAllBookingTypes = async (_req: Request, res: Response) => {
   try {
     const bookingTypes = await fetchAllBookingTypes();
     res.status(200).json(bookingTypes);
-    console.log("Success: Get all booking_types");
   } catch (err) {
     console.error("Error fetching booking types:", (err as Error).message);
     res.status(500).send("Could not get booking_types");
@@ -29,7 +28,6 @@ export const getBookingTypeById = async (req: Request, res: Response) => {
     }
 
     res.status(200).json(bookingType);
-    console.log(`Success: Get booking_type by ID ${id}`);
   } catch (err) {
     console.error("Error fetching booking type by ID:", (err as Error).message);
     res.status(500).send("Could not get booking_type by ID");

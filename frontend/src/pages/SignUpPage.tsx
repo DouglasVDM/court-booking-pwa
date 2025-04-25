@@ -20,7 +20,6 @@ const SignUpPage = () => {
     e.preventDefault();
     // Add logic to handle sign-up form submission
     // Example: Send formData to API endpoint
-    console.log("User Data Submitted:", formData);
     setSuccessMessage("Your account has been successfully created!");
   };
 

@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
-import { fetchAllEndTimes, fetchEndTimeById } from "../services/endTime.service";
+import {
+  fetchAllEndTimes,
+  fetchEndTimeById,
+} from "../services/endTime.service";
 
 export const getAllEndTimes = async (_req: Request, res: Response) => {
   try {
     const endTimes = await fetchAllEndTimes();
     res.status(200).json(endTimes);
-    console.log("Success: Get all end times");
   } catch (err) {
     console.error("Error fetching end times:", (err as Error).message);
     res.status(500).send("Could not get end times");
@@ -26,7 +28,6 @@ export const getEndTimeById = async (req: Request, res: Response) => {
     }
 
     res.status(200).json(endTime);
-    console.log(`Success: Get end time by ID ${id}`);
   } catch (err) {
     console.error("Error fetching end time by ID:", (err as Error).message);
     res.status(500).send("Could not get end time by ID");

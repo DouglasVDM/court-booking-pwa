@@ -9,7 +9,6 @@ export const getMembers = async (_req: Request, res: Response) => {
   try {
     const members = await fetchAllMembers();
     res.status(200).json(members);
-    console.log("Success: Get all members");
   } catch (err) {
     console.error("Error fetching members:", (err as Error).message);
     res.status(500).send("Could not get members");
@@ -30,7 +29,6 @@ export const getMemberById = async (req: Request, res: Response) => {
     }
 
     res.status(200).json(member);
-    console.log(`Success: Get member by ID ${id}`);
   } catch (err) {
     console.error("Error fetching member by ID:", (err as Error).message);
     res.status(500).send("Could not get member by ID");
@@ -51,7 +49,6 @@ export const getMemberByEmail = async (req: Request, res: Response) => {
     }
 
     res.status(200).json(member);
-    console.log(`Success: Get member by email ${email}`);
   } catch (err) {
     console.error("Error fetching member by email:", (err as Error).message);
     res.status(500).send("Could not get member by email");
