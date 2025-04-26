@@ -6,24 +6,24 @@ Welcome to the **Tennis Club Court Booking App** repository! This application si
 
 ## Table of Contents
 
-1. [Overview](#overview)
-2. [Features](#features)
-3. [Tech Stack](#tech-stack)
-4. [Setup Instructions](#setup-instructions)
+- [Tennis Club Court Booking App](#tennis-club-court-booking-app)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Features](#features)
+  - [Tech Stack](#tech-stack)
+  - [Setup Instructions](#setup-instructions)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
-5. [Database Schema](#database-schema)
-6. [API Endpoints](#api-endpoints)
-    - [Admin Endpoints](#admin-endpoints)
-    - [Booking Endpoints](#booking-endpoints)
-7. [Mermaid Diagrams](#mermaid-diagrams)
+  - [Application Screenshot](#application-screenshot)
+    - [A quick diagram showing how the new protected routing flow works now.](#a-quick-diagram-showing-how-the-new-protected-routing-flow-works-now)
+  - [Mermaid Diagrams](#mermaid-diagrams)
     - [Member Login and Validation](#member-login-and-validation)
     - [Future Visitor Flow](#future-visitor-flow)
     - [Booking Flow](#booking-flow)
     - [Payment Flow](#payment-flow)
-8. [PWA Features](#pwa-features)
-9. [Future Enhancements](#future-enhancements)
-10. [License](#license)
+  - [PWA Features](#pwa-features)
+  - [Future Enhancements](#future-enhancements)
+  - [License](#license)
 
 ---
 
@@ -91,82 +91,10 @@ The Tennis Club Court Booking App allows:
 
 ---
 
-## Database Schema
+## Application Screenshot
 
-### Members Table
-```sql
-CREATE TABLE members (
-    member_id SERIAL PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    phone_number VARCHAR(20),
-    membership_valid_until DATE
-);
-```
-
-### Visitors Table (Future Use)
-```sql
-CREATE TABLE visitors (
-    visitor_id SERIAL PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    email VARCHAR(100),
-    phone_number VARCHAR(20),
-    created_at TIMESTAMP DEFAULT NOW()
-);
-```
-
-### Bookings Table
-```sql
-CREATE TABLE bookings (
-    booking_id SERIAL PRIMARY KEY,
-    user_type VARCHAR(10) NOT NULL CHECK (user_type IN ('member', 'visitor')),
-    user_id INT NOT NULL,
-    court_id INT NOT NULL REFERENCES courts(court_id) ON DELETE CASCADE,
-    booking_date DATE NOT NULL,
-    start_time TIME NOT NULL,
-    end_time TIME NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW()
-);
-```
-
----
-
-## API Endpoints
-
-### Admin Endpoints
-- **Add Member:**
-  ```http
-  POST /api/admin/add-member
-  ```
-  **Payload:**
-  ```json
-  {
-    "first_name": "John",
-    "last_name": "Doe",
-    "email": "john.doe@example.com",
-    "phone_number": "+27 12 345 6789",
-    "membership_valid_until": "2024-12-31"
-  }
-  ```
-
-### Booking Endpoints
-- **Create Booking:**
-  ```http
-  POST /api/bookings
-  ```
-  **Payload:**
-  ```json
-  {
-    "user_type": "member",
-    "user_id": 1,
-    "court_id": 2,
-    "booking_date": "2024-12-12",
-    "start_time": "10:00",
-    "end_time": "11:00"
-  }
-  ```
+### A quick diagram showing how the new protected routing flow works now.
+![A quick diagram showing how the new protected routing flow works now.](./frontend/src/assets//protected-routing-flow.png)
 
 ---
 
