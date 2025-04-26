@@ -10,6 +10,7 @@ import LoginButton from "../components/LoginButton";
 import MembersList from "../components/members/MembersList";
 import CourtsList from "../components/courts/CourtsList";
 import DashboardPage from "../pages/DashboardPage";
+import Unauthorized from "../pages/Unauthorized";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
     path: "/members",
     element: <MembersList />,
   },
+  { path: "/unauthorized", element: <Unauthorized /> },
   {
     path: "*",
     element: <NotFound />,
