@@ -41,7 +41,6 @@ const useFetchMemberId = (apiEndpointPrefix) => {
 
         // 👇 Log them out if not a valid member
         navigate("/unauthorized");
-        logout();
       } finally {
         setLoading(false);
       }
