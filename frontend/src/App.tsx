@@ -16,6 +16,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import Profile from "./pages/Profile";
 import DashboardPage from "./pages/DashboardPage";
 import SignUpPage from "./pages/SignUpPage";
+import Unauthorized from "./pages/Unauthorized";
 
 function App() {
   const { error, isLoading, isAuthenticated } = useAuth0();
@@ -36,21 +37,35 @@ function App() {
   }
 
   if (error) {
+    return <Unauthorized message={error.message} />;
+  }
+
+  if (error) {
     return <NotFoundPage message={error.message} />;
   }
 
   return (
     <PageLayout>
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+      />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/logo" element={<HomePage />} />
+        <Route
+          path="/unauthorized"
+          element={<Unauthorized message="Unauthorized access" />}
+        />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+
+        {/* Protected Routes */}
         <Route path="/bookings" element={<ProtectedBooking />} />
         <Route path="/dashboard" element={<ProtectedDashboard />} />
         <Route path="/profile" element={<ProtectedProfile />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </PageLayout>
   );
