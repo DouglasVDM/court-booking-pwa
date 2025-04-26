@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-
-const apiEndpointPrefix = import.meta.env.VITE_API_ENDPOINT_PREFIX;
+import { useNavigate } from "react-router-dom";
 
 const useFetchMemberId = (apiEndpointPrefix) => {
-  const { user } = useAuth0();
+  const { user, logout, isAuthenticated } = useAuth0();
   const email = user?.email;
+  const navigate = useNavigate();
+
   const [memberId, setMemberId] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -14,6 +15,12 @@ const useFetchMemberId = (apiEndpointPrefix) => {
   useEffect(() => {
     if (!email) {
       setError("Email is required");
+      setLoading(false);
+      return;
+    }
+
+    if (!isAuthenticated) {
+      setError("User is not authenticated");
       setLoading(false);
       return;
     }
@@ -31,13 +38,17 @@ const useFetchMemberId = (apiEndpointPrefix) => {
       } catch (err: any) {
         console.error("Error fetching member ID", err);
         setError(err.response?.data || "Failed to fetch member ID");
+
+        // 👇 Log them out if not a valid member
+        navigate("/unauthorized");
+        logout();
       } finally {
         setLoading(false);
       }
     };
 
     fetchMemberId();
-  }, [email]);
+  }, [email, isAuthenticated]);
 
   return { memberId, loading, error };
 };
