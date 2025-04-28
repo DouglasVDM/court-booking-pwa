@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import LogoutButton from "../components/buttons/LogoutButton";
 
+const timeOut = 5000;
+
 const Unauthorized = () => {
   const navigate = useNavigate();
-  const timeOut = 5000;
   const { logout } = useAuth0();
   const [secondsLeft, setSecondsLeft] = useState(5);
 
@@ -17,16 +18,24 @@ const Unauthorized = () => {
         navigate("/");
       }
     }, 1000);
-
+    
     const autoLogout = setTimeout(() => {
-      logout();
+      const returnTo = import.meta.env.VITE_AUTH0_LOGOUT_REDIRECT_URL;
+
+      if (!returnTo) {
+        console.error("Missing VITE_AUTH0_LOGOUT_REDIRECT_URL. Please set it in your .env file.");
+        alert("Logout URL is missing. Please contact support.");
+        return;
+      }
+
+      logout({returnTo});
     }, timeOut);
 
     return () => {
       clearInterval(countdown);
       clearTimeout(autoLogout);
     };
-  }, [logout]);
+  }, [logout,secondsLeft]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
