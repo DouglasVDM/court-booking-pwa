@@ -1,18 +1,33 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import LogoutButton from "../components/buttons/LogoutButton";
 
 const Unauthorized = () => {
   const navigate = useNavigate();
-const timeOut = 5000;
+  const timeOut = 5000;
+  const { logout } = useAuth0();
+  const [secondsLeft, setSecondsLeft] = useState(5);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      navigate("/");
-    }, timeOut); 
-    return () => clearTimeout(timer); // Cleanup the timer on component unmount
-  }, [navigate]);
-  
+    const countdown = setInterval(() => {
+      setSecondsLeft((prev) => prev - 1);
+      if (secondsLeft <= 0) {
+        clearInterval(countdown);
+        navigate("/");
+      }
+    }, 1000);
+
+    const autoLogout = setTimeout(() => {
+      logout();
+    }, timeOut);
+
+    return () => {
+      clearInterval(countdown);
+      clearTimeout(autoLogout);
+    };
+  }, [logout]);
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
       <div className="max-w-md bg-white shadow-lg rounded-xl p-8 text-center">
@@ -22,7 +37,7 @@ const timeOut = 5000;
           Club.
         </p>
         <p className="text-gray-500 text-sm mb-6">
-          You’ll be redirected to the homepage.
+          Logging out in {secondsLeft} second{secondsLeft !== 1 ? "s" : ""}...
         </p>
         <div className="flex flex-col gap-4">
           <LogoutButton />
