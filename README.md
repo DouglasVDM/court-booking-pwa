@@ -24,6 +24,10 @@ Welcome to the **Tennis Club Court Booking App** repository! This application si
   - [PWA Features](#pwa-features)
   - [Future Enhancements](#future-enhancements)
   - [License](#license)
+- [📦 court-booking-pwa](#-court-booking-pwa)
+  - [📂 Root](#-root)
+  - [🛠️ Backend (`backend/`)](#️-backend-backend)
+  - [🎨 Frontend (`frontend/`)](#-frontend-frontend)
 
 ---
 
@@ -188,3 +192,136 @@ graph TD
 
 ## License
 This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+# 📦 court-booking-pwa
+
+## 📂 Root
+- 📄 README.md
+- 📄 types.ts
+
+## 🛠️ Backend (`backend/`)
+- 📄 .env
+- 📂 database_config/
+  - 🗃️ database.sql
+  - ⚙️ pool.ts
+- 📂 src/
+  - 🚀 app.ts
+  - 🚀 server.ts
+  - 📂 controllers/
+    - 🎯 bookingController.ts
+    - 🎯 bookingTypeController.ts
+    - 🎯 courtController.ts
+    - 🎯 endTimeController.ts
+    - 🎯 memberController.ts
+    - 🎯 startTimeController.ts
+    - 🎯 visitorController.ts
+  - 📂 services/
+    - 🛎️ booking.service.ts
+    - 🛎️ bookingType.service.ts
+    - 🛎️ court.service.ts
+    - 🛎️ endTime.service.ts
+    - 🛎️ member.service.ts
+    - 🛎️ startTime.service.ts
+    - 🛎️ visitor.service.ts
+  - 📂 routes/
+    - 🛣️ booking.routes.ts
+    - 🛣️ bookingType.routes.ts
+    - 🛣️ court.routes.ts
+    - 🛣️ endTime.routes.ts
+    - 🛣️ member.routes.ts
+    - 🛣️ startTime.routes.ts
+    - 🛣️ visitor.routes.ts
+  - 📂 middlewares/
+    - 🛡️ errorHandler.ts
+  - 📂 database/
+    - ⚙️ pool.ts
+  - 📂 utils/ (empty for now)
+- 📄 package.json
+- 📄 package-lock.json
+- 📄 tsconfig.json
+
+## 🎨 Frontend (`frontend/`)
+- 📄 .env
+- 📄 .eslintrc.cjs
+- 📂 .netlify/
+  - 📂 functions-internal/
+  - 📂 v1/functions/
+- 📂 dist/ (built PWA output)
+  - 📸 assets/
+  - 🖼️ icons, manifest, sw.js
+- 📂 public/
+  - 🖼️ favicon.svg
+- 📂 src/
+  - 🚀 main.tsx
+  - 🎨 App.tsx + App.css
+  - 🎨 PWABadge.tsx + PWABadge.css
+  - 📂 assets/
+    - 🖼️ Images (sample.png, protected-routing-flow.png)
+  - 📂 authentication/
+    - 🔒 Auth0ProviderWithRedirect.tsx
+  - 📂 components/
+    - 📃 BookingCard.tsx
+    - 📃 PageFooter.tsx
+    - 📃 PageLayout.tsx
+    - 📃 PageLoader.tsx
+    - 📃 ProtectedLayout.tsx
+    - 📂 buttons/
+      - 🔘 LoginButton.tsx
+      - 🔘 LogoutButton.tsx
+      - 🔘 SignupButton.tsx
+    - 📂 navigation/
+      - 🧭 AdminBookingsTable.tsx
+      - 🧭 Navbar.tsx
+      - 🧭 NavbarButtons.tsx
+      - 🧭 NavbarTab.tsx
+      - 🧭 NavbarTabs.tsx
+      - 🧭 TestTabs.tsx
+  - 📂 customHooks/
+    - 🪝 AuthProvider.ts
+    - 🪝 useBookingTypes.ts
+    - 🪝 useBookings.ts
+    - 🪝 useCreateBooking.ts
+    - 🪝 useDeleteBooking.ts
+    - 🪝 useFetchBooking.ts
+    - 🪝 useFetchMemberId.ts
+    - 🪝 useCourts.ts
+    - 🪝 useStartTimes.ts
+    - 🪝 useEndTimes.ts
+    - 🪝 useUpdateBooking.ts
+  - 📂 pages/
+    - 📄 AboutSection.tsx
+    - 📄 AdminPage.tsx
+    - 📄 BookingEditPage.tsx
+    - 📄 BookingForm.tsx
+    - 📄 BookingList.tsx
+    - 📄 BookingPage.tsx
+    - 📄 BookingTypesPage.tsx
+    - 📄 CourtsPage.tsx
+    - 📄 DashboardPage.tsx
+    - 📄 DatePickerPage.tsx
+    - 📄 FacilitiesSection.tsx
+    - 📄 HeroBanner.tsx
+    - 📄 HomePage.tsx
+    - 📄 LandingPage.tsx
+    - 📄 MembershipSection.tsx
+    - 📄 NotFoundPage.tsx
+    - 📄 ProfilePage.tsx
+    - 📄 SignUpPage.tsx
+    - 📄 TimeSelector.tsx
+    - 📄 Unauthorized.tsx
+  - 📂 services/ (empty or future API calls)
+  - 📂 styles/
+    - 🎨 base.css
+    - 🎨 bookings.css
+    - 🎨 buttons.css
+    - 🎨 hero-banner.css
+    - 🎨 index.css
+    - 🎨 navbar.css
+    - 🎨 responsive.css
+    - 🎨 sections.css
+- 📄 package.json
+- 📄 package-lock.json
+- 📄 vite.config.ts
+- 📄 tsconfig.json
+- 📄 tsconfig.node.json
+
