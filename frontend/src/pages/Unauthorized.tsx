@@ -33,7 +33,7 @@ const Unauthorized = () => {
         return;
       }
 
-      logout({ returnTo });
+      logout({ logoutParams: { returnTo } });
     }, timeOut);
 
     return () => clearTimeout(autoLogout);
