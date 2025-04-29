@@ -9,25 +9,35 @@ const apiPrefix = import.meta.env.VITE_API_ENDPOINT_PREFIX;
 const ProtectedLayout = () => {
   const { memberId, loading, error } = useFetchMemberId(apiPrefix);
   const [secondsLeft, setSecondsLeft] = useState(50);
+const [showLoadingUI, setShowLoadingUI] = useState(true);
 
   useEffect(() => {
-    if (!loading) return;
+    let delayTimeout: NodeJS.Timeout;
+    let countdownInterval: NodeJS.Timeout;
+    let reloadTimeout: NodeJS.Timeout;
 
-    const interval = setInterval(() => {
-      setSecondsLeft((prev) => prev - 1);
-    }, 1000);
+    if (loading) {
+      delayTimeout = setTimeout(() => {
+        setShowLoadingUI(true);
 
-    const timeOut = setTimeout(() => {
-      window.location.reload();
-    }, 5000);
+        countdownInterval = setInterval(() => {
+          setSecondsLeft((prev) => prev - 1);
+        }, 1000);
+
+        reloadTimeout = setTimeout(() => {
+          window.location.reload();
+        }, 5000);
+      }, 1000); // Show loading UI for 1 seconds
+    }
 
     return () => {
-      clearInterval(interval);
-      clearTimeout(timeOut);
+      clearTimeout(delayTimeout);
+      clearInterval(countdownInterval);
+      clearTimeout(reloadTimeout);
     };
   }, [loading]);
 
-  if (loading) {
+  if (loading && showLoadingUI) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-gray-100">
         <div className="max-w-md bg-white shadow-lg rounded-xl p-8 text-center">
