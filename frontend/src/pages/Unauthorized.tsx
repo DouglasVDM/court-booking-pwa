@@ -1,41 +1,43 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import LogoutButton from "../components/buttons/LogoutButton";
 
 const timeOut = 5000;
 
 const Unauthorized = () => {
-  const navigate = useNavigate();
   const { logout } = useAuth0();
   const [secondsLeft, setSecondsLeft] = useState(5);
 
   useEffect(() => {
     const countdown = setInterval(() => {
-      setSecondsLeft((prev) => prev - 1);
-      if (secondsLeft <= 0) {
-        clearInterval(countdown);
-        navigate("/");
-      }
+      setSecondsLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(countdown);
+        }
+        return prev - 1;
+      });
     }, 1000);
-    
+
+    return () => clearInterval(countdown);
+  }, []);
+
+  useEffect(() => {
     const autoLogout = setTimeout(() => {
       const returnTo = import.meta.env.VITE_AUTH0_LOGOUT_REDIRECT_URL;
 
       if (!returnTo) {
-        console.error("Missing VITE_AUTH0_LOGOUT_REDIRECT_URL. Please set it in your .env file.");
+        console.error(
+          "Missing VITE_AUTH0_LOGOUT_REDIRECT_URL. Please set it in your .env file."
+        );
         alert("Logout URL is missing. Please contact support.");
         return;
       }
 
-      logout({returnTo});
+      logout({ returnTo });
     }, timeOut);
 
-    return () => {
-      clearInterval(countdown);
-      clearTimeout(autoLogout);
-    };
-  }, [logout,secondsLeft]);
+    return () => clearTimeout(autoLogout);
+  }, [logout]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
