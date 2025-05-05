@@ -26,7 +26,7 @@ export const fetchAllBookings = async () => {
     JOIN booking_types bt ON b.booking_type_id = bt.booking_type_id
     JOIN members m ON b.member_id = m.member_id
     ORDER BY b.booking_date DESC, b.booking_id
-    LIMIT 4;
+    LIMIT 9;
   `;
   const { rows } = await pool.query(query);
   return rows;
