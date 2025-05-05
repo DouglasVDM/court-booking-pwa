@@ -50,7 +50,7 @@ const BookingsList: React.FC<BookingsListProps> = ({
           refetchBookings={triggerRefresh} // ✅ pass to edit page
         />
       ) : (
-        <Row>
+        <Row className="g-4">
           <h2>Bookings</h2>
           {bookings.map((booking) => (
             <Col key={booking.booking_id} md={4}>
