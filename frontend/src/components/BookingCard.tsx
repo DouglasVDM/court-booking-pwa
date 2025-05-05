@@ -36,12 +36,12 @@ const BookingCard: React.FC<BookingCardProps> = ({
   };
 
   return (
-    <Card className="mb-3 shadow-sm">
-      <Card.Body>
+    <Card className="mb-3 shadow-sm h-100">
+      <Card.Body className="d-flex flex-column justify-content-between">
         <Card.Title>
           {booking.first_name} {booking.surname}
         </Card.Title>
-        <Card.Text>
+        <Card.Text className="mb-0">
           <strong>Court:</strong> {booking.court_id} <br />
           <strong>Type:</strong> {booking.booking_type_name} <br />
           <strong>Date:</strong>{" "}
@@ -50,20 +50,22 @@ const BookingCard: React.FC<BookingCardProps> = ({
           <strong>End:</strong> {booking.end_time}
         </Card.Text>
 
-        {isOwner && (
-          <div className="d-flex gap-2">
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => onEditBooking(booking)}
-            >
-              Edit
-            </Button>
-            <Button variant="danger" size="sm" onClick={handleCancelClick}>
-              Cancel Booking
-            </Button>
-          </div>
-        )}
+        <div className="mt-3" style={{ minHeight: "2.5rem" }}>
+          {isOwner && (
+            <div className="d-flex gap-2">
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => onEditBooking(booking)}
+              >
+                Edit
+              </Button>
+              <Button variant="danger" size="sm" onClick={handleCancelClick}>
+                Cancel Booking
+              </Button>
+            </div>
+          )}
+        </div>
       </Card.Body>
     </Card>
   );
