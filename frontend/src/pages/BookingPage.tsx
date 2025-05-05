@@ -42,7 +42,7 @@ const BookingPage = () => {
   };
 
   return (
-    <div className="bookings-page-container">
+    <div className="bookings-page-container pb-4">
       <h1 className="mt-4">Booking Page</h1>
       <div className="mb-3">
         {currentPage !== "bookings" && (
