@@ -26,7 +26,7 @@ const [showLoadingUI, setShowLoadingUI] = useState(true);
 
         reloadTimeout = setTimeout(() => {
           window.location.reload();
-        }, 5000);
+        }, 15000);
       }, 1000); // Show loading UI for 1 seconds
     }
 
