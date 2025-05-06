@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import heroImage from "../assets/sample.png";
+import heroImage from "../assets/saturday-club-social.jpg";
 
 const HeroBanner = () => {
   return (

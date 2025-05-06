@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col, Image } from "react-bootstrap";
-import courtImage from "../assets/sample.png";
+import courtImage from "../assets/saturday-club-social.jpg";
 
 const FacilitiesSection:React.FC = () => {
   return (
