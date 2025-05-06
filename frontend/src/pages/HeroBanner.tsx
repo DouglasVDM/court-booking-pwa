@@ -15,6 +15,10 @@ const HeroBanner = () => {
         justifyContent: "center",
       }}
     >
+      <span className="visually-hidden">
+        Background image shows Saturday club members enjoying a sunny match.
+      </span>
+
       <Container className="text-center">
         <Row>
           <Col>

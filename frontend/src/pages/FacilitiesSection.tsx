@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import courtImage from "../assets/saturday-club-social.jpg";
 
-const FacilitiesSection:React.FC = () => {
+const FacilitiesSection: React.FC = () => {
   return (
     <Container className="py-5 text-center">
       <Row>
@@ -14,7 +14,7 @@ const FacilitiesSection:React.FC = () => {
           </p>
           <Image
             src={courtImage}
-            alt="Tennis Court"
+            alt="Saturday social tennis club gathering"
             fluid
             className="rounded shadow-lg mt-4"
           />
