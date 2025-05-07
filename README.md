@@ -1,327 +1,185 @@
-# Tennis Club Court Booking App
+# 🎾 Tennis Club Court Booking App
 
-Welcome to the **Tennis Club Court Booking App** repository! This application simplifies court bookings for members and is designed with future visitor functionality in mind. The app is a Progressive Web App (PWA) built with React and TypeScript, featuring a secure backend API powered by Express and PostgreSQL.
+A mobile-first **Progressive Web App (PWA)** that allows verified members of a tennis club to book courts with ease. Built for speed, security, and future scalability — including guest access and payments.
 
----
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue.svg)](https://court-booking-pwa.onrender.com)  
+[![GitHub](https://img.shields.io/badge/Repo-DouglasVDM/court--booking--pwa-000?logo=github)](https://github.com/DouglasVDM/court-booking-pwa)
 
-## Table of Contents
+## 📚 Table of Contents
 
-- [Tennis Club Court Booking App](#tennis-club-court-booking-app)
-  - [Table of Contents](#table-of-contents)
-  - [Overview](#overview)
-  - [Features](#features)
-  - [Tech Stack](#tech-stack)
-  - [Setup Instructions](#setup-instructions)
+- [🎾 Tennis Club Court Booking App](#-tennis-club-court-booking-app)
+  - [📚 Table of Contents](#-table-of-contents)
+  - [📌 Overview](#-overview)
+  - [🚀 Features](#-features)
+  - [🛠 Tech Stack](#-tech-stack)
+  - [🚀 Getting Started](#-getting-started)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
-  - [Application Screenshot](#application-screenshot)
-    - [A quick diagram showing how the new protected routing flow works now.](#a-quick-diagram-showing-how-the-new-protected-routing-flow-works-now)
-  - [Mermaid Diagrams](#mermaid-diagrams)
-    - [Member Login and Validation](#member-login-and-validation)
-    - [Future Visitor Flow](#future-visitor-flow)
-    - [Booking Flow](#booking-flow)
-    - [Payment Flow](#payment-flow)
-  - [PWA Features](#pwa-features)
-  - [Future Enhancements](#future-enhancements)
-  - [License](#license)
-- [📦 court-booking-pwa](#-court-booking-pwa)
-  - [📂 Root](#-root)
-  - [🛠️ Backend (`backend/`)](#️-backend-backend)
-  - [🎨 Frontend (`frontend/`)](#-frontend-frontend)
+    - [Configure environment variables](#configure-environment-variables)
+    - [client/.env](#clientenv)
+    - [server/.env](#serverenv)
+    - [Run development servers](#run-development-servers)
+  - [🧩 Application Diagram](#-application-diagram)
+    - [🧠 Flowcharts (Mermaid)](#-flowcharts-mermaid)
+  - [⚙️ PWA Capabilities](#️-pwa-capabilities)
+  - [🧭 Future Enhancements](#-future-enhancements)
+  - [🗂 Project Structure](#-project-structure)
+  - [📄 License](#-license)
+  - [👤 Author](#-author)
+    - [Douglas van der Merwe](#douglas-van-der-merwe)
+
+## 📌 Overview
+
+The app enables:
+- 🧑‍🤝‍🧑 **Club members** to log in, view availability, and book courts.
+- 🛡️ **Admins** to manage bookings and control member access.
+- 👤 **Future visitors** to book and pay securely — built with this in mind.
+
+## 🚀 Features
+
+- 🔐 Secure login using **Auth0**, restricted to verified members
+- 📅 Conflict-aware booking system
+- ⏳ Member booking frequency rules (e.g. 1 per 2 weeks)
+- ♻️ Real-time UI updates after changes
+- ⚙️ Clean separation of concerns: routes, controllers, services
+- 📱 Installable, offline-ready **PWA**
+- 🛠 Built with scalability for visitor payments and admin dashboards
 
 ---
 
-## Overview
-The Tennis Club Court Booking App allows:
-- **Members** to securely book courts via their accounts.
-- **Admins** to manage members and bookings.
-- **Future Visitors** to book courts and pay online.
+## 🛠 Tech Stack
 
----
+| Frontend         | Backend      | DB                  | Auth  | Deployment |
+| ---------------- | ------------ | ------------------- | ----- | ---------- |
+| React (Vite, TS) | Express (TS) | PostgreSQL (Docker) | Auth0 | Render     |
 
-## Features
-- Member authentication via **Auth0**.
-- CRUD operations for members and bookings.
-- Prevention of overlapping bookings.
-- Progressive Web App (PWA) capabilities for offline access.
-- Admin features for adding and validating member details.
-- Database designed for scalability, including future visitor functionality.
-
----
-
-## Tech Stack
-- **Frontend:** React, TypeScript, Vite, React-Bootstrap.
-- **Backend:** Node.js, Express, PostgreSQL.
-- **Authentication:** Auth0.
-- **Deployment:** Docker for PostgreSQL, flexible hosting options.
-- **PWA:** Service workers for offline capability and a responsive, mobile-first design.
-
----
-
-## Setup Instructions
+## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js v18+ and npm.
-- PostgreSQL v14+.
-- Docker Desktop (for database setup).
+- Node.js v18+
+- PostgreSQL v14+
+- Docker Desktop (for DB)
 
 ### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-repo/tennis-club-booking.git
-   cd tennis-club-booking
-   ```
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+```bash
+git clone https://github.com/DouglasVDM/court-booking-pwa.git
+cd court-booking-pwa
+cd client && npm install
+cd ../server && npm install
+```
+### Configure environment variables
 
-3. Configure environment variables:
-   - Copy `.env.example` to `.env`.
-   - Add your PostgreSQL, Auth0, and other required credentials.
+### client/.env
 
-4. Start the backend server:
-   ```bash
-   npm run start:server
-   ```
+```env
+VITE_AUTH0_DOMAIN=your-auth0-domain
+VITE_AUTH0_CLIENT_ID=your-client-id
+VITE_AUTH0_AUDIENCE=your-api-audience
+```
+### server/.env
 
-5. Start the frontend development server:
-   ```bash
-   npm run start:client
-   ```
-
-6. Access the application at [http://localhost:3000](http://localhost:3000).
-
----
-
-## Application Screenshot
-
-### A quick diagram showing how the new protected routing flow works now.
-![A quick diagram showing how the new protected routing flow works now.](./frontend/src/assets//protected-routing-flow.png)
-
----
-
-## Mermaid Diagrams
-
-### Member Login and Validation
-```mermaid
-graph TD
-    A[Start: Member Login via Auth0] --> B{Is User Authenticated?}
-    B -- Yes --> C[Check Email Against Members Table]
-    B -- No --> Z[Authentication Failed: Deny Access]
-    C --> D{Email Exists in Members Table?}
-    D -- Yes --> E[Grant Access to Member Dashboard]
-    D -- No --> F{Is Visitor Booking Allowed?}
-    F -- Yes --> G[Create Temporary Visitor Record]
-    G --> H[Grant Limited Access for Visitor Booking]
-    F -- No --> I[Deny Access]
-    E --> J[Successful Login Completed]
-    H --> J
-    Z --> K[End]
-    I --> K
-    J --> K[End]
+```env
+DATABASE_URL=postgres://user:pass@localhost:5432/db
+AUTH0_DOMAIN=your-auth0-domain
+AUTH0_AUDIENCE=your-api-audience
+PORT=5000
 ```
 
-### Future Visitor Flow
+### Run development servers
+
+```bash
+# in two separate terminals
+
+cd client && npm run dev
+cd server && npm run dev
+```
+## 🧩 Application Diagram
+
+### 🧠 Flowcharts (Mermaid)
+
+<details> <summary>🔐 Member Login Flow</summary>
+
 ```mermaid
 graph TD
-    A[Start: Visitor Signup/Login] --> B{Authenticated via Auth0?}
-    B -- Yes --> C[Check Visitor Email Against Visitors Table]
-    B -- No --> Z[Authentication Failed: Deny Access]
-    C --> D{Visitor Email Exists?}
-    D -- Yes --> E[Grant Limited Access]
-    D -- No --> F[Create New Visitor Record]
-    F --> E
-    E --> G[Proceed to Visitor Booking]
-    G --> H[Payment Confirmation]
-    H --> I[Successful Booking]
-    Z --> K[End]
-    I --> K[End]
+  A[Login via Auth0] --> B{Authenticated?}
+  B -- Yes --> C[Check Email in DB]
+  C -- Exists --> D[Grant Access]
+  C -- Missing --> E[Deny Access or Create Visitor]
+  D --> F[Dashboard]
 ```
+</details> 
 
-### Booking Flow
+<details> <summary>👤 Future Visitor Flow</summary>
+
 ```mermaid
 graph TD
-    A[Start: Booking Request] --> B{User Type?}
-    B -- Member --> C[Check Membership Validity]
-    B -- Visitor --> D[Check Payment Status]
-    C --> E{Membership Valid?}
-    E -- Yes --> F[Check Court Availability]
-    E -- No --> Z[Deny Booking: Invalid Membership]
-    D --> G{Payment Completed?}
-    G -- Yes --> F
-    G -- No --> Z[Deny Booking: Payment Incomplete]
-    F --> H{Court Available?}
-    H -- Yes --> I[Create Booking]
-    H -- No --> Z[Deny Booking: Court Unavailable]
-    I --> J[Send Confirmation]
-    J --> K[End]
-    Z --> K[End]
+  A[Visitor Login] --> B[Check Visitor Table]
+  B --> C[Allow Booking with Payment]
 ```
+</details> 
 
-### Payment Flow
+<details> <summary>📅 Booking Flow</summary>
+
 ```mermaid
 graph TD
-    A[Start: Booking Request] --> B[Select Court, Date, Time]
-    B --> C[Calculate Total Cost]
-    C --> D[Present Payment Gateway]
-    D --> E{Payment Successful?}
-    E -- Yes --> F[Confirm Booking]
-    F --> G[Send Booking Confirmation Email]
-    E -- No --> Z[Cancel Booking Process]
-    G --> H[End]
-    Z --> H
+  A[Submit Booking] --> B[Check Conflicts]
+  B -- No Conflict --> C[Create Booking]
+  C --> D[Send Confirmation]
+  ```
+</details> 
+
+<details> <summary>💳 Payment Flow (Future)</summary>
+
+```mermaid
+graph TD
+  A[Start Booking] --> B[Enter Details]
+  B --> C[Stripe Checkout]
+  C --> D[On Success → Confirm Booking]
+```
+</details>
+
+## ⚙️ PWA Capabilities
+
+✅ Installable on mobile
+
+✅ Offline fallback via service worker
+
+✅ Responsive design
+
+✅ Fast load times with Vite
+
+## 🧭 Future Enhancements
+
+- Guest booking + payments
+- Admin dashboard with stats and override controls
+- Booking reminders and notifications
+- Recurring bookings
+
+## 🗂 Project Structure
+
+```bash
+/client       # React frontend (Vite, PWA)
+  ├── components/
+  ├── customHooks/
+  ├── pages/
+  └── authentication/, assets/, styles/
+
+/server       # Express backend
+  ├── controllers/
+  ├── routes/
+  ├── services/
+  ├── models/
+  └── db/, middlewares/, utils/
 ```
 
----
+## 📄 License
+MIT License — feel free to use and build upon this.
 
-## PWA Features
-- **Offline Mode:** Service workers cache key assets.
-- **Installable:** Add to home screen on mobile devices.
-- **Responsive Design:** Optimized for desktop, tablet, and mobile.
-
----
-
-## Future Enhancements
-- Enable **visitor bookings** with online payment integration.
-- Advanced analytics for court usage.
-- Notifications for upcoming bookings.
+## 👤 Author
+### Douglas van der Merwe
+📍 South Africa  
+🔗 GitHub: @DouglasVDM
 
 ---
-
-## License
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
-# 📦 court-booking-pwa
-
-## 📂 Root
-- 📄 README.md
-- 📄 types.ts
-
-## 🛠️ Backend (`backend/`)
-- 📄 .env
-- 📂 database_config/
-  - 🗃️ database.sql
-  - ⚙️ pool.ts
-- 📂 src/
-  - 🚀 app.ts
-  - 🚀 server.ts
-  - 📂 controllers/
-    - 🎯 bookingController.ts
-    - 🎯 bookingTypeController.ts
-    - 🎯 courtController.ts
-    - 🎯 endTimeController.ts
-    - 🎯 memberController.ts
-    - 🎯 startTimeController.ts
-    - 🎯 visitorController.ts
-  - 📂 services/
-    - 🛎️ booking.service.ts
-    - 🛎️ bookingType.service.ts
-    - 🛎️ court.service.ts
-    - 🛎️ endTime.service.ts
-    - 🛎️ member.service.ts
-    - 🛎️ startTime.service.ts
-    - 🛎️ visitor.service.ts
-  - 📂 routes/
-    - 🛣️ booking.routes.ts
-    - 🛣️ bookingType.routes.ts
-    - 🛣️ court.routes.ts
-    - 🛣️ endTime.routes.ts
-    - 🛣️ member.routes.ts
-    - 🛣️ startTime.routes.ts
-    - 🛣️ visitor.routes.ts
-  - 📂 middlewares/
-    - 🛡️ errorHandler.ts
-  - 📂 database/
-    - ⚙️ pool.ts
-  - 📂 utils/ (empty for now)
-- 📄 package.json
-- 📄 package-lock.json
-- 📄 tsconfig.json
-
-## 🎨 Frontend (`frontend/`)
-- 📄 .env
-- 📄 .eslintrc.cjs
-- 📂 .netlify/
-  - 📂 functions-internal/
-  - 📂 v1/functions/
-- 📂 dist/ (built PWA output)
-  - 📸 assets/
-  - 🖼️ icons, manifest, sw.js
-- 📂 public/
-  - 🖼️ favicon.svg
-- 📂 src/
-  - 🚀 main.tsx
-  - 🎨 App.tsx + App.css
-  - 🎨 PWABadge.tsx + PWABadge.css
-  - 📂 assets/
-    - 🖼️ Images (sample.png, protected-routing-flow.png)
-  - 📂 authentication/
-    - 🔒 Auth0ProviderWithRedirect.tsx
-  - 📂 components/
-    - 📃 BookingCard.tsx
-    - 📃 PageFooter.tsx
-    - 📃 PageLayout.tsx
-    - 📃 PageLoader.tsx
-    - 📃 ProtectedLayout.tsx
-    - 📂 buttons/
-      - 🔘 LoginButton.tsx
-      - 🔘 LogoutButton.tsx
-      - 🔘 SignupButton.tsx
-    - 📂 navigation/
-      - 🧭 AdminBookingsTable.tsx
-      - 🧭 Navbar.tsx
-      - 🧭 NavbarButtons.tsx
-      - 🧭 NavbarTab.tsx
-      - 🧭 NavbarTabs.tsx
-      - 🧭 TestTabs.tsx
-  - 📂 customHooks/
-    - 🪝 AuthProvider.ts
-    - 🪝 useBookingTypes.ts
-    - 🪝 useBookings.ts
-    - 🪝 useCreateBooking.ts
-    - 🪝 useDeleteBooking.ts
-    - 🪝 useFetchBooking.ts
-    - 🪝 useFetchMemberId.ts
-    - 🪝 useCourts.ts
-    - 🪝 useStartTimes.ts
-    - 🪝 useEndTimes.ts
-    - 🪝 useUpdateBooking.ts
-  - 📂 pages/
-    - 📄 AboutSection.tsx
-    - 📄 AdminPage.tsx
-    - 📄 BookingEditPage.tsx
-    - 📄 BookingForm.tsx
-    - 📄 BookingList.tsx
-    - 📄 BookingPage.tsx
-    - 📄 BookingTypesPage.tsx
-    - 📄 CourtsPage.tsx
-    - 📄 DashboardPage.tsx
-    - 📄 DatePickerPage.tsx
-    - 📄 FacilitiesSection.tsx
-    - 📄 HeroBanner.tsx
-    - 📄 HomePage.tsx
-    - 📄 LandingPage.tsx
-    - 📄 MembershipSection.tsx
-    - 📄 NotFoundPage.tsx
-    - 📄 ProfilePage.tsx
-    - 📄 SignUpPage.tsx
-    - 📄 TimeSelector.tsx
-    - 📄 Unauthorized.tsx
-  - 📂 services/ (empty or future API calls)
-  - 📂 styles/
-    - 🎨 base.css
-    - 🎨 bookings.css
-    - 🎨 buttons.css
-    - 🎨 hero-banner.css
-    - 🎨 index.css
-    - 🎨 navbar.css
-    - 🎨 responsive.css
-    - 🎨 sections.css
-- 📄 package.json
-- 📄 package-lock.json
-- 📄 vite.config.ts
-- 📄 tsconfig.json
-- 📄 tsconfig.node.json
 
