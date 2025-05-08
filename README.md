@@ -65,8 +65,8 @@ The app enables:
 ```bash
 git clone https://github.com/DouglasVDM/court-booking-pwa.git
 cd court-booking-pwa
-cd client && npm install
-cd ../server && npm install
+cd frontend && npm install
+cd ../backend && npm install
 ```
 ### Configure environment variables
 
@@ -91,8 +91,9 @@ PORT=5000
 ```bash
 # in two separate terminals
 
-cd client && npm run dev
-cd server && npm run dev
+cd frontend && npm run dev --trace-warnings
+cd backend && npm run dev --trace-warnings
+
 ```
 ## 🧩 Application Diagram
 
@@ -159,13 +160,13 @@ graph TD
 ## 🗂 Project Structure
 
 ```bash
-/client       # React frontend (Vite, PWA)
+/frontend       # React frontend (Vite, PWA)
   ├── components/
   ├── customHooks/
   ├── pages/
   └── authentication/, assets/, styles/
 
-/server       # Express backend
+/backend       # Express backend
   ├── controllers/
   ├── routes/
   ├── services/
