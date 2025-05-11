@@ -5,6 +5,13 @@ A mobile-first **Progressive Web App (PWA)** that allows verified members of a t
 [![Live Demo](https://img.shields.io/badge/Live-Demo-blue.svg)](https://court-booking-pwa.onrender.com)  
 [![GitHub](https://img.shields.io/badge/Repo-DouglasVDM/court--booking--pwa-000?logo=github)](https://github.com/DouglasVDM/court-booking-pwa)
 
+![Build](https://github.com/DouglasVDM/court-booking-pwa/actions/workflows/main.yml/badge.svg)
+![Coverage](https://codecov.io/gh/DouglasVDM/court-booking-pwa/branch/main/graph/badge.svg)
+![License](https://img.shields.io/github/license/DouglasVDM/court-booking-pwa)
+![Last Commit](https://img.shields.io/github/last-commit/DouglasVDM/court-booking-pwa)
+![Render](https://img.shields.io/badge/Render-Deployed-blue)
+
+
 ## 📚 Table of Contents
 
 - [🎾 Tennis Club Court Booking App](#-tennis-club-court-booking-app)
