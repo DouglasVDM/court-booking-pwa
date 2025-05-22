@@ -15,7 +15,7 @@
       "node",
       "express",
       "jest"
-    ],
+    ]
   },
   "include": [
     "src"
