@@ -13,8 +13,7 @@
     "noImplicitAny": true,
     "types": [
       "node",
-      "express",
-      "jest"
+      "express"
     ]
   },
   "include": [
