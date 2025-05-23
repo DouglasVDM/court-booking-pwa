@@ -40,7 +40,7 @@ FROM booking_types bt;
 CREATE TABLE start_times (
     start_time_id serial4 NOT NULL,
     start_time time NOT NULL,
-    CONSTRAINT start_times_start_time_key UNIQUE (start_time)
+    CONSTRAINT start_times_start_time_id_key UNIQUE (start_time_id)
 );
 INSERT INTO start_times (start_time)
 VALUES ('06:00'),
