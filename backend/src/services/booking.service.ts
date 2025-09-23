@@ -77,7 +77,7 @@ export const createBooking = async (data: any) => {
     return rows[0];
   } catch (err: any) {
     if (err.message.includes("exclude_overlapping_bookings")) {
-      throw new Error('The court is already for the selected time slot.');
+      throw new Error('The court is already booked for the selected time slot.');
     }
     throw err;
   }
