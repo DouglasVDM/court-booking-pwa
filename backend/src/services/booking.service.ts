@@ -100,9 +100,9 @@ export const updateBooking = async (id: string, data: any) => {
     UPDATE bookings
     SET 
       member_id = $1, 
-      court_id = $2
+      court_id = $2,
       booking_type_id = $3, 
-      booking_time_range = $4, 
+      booking_time_range = $4
     WHERE booking_id = $5
     RETURNING *;
   `;
