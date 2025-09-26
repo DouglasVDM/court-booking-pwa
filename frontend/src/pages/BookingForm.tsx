@@ -86,9 +86,24 @@ const BookingForm: React.FC<BookingFormProps> = ({
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  // Handle form submission
+  // Handle form submission with enhanced client-side validation
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+
+    if (!formData.booking_date) {
+      toast.error("Please select a booking date.");
+      return;
+    }
+
+    if (!formData.court_id) {
+      toast.error("Please select a court.");
+      return;
+    }
+
+    if (!formData.booking_type_id) {
+      toast.error("Please select a booking type.");
+      return;
+    }
 
     if (!formData.start_time || !formData.end_time) {
       toast.error("Please select both a start and end time.");
